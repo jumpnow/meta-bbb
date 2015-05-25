@@ -11,3 +11,10 @@ This layer depends on:
         commit: 5b0305d 
 
         meta-bbb layer maintainer: Scott Ellis <scott@jumpnowtek.com>
+
+Software
+
+# Yocto 1.8.0 [fido] branch
+# Linux kernel 4.0.4 (linux-stable)
+# U-Boot 2014.04
+
