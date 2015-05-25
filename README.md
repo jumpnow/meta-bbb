@@ -14,7 +14,7 @@ This layer depends on:
 
 Software
 
-# Yocto 1.8.0 [fido] branch
-# Linux kernel 4.0.4 (linux-stable)
-# U-Boot 2014.04
+* Yocto 1.8.0 [fido] branch
+* Linux kernel 4.0.4 (linux-stable)
+* U-Boot 2014.04
 
