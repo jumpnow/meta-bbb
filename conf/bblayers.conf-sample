@@ -1,0 +1,20 @@
+# LAYER_CONF_VERSION is increased each time build/conf/bblayers.conf
+# changes incompatibly
+LCONF_VERSION = "6"
+
+BBPATH = "${TOPDIR}"
+BBFILES ?= ""
+
+BBLAYERS ?= " \
+  ${HOME}/poky-fido/meta \
+  ${HOME}/poky-fido/meta-yocto \
+  ${HOME}/poky-fido/meta-openembedded/meta-oe \
+  ${HOME}/poky-fido/meta-openembedded/meta-networking \
+  ${HOME}/poky-fido/meta-openembedded/meta-python \
+  ${HOME}/bbb/meta-bbb \
+  "
+
+BBLAYERS_NON_REMOVABLE ?= " \
+  ${HOME}/poky-fido/meta \
+  ${HOME}/poky-fido/meta-yocto \
+  "
