@@ -11,6 +11,7 @@ BBLAYERS ?= " \
   ${HOME}/poky-fido/meta-openembedded/meta-oe \
   ${HOME}/poky-fido/meta-openembedded/meta-networking \
   ${HOME}/poky-fido/meta-openembedded/meta-python \
+  ${HOME}/poky-fido/meta-qt5 \
   ${HOME}/bbb/meta-bbb \
   "
 

@@ -1,6 +1,6 @@
 # Local configuration for meta-bbb images
 # Yocto Project 1.8.0 Poky distribution 13.0.0 [fido] branch
-# This is a systemd system
+# This is a sysvinit system
 
 LICENSE_FLAGS_WHITELIST = "commercial"
 
@@ -16,7 +16,11 @@ PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
 #PARALLEL_MAKE = "-j8"
 
 PREFERRED_PROVIDER_udev = "systemd"
-VIRTUAL_RUNTIME_init_manager = "systemd"
+VIRTUAL_RUNTIME_init_manager = "sysvinit"
+
+# Qt5 apps crash for me with any mouse events when built with directfb.
+# Using linuxfb instead.
+PACKAGECONFIG_FB_pn-qtbase = "linuxfb"
 
 MACHINE = "beaglebone"
 
