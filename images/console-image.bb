@@ -15,6 +15,7 @@ CORE_OS = " \
 
 KERNEL_EXTRA_INSTALL = " \
     kernel-modules \
+    load-modules \
  "
 
 DEV_SDK_INSTALL = " \
