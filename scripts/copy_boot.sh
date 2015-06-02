@@ -7,6 +7,11 @@ if [ "x${1}" = "x" ]; then
 	exit 0
 fi
 
+if [ ! -d /media/card ]; then
+	echo "Mount point /media/card does not exist";
+	exit 1
+fi
+
 if [ -z "$OETMP" ]; then
 	echo -e "\nWorking from local directory"
     SRCDIR=.
