@@ -1,0 +1,42 @@
+From a2c4b45d1ab87cb03df452e84797f7dfd7de3dbb Mon Sep 17 00:00:00 2001
+From: Scott Ellis <scott@jumpnowtek.com>
+Date: Wed, 3 Jun 2015 05:54:14 -0400
+Subject: [PATCH 2/5] Add bbb-i2c1 dtsi
+
+---
+ arch/arm/boot/dts/bbb-i2c1.dtsi | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+ create mode 100644 arch/arm/boot/dts/bbb-i2c1.dtsi
+
+diff --git a/arch/arm/boot/dts/bbb-i2c1.dtsi b/arch/arm/boot/dts/bbb-i2c1.dtsi
+new file mode 100644
+index 0000000..ae26a5f
+--- /dev/null
++++ b/arch/arm/boot/dts/bbb-i2c1.dtsi
+@@ -0,0 +1,23 @@
++/*
++ * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++
++&am33xx_pinmux {
++	i2c1_pins: i2c1_pins {
++		pinctrl-single,pins = <
++			0x158 (SLEWCTRL_SLOW | PIN_INPUT_PULLUP | MUX_MODE2)  /* P9.18, i2c1_sda */
++			0x15c (SLEWCTRL_SLOW | PIN_INPUT_PULLUP | MUX_MODE2)  /* P9.17, i2c1_scl */
++		>;
++	};
++};
++
++&i2c1 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&i2c1_pins>;
++	clock-frequency = <100000>;
++};
+-- 
+2.1.4
+
