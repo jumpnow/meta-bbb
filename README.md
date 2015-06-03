@@ -26,5 +26,28 @@ Major Software Versions
 
 The qt5-image includes Qt 5.4.1 built for framebuffer use only.
 
-Launch apps with `-platform linuxfb -plugin evdevkeyboard -plugin evdevmouse`
+Launch Qt5 gui apps with `-platform linuxfb -plugin evdevkeyboard -plugin evdevmouse [-plugin evdevtouch]`
+
+There are a couple of custom dtbs built and installed in `/boot` on the rootfs
+if you use the meta-bbb/scripts/copy_*.sh scripts.
+
+* bbb-hdmi.dtb
+* bbb-4dcape70t.dtb
+
+And the stock dtb
+
+* am335x-boneblack.dtb
+
+On the TODO list is support for the 4dcape70t buttons. Not hard.
+
+Both of the custom dtbs include support for SPI1 and I2C1 and I2C2 on
+the P9 header.
+
+Working on the newhaven 5-inch touchscreen dtb.
+
+There is also a sample uEnv.txt in meta-bbb/scripts. Edit and copy that
+to the `<TMPDIR>/deploy/images/beaglebone/` before running `copy_rootfs.sh`
+and it will get copied too `/boot`.
+
+Read the notes in uEnv.txt on switching dtbs.
 
