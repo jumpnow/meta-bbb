@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MACHINE=beaglebone
-DTB_LIST="am335x-boneblack bbb-4dcape70t"
+DTB_LIST="am335x-boneblack bbb-hdmi bbb-4dcape70t"
 
 if [ "x${1}" = "x" ]; then
 	echo -e "\nUsage: ${0} <block device> [ <image-type> [<hostname>] ]\n"
