@@ -26,28 +26,39 @@ Major Software Versions
 
 The qt5-image includes Qt 5.4.1 built for framebuffer use only.
 
-Launch Qt5 gui apps with `-platform linuxfb -plugin evdevkeyboard -plugin evdevmouse [-plugin evdevtouch]`
+Launch Qt5 apps with the following args 
 
-There are a couple of custom dtbs built and installed in `/boot` on the rootfs
-if you use the meta-bbb/scripts/copy_*.sh scripts.
+    -platform linuxfb [-plugin evdevkeyboard] [-plugin evdevmouse] [-plugin evdevtouch]
+
+There is a demo qt5 app installed called [tspress][tspress] that you can use.
+
+The default dtb enables HDMI
 
 * bbb-hdmi.dtb
-* bbb-4dcape70t.dtb
 
-And the stock dtb
+There are dtbs for a couple of touchscreen capes installed in `/boot`
 
-* am335x-boneblack.dtb
+* bbb-4dcape70.dtb - for the 4D Systems LCD, 7-inch, 800x480 touchscreen 
+* bbb-nh5cape.dtb - for the NewHaven Capacitive, 5-inch, 800x480 touchscreen 
 
-On the TODO list is support for the 4dcape70t buttons. Not hard.
+All add the following
 
-Both of the custom dtbs include support for SPI1 and I2C1 and I2C2 on
-the P9 header.
+* /dev/spidev1.0 - pins P9.28 cs0, P9.29 d0, P9.30 d1, P9.31 sclk - d0 is MOSI
+* /dev/i2c1 - pins P9.17 scl and P9.18 sda, 100 kHz
+* /dev/i2c2 - pins P9.19 scl and P9.20 sda, 400 kHz
 
-Working on the newhaven 5-inch touchscreen dtb.
 
-There is also a sample uEnv.txt in meta-bbb/scripts. Edit and copy that
-to the `<TMPDIR>/deploy/images/beaglebone/` before running `copy_rootfs.sh`
-and it will get copied too `/boot`.
+To switch between these dtbs, look at `/boot/uEnv.txt`.
 
-Read the notes in uEnv.txt on switching dtbs.
+You can modify either `fdtfile=` or `touchscreen_dtb=` also adding a *use_touchscreen*
+file to `/boot`
 
+    touch > /boot/use_touchscreen
+
+
+To use the nh5cape you also need to add the touchscreen driver to /etc/modules
+
+    echo ft5x06_ts >> /dev/modules
+
+
+[tspress]: https://github.com/scottellis/tspress
