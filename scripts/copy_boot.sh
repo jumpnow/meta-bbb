@@ -56,16 +56,6 @@ if [ -b $DEV ]; then
 	echo "Copying u-boot"
 	sudo cp ${SRCDIR}/u-boot-${MACHINE}.img /media/card/u-boot.img
 
-	if [ -f ${SRCDIR}/boot.scr ]; then
-		echo "Copying boot.scr"
-		sudo cp ${SRCDIR}/boot.scr /media/card/boot.scr
-
-		if [ -f ${SRCDIR}/boot.cmd ]; then
-			echo "Copying boot.cmd"
-			sudo cp ${SRCDIR}/boot.cmd /media/card/boot.cmd
-		fi
-	fi
-
 	echo "Unmounting ${DEV}"
 	sudo umount ${DEV}
 else
