@@ -15,7 +15,7 @@ index 0000000..39a0862
 +++ b/arch/arm/boot/dts/bbb-hdmi.dts
 @@ -0,0 +1,90 @@
 +/*
-+ * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com 
++ * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
 + *
 + * This program is free software; you can redistribute it and/or modify
 + * it under the terms of the GNU General Public License version 2 as

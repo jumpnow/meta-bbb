@@ -84,7 +84,7 @@ index 0000000..095971b
 +			0xe8 (PIN_OUTPUT_PULLDOWN | MUX_MODE0)   /* lcd_pclk */
 +			0xec (PIN_OUTPUT_PULLDOWN | MUX_MODE0)   /* lcd_ac_bias_en */
 +			/* LCD enable */
-+			0x8c (PIN_OUTPUT_PULLUP | MUX_MODE7)     /* P8.19, gpio2[1] */	
++			0x8c (PIN_OUTPUT_PULLUP | MUX_MODE7)     /* P8.19, gpio2[1] */
 +		>;
 +	};
 +
