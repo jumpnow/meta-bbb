@@ -1,19 +1,19 @@
-From 76efc7fc1f61dd294506a4c6007fecf1a540be5a Mon Sep 17 00:00:00 2001
+From f233c6c6adacf9650135265ec29ef83df8e072ba Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
-Date: Wed, 3 Jun 2015 05:55:55 -0400
-Subject: [PATCH 5/5] add bbb-4dcape70t dts
+Date: Wed, 17 Jun 2015 09:48:11 -0400
+Subject: [PATCH] add bbb 4dcape70 dts
 
 ---
- arch/arm/boot/dts/bbb-4dcape70t.dts | 143 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 143 insertions(+)
+ arch/arm/boot/dts/bbb-4dcape70t.dts | 145 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 145 insertions(+)
  create mode 100644 arch/arm/boot/dts/bbb-4dcape70t.dts
 
 diff --git a/arch/arm/boot/dts/bbb-4dcape70t.dts b/arch/arm/boot/dts/bbb-4dcape70t.dts
 new file mode 100644
-index 0000000..2b73427
+index 0000000..6c1697a
 --- /dev/null
 +++ b/arch/arm/boot/dts/bbb-4dcape70t.dts
-@@ -0,0 +1,143 @@
+@@ -0,0 +1,145 @@
 +/*
 + * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
 + *
@@ -142,11 +142,13 @@ index 0000000..2b73427
 +
 +&tscadc {
 +	status = "okay";
++
 +	tsc {
 +		ti,wires = <4>;
 +		ti,x-plate-resistance = <200>;
 +		ti,coordinate-readouts = <5>;
 +		ti,wire-config = <0x00 0x11 0x22 0x33>;
++		ti,charge-delay = <0x400>;
 +	};
 +
 +	adc {
