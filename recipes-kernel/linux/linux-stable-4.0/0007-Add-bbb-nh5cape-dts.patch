@@ -1,19 +1,19 @@
-From be52f6bdc3c10c1b748a18165c699e6ee0bed145 Mon Sep 17 00:00:00 2001
+From 90554ca52659d35afad90072047f117f8a400eae Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
-Date: Sat, 6 Jun 2015 12:23:20 -0400
+Date: Thu, 18 Jun 2015 13:23:07 -0400
 Subject: [PATCH] Add bbb nh5cape dts
 
 ---
- arch/arm/boot/dts/bbb-nh5cape.dts | 164 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 164 insertions(+)
+ arch/arm/boot/dts/bbb-nh5cape.dts | 157 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 157 insertions(+)
  create mode 100644 arch/arm/boot/dts/bbb-nh5cape.dts
 
 diff --git a/arch/arm/boot/dts/bbb-nh5cape.dts b/arch/arm/boot/dts/bbb-nh5cape.dts
 new file mode 100644
-index 0000000..095971b
+index 0000000..816b255
 --- /dev/null
 +++ b/arch/arm/boot/dts/bbb-nh5cape.dts
-@@ -0,0 +1,164 @@
+@@ -0,0 +1,157 @@
 +/*
 + * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
 + *
@@ -84,7 +84,7 @@ index 0000000..095971b
 +			0xe8 (PIN_OUTPUT_PULLDOWN | MUX_MODE0)   /* lcd_pclk */
 +			0xec (PIN_OUTPUT_PULLDOWN | MUX_MODE0)   /* lcd_ac_bias_en */
 +			/* LCD enable */
-+			0x8c (PIN_OUTPUT_PULLUP | MUX_MODE7)     /* P8.19, gpio2[1] */
++			0x8c (PIN_OUTPUT_PULLUP | MUX_MODE7)     /* P8.19, gpio2[1] */	
 +		>;
 +	};
 +
@@ -95,13 +95,6 @@ index 0000000..095971b
 +	touchscreen_pins: touchscreen_pins {
 +		pinctrl-single,pins = < 0x1a4 (PIN_INPUT_PULLUP | MUX_MODE7) >; /* P9.27, gpio3[19] */
 +	};
-+
-+	i2c2_pins: i2c2_pins {
-+		pinctrl-single,pins = <
-+			0x178 (SLEWCTRL_SLOW | PIN_INPUT_PULLUP | MUX_MODE3)  /* P9.20, i2c2_sda */
-+			0x17c (SLEWCTRL_SLOW | PIN_INPUT_PULLUP | MUX_MODE3)  /* P9.19, i2c2_scl */
-+		>;
-+        };
 +};
 +
 +&lcdc {
@@ -121,7 +114,7 @@ index 0000000..095971b
 +			ac-bias           = <255>;
 +			ac-bias-intrpt    = <0>;
 +			dma-burst-sz      = <16>;
-+			bpp               = <32>;
++			bpp               = <24>;
 +			fdd               = <0x80>;
 +			sync-edge         = <0>;
 +			sync-ctrl         = <0>;
