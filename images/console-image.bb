@@ -48,6 +48,7 @@ DEV_EXTRAS = " \
  "
 
 EXTRA_TOOLS_INSTALL = " \
+    bc \
     bzip2 \
     devmem2 \
     dosfstools \
