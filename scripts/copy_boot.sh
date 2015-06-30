@@ -36,11 +36,6 @@ if [ ! -f ${SRCDIR}/u-boot-${MACHINE}.img ]; then
 	exit 1
 fi
 
-if [ ! -f ${SRCDIR}/zImage-${MACHINE}.bin ]; then
-	echo -e "File not found: ${SRCDIR}/uImage-${MACHINE}.bin\n"
-	exit 1
-fi
-
 DEV=/dev/${1}1
 
 if [ -b $DEV ]; then
