@@ -18,6 +18,12 @@ KERNEL_EXTRA_INSTALL = " \
     load-modules \
  "
 
+WIFI_SUPPORT = " \
+    crda \
+    iw \
+    wpa-supplicant \
+ "
+
 DEV_SDK_INSTALL = " \
     binutils \
     binutils-symlinks \
@@ -45,6 +51,12 @@ DEV_EXTRAS = " \
     ntp \
     ntp-tickadj \
     spiloop \
+ "
+
+PYTHON_SUPPORT = " \
+    python-core \
+    python-fcntl \
+    python-subprocess \
  "
 
 EXTRA_TOOLS_INSTALL = " \
@@ -76,6 +88,8 @@ IMAGE_INSTALL += " \
     ${DEV_EXTRAS} \
     ${EXTRA_TOOLS_INSTALL} \
     ${KERNEL_EXTRA_INSTALL} \
+    ${PYTHON_SUPPORT} \
+    ${WIFI_SUPPORT} \
  "
 
 set_local_timezone() {
