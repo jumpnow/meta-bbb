@@ -1,0 +1,35 @@
+From 433ec58f7687564dea3007033c3aaad96b6ecd4a Mon Sep 17 00:00:00 2001
+From: Scott Ellis <scott@jumpnowtek.com>
+Date: Thu, 9 Jul 2015 07:17:28 -0400
+Subject: [PATCH] bbb-4dcape70t-dts: Include button dtsi, comment out spi
+
+---
+ arch/arm/boot/dts/bbb-4dcape70t.dts | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/bbb-4dcape70t.dts b/arch/arm/boot/dts/bbb-4dcape70t.dts
+index 6c1697a..c9ee305 100644
+--- a/arch/arm/boot/dts/bbb-4dcape70t.dts
++++ b/arch/arm/boot/dts/bbb-4dcape70t.dts
+@@ -9,10 +9,17 @@
+ 
+ #include "am33xx.dtsi"
+ #include "am335x-bone-common.dtsi"
+-#include "bbb-spi1-spidev.dtsi"
++/* #include "bbb-spi1-spidev.dtsi" */
+ #include "bbb-i2c1.dtsi"
+ #include "bbb-i2c2.dtsi"
+ 
++/* The 4dcape DOWN button gpio3[16] conflicts with SPI1.d0
++   You can choose either the keypad.dtsi or the spi1-spidev dtsi,
++   but not both unless you comment out the 'DOWN' key defs in
++   bbb-4dcape70t-keypad.dtsi.
++*/
++#include "bbb-4dcape70t-keypad.dtsi"
++
+ / {
+ 	model = "TI AM335x BeagleBone Black";
+ 	compatible = "ti,am335x-bone-black", "ti,am335x-bone", "ti,am33xx";
+-- 
+2.1.4
+

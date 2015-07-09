@@ -20,10 +20,10 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-4.1:"
 
 S = "${WORKDIR}/git"
 
-PR = "r1"
+PR = "r2"
 
-# v4.1 = b953c0d234bc72e8489d3bf51a276c5c4ec85345 
-SRCREV = "b953c0d234bc72e8489d3bf51a276c5c4ec85345"
+# v4.1.1 = 6a010c0abd49388a49af3d5a5bfc00e0d5767607
+SRCREV = "6a010c0abd49388a49af3d5a5bfc00e0d5767607"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-4.1.y \
     file://defconfig \
@@ -35,5 +35,7 @@ SRC_URI = " \
     file://0006-Add-bbb-4dcape70t-dts.patch \
     file://0007-Add-ft5x06-touchscreen-driver.patch \
     file://0008-Add-bbb-nh5cape-dts.patch \
+    file://0009-Add-4dcape70t-button-dtsi.patch \
+    file://0010-4dcape70t-dts-include-button-dtsi-comment-out-spi.patch \
  "
 
