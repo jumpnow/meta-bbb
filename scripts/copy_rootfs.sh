@@ -88,8 +88,11 @@ if [ -b $DEV ]; then
 	fi
 
 	if [ -f ${SRCDIR}/uEnv.txt ]; then
-		echo "Copying uEnv.txt to /media/card/boot"
+		echo "Copying ${SRCDIR}/uEnv.txt to /media/card/boot"
 		sudo cp ${SRCDIR}/uEnv.txt /media/card/boot
+	elif [ -f ./uEnv.txt ]; then
+		echo "Copying ./uEnv.txt to /media/card/boot"
+		sudo cp ./uEnv.txt /media/card/boot
 	fi
 
 	echo "Unmounting $DEV"
