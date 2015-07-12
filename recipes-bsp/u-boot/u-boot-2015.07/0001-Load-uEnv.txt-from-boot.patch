@@ -1,24 +1,23 @@
-From fd7ccfa966250c04890ae92d99b971b66b85b38e Mon Sep 17 00:00:00 2001
+From c59efa80becc2916fa40ecf073e07a9715901ad1 Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
-Date: Thu, 28 May 2015 13:05:06 -0400
+Date: Sun, 12 Jul 2015 09:55:55 -0400
 Subject: [PATCH] Load uEnv.txt from /boot
 
-This eliminates the need to mount the boot FAT partition to
+This eliminates the need to mound the boot FAT partition to
 update uEnv.txt.
 
 Also remove SPI, NAND, RAMFS and NFS boot configuration
 from CONFIG_EXTRA_ENV_SETTINGS. This u-boot will only
-be used with beaglebones and only using SD cards or
-eMMC.
+be used with beaglebones and only using SD cards or eMMC.
 ---
- include/configs/am335x_evm.h | 53 ++------------------------------------------
- 1 file changed, 2 insertions(+), 51 deletions(-)
+ include/configs/am335x_evm.h | 36 +-----------------------------------
+ 1 file changed, 1 insertion(+), 35 deletions(-)
 
 diff --git a/include/configs/am335x_evm.h b/include/configs/am335x_evm.h
-index a87059c..913b2b1 100644
+index 035c156..a0b9e04 100644
 --- a/include/configs/am335x_evm.h
 +++ b/include/configs/am335x_evm.h
-@@ -76,49 +76,21 @@
+@@ -76,40 +76,21 @@
  	"bootfile=zImage\0" \
  	"fdtfile=undefined\0" \
  	"console=ttyO0,115200n8\0" \
@@ -29,10 +28,6 @@ index a87059c..913b2b1 100644
  	"mmcdev=0\0" \
  	"mmcroot=/dev/mmcblk0p2 ro\0" \
  	"mmcrootfstype=ext4 rootwait\0" \
--	"rootpath=/export/rootfs\0" \
--	"nfsopts=nolock\0" \
--	"static_ip=${ipaddr}:${serverip}:${gatewayip}:${netmask}:${hostname}" \
--		"::off\0" \
 -	"ramroot=/dev/ram0 rw\0" \
 -	"ramrootfstype=ext2\0" \
  	"mmcargs=setenv bootargs console=${console} " \
@@ -48,11 +43,6 @@ index a87059c..913b2b1 100644
 -		"${optargs} " \
 -		"root=${spiroot} " \
 -		"rootfstype=${spirootfstype}\0" \
--	"netargs=setenv bootargs console=${console} " \
--		"${optargs} " \
--		"root=/dev/nfs " \
--		"nfsroot=${serverip}:${rootpath},${nfsopts} rw " \
--		"ip=dhcp\0" \
  	"bootenv=uEnv.txt\0" \
  	"loadbootscript=load mmc ${mmcdev} ${loadaddr} boot.scr\0" \
  	"bootscript=echo Running bootscript from mmc${mmcdev} ...; " \
@@ -69,7 +59,7 @@ index a87059c..913b2b1 100644
  	"loadimage=load mmc ${bootpart} ${loadaddr} ${bootdir}/${bootfile}\0" \
  	"loadfdt=load mmc ${bootpart} ${fdtaddr} ${bootdir}/${fdtfile}\0" \
  	"mmcloados=run mmcargs; " \
-@@ -154,33 +126,13 @@
+@@ -145,27 +126,13 @@
  				"fi;" \
  			"fi ;" \
  		"fi;\0" \
@@ -78,13 +68,6 @@ index a87059c..913b2b1 100644
 -		"sf probe ${spibusno}:0; " \
 -		"sf read ${loadaddr} ${spisrcaddr} ${spiimgsize}; " \
 -		"bootz ${loadaddr}\0" \
--	"netboot=echo Booting from network ...; " \
--		"setenv autoload no; " \
--		"dhcp; " \
--		"tftp ${loadaddr} ${bootfile}; " \
--		"tftp ${fdtaddr} ${fdtfile}; " \
--		"run netargs; " \
--		"bootz ${loadaddr} - ${fdtaddr}\0" \
 -	"ramboot=echo Booting from ramdisk ...; " \
 -		"run ramargs; " \
 -		"bootz ${loadaddr} ${rdaddr} ${fdtaddr}\0" \
@@ -100,16 +83,15 @@ index a87059c..913b2b1 100644
  		"if test $fdtfile = undefined; then " \
  			"echo WARNING: Could not determine device tree to use; fi; \0" \
 -	NANDARGS \
+-	NETARGS \
  	DFUARGS
  #endif
  
-@@ -189,8 +141,7 @@
- 	"run mmcboot;" \
+@@ -175,7 +142,6 @@
  	"setenv mmcdev 1; " \
  	"setenv bootpart 1:2; " \
--	"run mmcboot;" \
+ 	"run mmcboot;" \
 -	"run nandboot;"
-+	"run mmcboot;"
  
  /* NS16550 Configuration */
  #define CONFIG_SYS_NS16550_COM1		0x44e09000	/* Base EVM has UART0 */
