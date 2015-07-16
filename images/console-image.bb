@@ -21,6 +21,9 @@ KERNEL_EXTRA_INSTALL = " \
 WIFI_SUPPORT = " \
     crda \
     iw \
+    linux-firmware-rtl8192ce \
+    linux-firmware-rtl8192cu \
+    linux-firmware-rtl8192su \
     wpa-supplicant \
  "
 
