@@ -1,0 +1,25 @@
+From 5ead2e14126dc7af17e8257bbeed66fdcef59608 Mon Sep 17 00:00:00 2001
+From: Scott Ellis <scott@jumpnowtek.com>
+Date: Fri, 17 Jul 2015 11:11:07 -0400
+Subject: [PATCH 1/2] Load uEnv.txt from rootfs partition
+
+---
+ include/configs/am335x_evm.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/include/configs/am335x_evm.h b/include/configs/am335x_evm.h
+index 035c156..98681a6 100644
+--- a/include/configs/am335x_evm.h
++++ b/include/configs/am335x_evm.h
+@@ -102,7 +102,7 @@
+ 	"loadbootscript=load mmc ${mmcdev} ${loadaddr} boot.scr\0" \
+ 	"bootscript=echo Running bootscript from mmc${mmcdev} ...; " \
+ 		"source ${loadaddr}\0" \
+-	"loadbootenv=load mmc ${mmcdev} ${loadaddr} ${bootenv}\0" \
++	"loadbootenv=load mmc ${bootpart} ${loadaddr} ${bootdir}/${bootenv}\0" \
+ 	"importbootenv=echo Importing environment from mmc ...; " \
+ 		"env import -t -r $loadaddr $filesize\0" \
+ 	"ramargs=setenv bootargs console=${console} " \
+-- 
+2.1.4
+
