@@ -1,0 +1,24 @@
+From f4ca2ad2826653c0b414537ce0ca0c920c38865b Mon Sep 17 00:00:00 2001
+From: Scott Ellis <scott@jumpnowtek.com>
+Date: Tue, 21 Jul 2015 06:17:42 -0400
+Subject: [PATCH] Remove SPL_OS_BOOT config option (falcon mode)
+
+---
+ include/configs/am335x_evm.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/include/configs/am335x_evm.h b/include/configs/am335x_evm.h
+index 035c156..076b403 100644
+--- a/include/configs/am335x_evm.h
++++ b/include/configs/am335x_evm.h
+@@ -417,6 +417,7 @@
+ 					"128k(u-boot-env2),3464k(kernel)," \
+ 					"-(rootfs)"
+ #elif defined(CONFIG_EMMC_BOOT)
++#undef CONFIG_SPL_OS_BOOT
+ #undef CONFIG_ENV_IS_NOWHERE
+ #define CONFIG_ENV_IS_IN_MMC
+ #define CONFIG_SPL_ENV_SUPPORT
+-- 
+2.1.4
+
