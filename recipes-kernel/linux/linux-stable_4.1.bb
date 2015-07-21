@@ -20,7 +20,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-4.1:"
 
 S = "${WORKDIR}/git"
 
-PR = "r3"
+PR = "r4"
 
 # v4.1.2 = 5cf9896dc5c72a6c68c36140568b755f697f7760 
 SRCREV = "5cf9896dc5c72a6c68c36140568b755f697f7760"
@@ -37,5 +37,6 @@ SRC_URI = " \
     file://0008-Add-bbb-nh5cape-dts.patch \
     file://0009-Add-4dcape70t-button-dtsi.patch \
     file://0010-4dcape70t-dts-include-button-dtsi-comment-out-spi.patch \
+    file://0011-mmc-Allow-writes-to-mmcblkboot-partitions.patch \
  "
 
