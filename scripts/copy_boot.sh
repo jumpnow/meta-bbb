@@ -51,6 +51,14 @@ if [ -b $DEV ]; then
 	echo "Copying u-boot"
 	sudo cp ${SRCDIR}/u-boot-${MACHINE}.img /media/card/u-boot.img
 
+	if [ -f ${SRCDIR}/uEnv.txt ]; then
+		echo "Copying ${SRCDIR}/uEnv.txt to /media/card"
+		sudo cp ${SRCDIR}/uEnv.txt /media/card
+	elif [ -f ./uEnv.txt ]; then
+		echo "Copying ./uEnv.txt to /media/card"
+		sudo cp ./uEnv.txt /media/card
+	fi
+
 	echo "Unmounting ${DEV}"
 	sudo umount ${DEV}
 else

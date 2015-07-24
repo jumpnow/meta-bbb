@@ -49,6 +49,11 @@ if [ ! -f ${SRCDIR}/u-boot-${MACHINE}.img ]; then
 	exit 1
 fi
 
+if [ ! -f "${SRCDIR}/emmc-uEnv.txt" ]; then
+        echo "File not found: ${SRCDIR}/emmc-uEnv.txt"
+        exit 1
+fi
+
 DEV=/dev/${1}p1
 
 if [ -b $DEV ]; then
@@ -63,6 +68,9 @@ if [ -b $DEV ]; then
 
 	echo "Copying u-boot"
 	cp ${SRCDIR}/u-boot-${MACHINE}.img /media/u-boot.img
+
+        echo "Copying emmc-uEnv.txt to uEnv.txt"
+        cp ${SRCDIR}/emmc-uEnv.txt /media/uEnv.txt
 
 	echo "Unmounting ${DEV}"
 	umount ${DEV}

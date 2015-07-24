@@ -52,17 +52,29 @@ All dtbs add the following
 * /dev/i2c2 - pins P9.19 scl and P9.20 sda, 400 kHz
 
 
-To switch between these dtbs, take a look at `/boot/uEnv.txt`.
+To switch between these dtbs, take a look at `uEnv.txt` on the boot partition.
 
-You can modify either `fdtfile=` or `touchscreen_dtb=` also adding a *use_touchscreen*
-file to the `/boot` directory.
+You can mount the boot partition like this
 
-    touch > /boot/use_touchscreen
+    root@beaglebone~# mount /dev/mmcblk0p1 /mnt
 
+    root@beaglebone:~# ls -l /mnt
+    total 466
+    -rwxr-xr-x 1 root root  64408 Jul 24 09:00 MLO
+    -rwxr-xr-x 1 root root 410860 Jul 24 09:00 u-boot.img
+    -rwxr-xr-x 1 root root   1112 Jul 24 09:00 uEnv.txt
 
-To use the nh5cape you also need to add the touchscreen driver to /etc/modules
+You can either modify `fdtfile=` or you can modify `touchscreen_dtb=` and also
+add a *use_touchscreen* file to the `/boot` directory on the root filesystem.
 
-    echo ft5x06_ts >> /dev/modules
+    root@beaglebone:~# touch > /boot/use_touchscreen
+
+Those are just some examples. You can easily devise your own strategy for
+choosing which *dtb* to load at boot.
+
+To use the nh5cape you will also need to add the touchscreen driver to `/etc/modules`
+
+    root@beaglebone:~# echo ft5x06_ts >> /dev/modules
 
 
 [jumpnowtek-bbb]: http://www.jumpnowtek.com/yocto/BeagleBone-Systems-with-Yocto.html

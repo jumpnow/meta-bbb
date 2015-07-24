@@ -61,11 +61,6 @@ for dtb in $DTB_LIST; do
 	fi
 done 
 
-if [ ! -f "${SRCDIR}/emmc-uEnv.txt" ]; then
-	echo "File not found: ${SRCDIR}/emmc-uEnv.txt"
-	exit 1
-fi
-
 DEV=/dev/${1}p2
 
 if [ -b $DEV ]; then
@@ -96,9 +91,6 @@ if [ -b $DEV ]; then
 		echo "Writing wpa_supplicant.conf to /media/etc/"
 		cp ${SRCDIR}/wpa_supplicant.conf /media/etc/wpa_supplicant.conf
 	fi
-
-	echo "Copying emmc-uEnv.txt to /media/boot/uEnv.txt"
-	cp ${SRCDIR}/emmc-uEnv.txt /media/boot/uEnv.txt
 
 	echo "Unmounting $DEV"
 	umount $DEV
