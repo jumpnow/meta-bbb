@@ -53,6 +53,7 @@ DEV_SDK_INSTALL = " \
 DEV_EXTRAS = " \
     ntp \
     ntp-tickadj \
+    serialecho \
     spiloop \
  "
 
