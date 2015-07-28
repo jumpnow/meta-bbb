@@ -20,7 +20,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-4.1:"
 
 S = "${WORKDIR}/git"
 
-PR = "r5"
+PR = "r6"
 
 # v4.1.3  
 SRCREV = "c8bde72f9af412de57f0ceae218d648640118b0b"
@@ -38,5 +38,8 @@ SRC_URI = " \
     file://0009-Add-4dcape70t-button-dtsi.patch \
     file://0010-4dcape70t-dts-include-button-dtsi-comment-out-spi.patch \
     file://0011-mmc-Allow-writes-to-mmcblkboot-partitions.patch \
+    file://0012-4dcape70t-Increase-charge-delay.patch \
+    file://0013-Add-uart4-dtsi.patch \
+    file://0014-Include-uart4-dtsi-in-bbb-dts-files.patch \
  "
 
