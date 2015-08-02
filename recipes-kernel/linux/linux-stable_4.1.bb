@@ -20,7 +20,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-4.1:"
 
 S = "${WORKDIR}/git"
 
-PR = "r6"
+PR = "r7"
 
 # v4.1.3  
 SRCREV = "c8bde72f9af412de57f0ceae218d648640118b0b"
@@ -41,5 +41,6 @@ SRC_URI = " \
     file://0012-4dcape70t-Increase-charge-delay.patch \
     file://0013-Add-uart4-dtsi.patch \
     file://0014-Include-uart4-dtsi-in-bbb-dts-files.patch \
+    file://0015-bbb-nh5cape-Fix-bpp-for-24-bit-color.patch \
  "
 
