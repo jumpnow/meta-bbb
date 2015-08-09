@@ -11,15 +11,10 @@
 #
 # Assumes the following files are available in the local directory:
 #
-#  1) zImage-am335x-boneblack.dtb
-#  2) zImage-bbb-hdmi-dtb
-#  3) zImage-bbb-4dcape70t.dtb
-#  4) zImage-bbb-nh5cape.dtb
-#  5) ${IMAGE}-image-beaglebone.tar.xz where ${IMAGE} is the 2nd arg to this script
-#  6) emmc-uEnv.txt
+#  1) ${IMAGE}-image-beaglebone.tar.xz where ${IMAGE} is the 2nd arg to this script
+#  2) emmc-uEnv.txt
 
 MACHINE=beaglebone
-DTB_LIST="am335x-boneblack bbb-hdmi bbb-4dcape70t bbb-nh5cape"
 SRCDIR=.
 
 if [ "x${1}" = "x" ]; then
@@ -54,13 +49,6 @@ if [ ! -f "${SRCDIR}/${IMAGE}-image-${MACHINE}.tar.xz" ]; then
         exit 1
 fi
 
-for dtb in $DTB_LIST; do
-	if [ ! -f ${SRCDIR}/zImage-${dtb}.dtb ]; then
-		echo "DTB file not found: ${SRCDIR}/zImage-${dtb}.dtb"
-		exit 1
-	fi
-done 
-
 DEV=/dev/${1}p2
 
 if [ -b $DEV ]; then
@@ -72,11 +60,6 @@ if [ -b $DEV ]; then
 
 	echo "Extracting ${IMAGE}-image-${MACHINE}.tar.xz to /media"
 	tar -C /media -xJf ${SRCDIR}/${IMAGE}-image-${MACHINE}.tar.xz
-
-	for dtb in $DTB_LIST; do
-		echo "Copying ${dtb}.dtb to /media/boot/"
-		cp ${SRCDIR}/zImage-${dtb}.dtb /media/boot/${dtb}.dtb
-	done
 
 	echo "Writing hostname to /etc/hostname"
 	export TARGET_HOSTNAME

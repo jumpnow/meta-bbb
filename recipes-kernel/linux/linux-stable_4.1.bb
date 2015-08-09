@@ -4,7 +4,7 @@ KERNEL_IMAGETYPE = "zImage"
 
 COMPATIBLE_MACHINE = "beaglebone"
 
-RDEPENDS_kernel_base += "kernel-devicetree"
+RDEPENDS_kernel-base += "kernel-devicetree"
 
 KERNEL_DEVICETREE_beaglebone = " \
     am335x-boneblack.dtb \
@@ -20,7 +20,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-4.1:"
 
 S = "${WORKDIR}/git"
 
-PR = "r8"
+PR = "r9"
 
 # v4.1.4  
 SRCREV = "89e419960fb6a260f6a112821507d516117d5aa1"

@@ -1,7 +1,6 @@
 #!/bin/bash
 
 MACHINE=beaglebone
-DTB_LIST="am335x-boneblack bbb-hdmi bbb-4dcape70t bbb-nh5cape"
 
 if [ "x${1}" = "x" ]; then
 	echo -e "\nUsage: ${0} <block device> [ <image-type> [<hostname>] ]\n"
@@ -49,13 +48,6 @@ if [ ! -f "${SRCDIR}/${IMAGE}-image-${MACHINE}.tar.xz" ]; then
         exit 1
 fi
 
-for dtb in $DTB_LIST; do
-	if [ ! -f ${SRCDIR}/zImage-${dtb}.dtb ]; then
-		echo "DTB file not found: ${SRCDIR}/zImage-${dtb}.dtb"
-		exit 1
-	fi
-done 
-
 DEV=/dev/${1}2
 
 if [ -b $DEV ]; then
@@ -67,11 +59,6 @@ if [ -b $DEV ]; then
 
 	echo "Extracting ${IMAGE}-image-${MACHINE}.tar.xz to /media/card"
 	sudo tar -C /media/card -xJf ${SRCDIR}/${IMAGE}-image-${MACHINE}.tar.xz
-
-	for dtb in $DTB_LIST; do
-		echo "Copying ${dtb}.dtb to /media/card/boot/"
-		sudo cp ${SRCDIR}/zImage-${dtb}.dtb /media/card/boot/${dtb}.dtb
-	done
 
 	echo "Writing hostname to /etc/hostname"
 	export TARGET_HOSTNAME

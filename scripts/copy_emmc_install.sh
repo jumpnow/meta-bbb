@@ -1,7 +1,6 @@
 #!/bin/bash
 
 MACHINE=beaglebone
-DTB_LIST="am335x-boneblack bbb-hdmi bbb-4dcape70t bbb-nh5cape"
 SUPPORT_SCRIPTS="emmc-uEnv.txt mk2parts.sh emmc_copy_boot.sh emmc_copy_rootfs.sh emmc_install.sh"
 
 if [ "x${1}" = "x" ]; then
@@ -49,13 +48,6 @@ if [ ! -f "${SRCDIR}/${IMAGE}-image-${MACHINE}.tar.xz" ]; then
         exit 1
 fi
 
-for dtb in $DTB_LIST; do
-        if [ ! -f ${SRCDIR}/zImage-${dtb}.dtb ]; then
-                echo "DTB file not found: ${SRCDIR}/zImage-${dtb}.dtb"
-                exit 1
-        fi
-done
-
 for file in $SUPPORT_SCRIPTS; do
 	if [ ! -f ${SRCDIR}/${file} ]; then
 		if [ ! -f ./${file} ]; then
@@ -91,10 +83,6 @@ echo "Copying files"
 sudo cp ${SRCDIR}/MLO-${MACHINE} /media/card/home/root/emmc
 sudo cp ${SRCDIR}/u-boot-${MACHINE}.img /media/card/home/root/emmc
 sudo cp ${SRCDIR}/${IMAGE}-image-${MACHINE}.tar.xz /media/card/home/root/emmc
-
-for dtb in $DTB_LIST; do
-	sudo cp ${SRCDIR}/zImage-${dtb}.dtb /media/card/home/root/emmc
-done
 
 for file in $SUPPORT_SCRIPTS; do
 	if [ -f $SRCDIR/${file} ]; then
