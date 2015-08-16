@@ -43,5 +43,7 @@ USER_CLASSES = "image-mklibs image-prelink"
 
 PATCHRESOLVE = "noop"
 
+RM_OLD_IMAGE = "1"
+
 CONF_VERSION = "1"
 
