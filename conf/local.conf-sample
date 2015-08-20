@@ -12,9 +12,6 @@ DISTRO_FEATURES_BACKFILL_CONSIDERED += "pulseaudio opengl"
 
 PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
 
-#BB_NUMBER_THREADS = "8"
-#PARALLEL_MAKE = "-j8"
-
 PREFERRED_PROVIDER_udev = "systemd"
 VIRTUAL_RUNTIME_init_manager = "sysvinit"
 
