@@ -20,7 +20,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-4.1:"
 
 S = "${WORKDIR}/git"
 
-PR = "r11"
+PR = "r12"
 
 # v4.1.6  
 SRCREV = "4ff62ca06c0c0b084f585f7a2cfcf832b21d94fc"
@@ -42,5 +42,6 @@ SRC_URI = " \
     file://0013-Add-uart4-dtsi.patch \
     file://0014-Include-uart4-dtsi-in-bbb-dts-files.patch \
     file://0015-bbb-nh5cape-Fix-bpp-for-24-bit-color.patch \
+    file://0016-Revert-usb-musb-dsps-just-start-polling-already.patch \
  "
 

@@ -1,0 +1,31 @@
+From ceb86f259f0693589be47956401fba0a2afa2870 Mon Sep 17 00:00:00 2001
+From: Scott Ellis <scott@jumpnowtek.com>
+Date: Wed, 19 Aug 2015 09:59:52 -0400
+Subject: [PATCH] Revert: usb musb dsps just start polling already
+
+This reverts commit ad78c918602cb7cce0fab5d5813213853a6f351d
+
+The problem is random rebooting on some BBB revisions.
+---
+ drivers/usb/musb/musb_dsps.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/usb/musb/musb_dsps.c b/drivers/usb/musb/musb_dsps.c
+index 65d931a..dc4ea08 100644
+--- a/drivers/usb/musb/musb_dsps.c
++++ b/drivers/usb/musb/musb_dsps.c
+@@ -225,8 +225,9 @@ static void dsps_musb_enable(struct musb *musb)
+ 
+ 	dsps_writel(reg_base, wrp->epintr_set, epmask);
+ 	dsps_writel(reg_base, wrp->coreintr_set, coremask);
+-	/* start polling for ID change. */
+-	mod_timer(&glue->timer, jiffies + msecs_to_jiffies(wrp->poll_timeout));
++	/* Force the DRVVBUS IRQ so we can start polling for ID change. */
++	dsps_writel(reg_base, wrp->coreintr_set,
++		    (1 << wrp->drvvbus) << wrp->usb_shift);
+ 	dsps_musb_try_idle(musb, 0);
+ }
+ 
+-- 
+2.1.4
+
