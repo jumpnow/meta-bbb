@@ -3,7 +3,7 @@ This layer depends on:
     URI: git://git.yoctoproject.org/poky.git
     branch: fido 
     revision: HEAD
-    commit: 08f9fbb 
+    commit: cd2c9ac 
 
     URI: git://git.openembedded.org/meta-openembedded
     branch: fido 
@@ -23,7 +23,7 @@ Instructions for using this layer can be found on the [jumpnowtek site][jumpnowt
 Major Software Versions
 
 * Yocto 1.8.0 [fido] branch
-* Linux kernel 4.1.6 (linux-stable)
+* Linux kernel 4.2 (linux-stable)
 * U-Boot 2015.07
 
 The qt5-image includes [Qt 5.4.3][qt] built for framebuffer use only.
@@ -48,8 +48,8 @@ There are dtbs for a couple of touchscreen capes installed in `/boot`
 All dtbs add the following
 
 * /dev/spidev1.0 - pins P9.28 cs0, P9.29 d0, P9.30 d1, P9.31 sclk - d0 is MOSI
-* /dev/i2c1 - pins P9.17 scl and P9.18 sda, 100 kHz
-* /dev/i2c2 - pins P9.19 scl and P9.20 sda, 400 kHz
+* /dev/i2c1 - pins P9.17 scl and P9.18 sda
+* /dev/i2c2 - pins P9.19 scl and P9.20 sda
 
 
 To switch between these dtbs, take a look at `uEnv.txt` on the boot partition.
@@ -72,9 +72,17 @@ add a *use_touchscreen* file to the `/boot` directory on the root filesystem.
 Those are just some examples. You can easily devise your own strategy for
 choosing which *dtb* to load at boot.
 
-To use the nh5cape you will also need to add the touchscreen driver to `/etc/modules`
+To use the nh5cape you will need the `ft5x06_ts` touchscreen driver
 
     root@beaglebone:~# echo ft5x06_ts >> /dev/modules
+
+You can load it manually with *modprobe*
+
+    root@beaglebone:~# modprobe ft5x06_ts
+
+Or add it to `/etc/modules` to have it load every boot
+
+    root@beaglebone:~# echo ft5x06_ts >> /etc/modules
 
 
 [jumpnowtek-bbb]: http://www.jumpnowtek.com/yocto/BeagleBone-Systems-with-Yocto.html
