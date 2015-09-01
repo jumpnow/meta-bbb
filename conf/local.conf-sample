@@ -15,6 +15,9 @@ PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
 PREFERRED_PROVIDER_udev = "systemd"
 VIRTUAL_RUNTIME_init_manager = "sysvinit"
 
+# To stay with another kernel version
+# PREFERRED_VERSION_linux-stable = "4.1"
+
 # Qt5 apps crash for me with any mouse events when built with directfb.
 # Using linuxfb instead.
 PACKAGECONFIG_FB_pn-qtbase = "linuxfb"
