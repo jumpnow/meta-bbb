@@ -3,7 +3,7 @@ This layer depends on:
     URI: git://git.yoctoproject.org/poky.git
     branch: fido 
     revision: HEAD
-    commit: cd2c9ac 
+    commit: b50596d 
 
     URI: git://git.openembedded.org/meta-openembedded
     branch: fido 
@@ -26,7 +26,7 @@ Major Software Versions
 * Linux kernel 4.2 (linux-stable)
 * U-Boot 2015.07
 
-The qt5-image includes [Qt 5.4.3][qt] built for framebuffer use only.
+The qt5-image includes [Qt 5.4.2][qt] built for framebuffer use only.
 
 Launch Qt5 apps with the following args 
 
