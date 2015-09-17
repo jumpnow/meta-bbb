@@ -8,12 +8,12 @@ This layer depends on:
     URI: git://git.openembedded.org/meta-openembedded
     branch: fido 
     revision: HEAD
-    commit: 10d3c8f 
+    commit: 6c5bce7 
 
     URI: https://github.com/meta-qt5/meta-qt5.git
     branch: fido
     revision: HEAD
-    commit: fc02638 
+    commit: 90919b9 
 
     meta-bbb layer maintainer: Scott Ellis <scott@jumpnowtek.com>
 
