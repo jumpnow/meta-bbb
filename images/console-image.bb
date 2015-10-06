@@ -50,6 +50,7 @@ DEV_SDK_INSTALL = " \
     make \
     perl-modules \
     pkgconfig \
+    python-modules \
  "
 
 DEV_EXTRAS = " \
@@ -59,12 +60,6 @@ DEV_EXTRAS = " \
     spiloop \
     zeromq \
     zeromq-dev \
- "
-
-PYTHON_SUPPORT = " \
-    python-core \
-    python-fcntl \
-    python-subprocess \
  "
 
 EXTRA_TOOLS_INSTALL = " \
@@ -96,7 +91,6 @@ IMAGE_INSTALL += " \
     ${DEV_EXTRAS} \
     ${EXTRA_TOOLS_INSTALL} \
     ${KERNEL_EXTRA_INSTALL} \
-    ${PYTHON_SUPPORT} \
     ${WIFI_SUPPORT} \
  "
 
