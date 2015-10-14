@@ -12,7 +12,7 @@
 # Assumes the following files are available in the local directory:
 #
 #  1) ${IMAGE}-image-beaglebone.tar.xz where ${IMAGE} is the 2nd arg to this script
-#  2) emmc-uEnv.txt
+#
 
 MACHINE=beaglebone
 SRCDIR=.
