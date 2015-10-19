@@ -22,8 +22,8 @@ S = "${WORKDIR}/git"
 
 PR = "r1"
 
-# v4.3-rc4  
-SRCREV = "049e6dde7e57f0054fdc49102e7ef4830c698b46"
+# v4.3-rc6  
+SRCREV = "7379047d5585187d1288486d4627873170d0005a"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=master \
     file://defconfig \
