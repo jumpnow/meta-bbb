@@ -20,10 +20,10 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-4.1:"
 
 S = "${WORKDIR}/git"
 
-PR = "r14"
+PR = "r15"
 
-# v4.1.10  
-SRCREV = "27f1b7fed9c305ef46f8708f1bdde9cdb5f166bd"
+# v4.1.11  
+SRCREV = "205a8514e63a221c3a5071f27521013444e43e5f"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-4.1.y \
     file://defconfig \
@@ -37,11 +37,9 @@ SRC_URI = " \
     file://0008-Add-bbb-nh5cape-dts.patch \
     file://0009-Add-4dcape70t-button-dtsi.patch \
     file://0010-4dcape70t-dts-include-button-dtsi-comment-out-spi.patch \
-    file://0011-mmc-Allow-writes-to-mmcblkboot-partitions.patch \
     file://0012-4dcape70t-Increase-charge-delay.patch \
     file://0013-Add-uart4-dtsi.patch \
     file://0014-Include-uart4-dtsi-in-bbb-dts-files.patch \
     file://0015-bbb-nh5cape-Fix-bpp-for-24-bit-color.patch \
-    file://0016-Revert-usb-musb-dsps-just-start-polling-already.patch \
  "
 
