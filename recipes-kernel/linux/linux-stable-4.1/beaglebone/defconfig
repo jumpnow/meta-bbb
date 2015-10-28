@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm 4.1.1 Kernel Configuration
+# Linux/arm 4.1.12 Kernel Configuration
 #
 CONFIG_ARM=y
 CONFIG_ARM_HAS_SG_CHAIN=y
@@ -78,7 +78,6 @@ CONFIG_TICK_ONESHOT=y
 CONFIG_NO_HZ_COMMON=y
 # CONFIG_HZ_PERIODIC is not set
 CONFIG_NO_HZ_IDLE=y
-# CONFIG_NO_HZ_FULL is not set
 CONFIG_NO_HZ=y
 CONFIG_HIGH_RES_TIMERS=y
 
@@ -94,7 +93,6 @@ CONFIG_TICK_CPU_ACCOUNTING=y
 #
 # RCU Subsystem
 #
-# CONFIG_TREE_RCU is not set
 CONFIG_TINY_RCU=y
 CONFIG_SRCU=y
 # CONFIG_TASKS_RCU is not set
