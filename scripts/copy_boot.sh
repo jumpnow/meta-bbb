@@ -8,7 +8,7 @@ if [ "x${1}" = "x" ]; then
 fi
 
 if [ ! -d /media/card ]; then
-	echo "Mount point /media/card does not exist";
+	echo "Temporary mount point [/media/card] not found"
 	exit 1
 fi
 
