@@ -1,19 +1,19 @@
 This layer depends on:
 
     URI: git://git.yoctoproject.org/poky.git
-    branch: fido 
+    branch: jethro 
     revision: HEAD
-    commit: fa55b8e 
+    commit: 370a291 
 
     URI: git://git.openembedded.org/meta-openembedded
-    branch: fido 
+    branch: jethro 
     revision: HEAD
-    commit: df2f700 
+    commit: c04f105 
 
     URI: https://github.com/meta-qt5/meta-qt5.git
     branch: fido
     revision: HEAD
-    commit: 90919b9 
+    commit: 89038bf 
 
     meta-bbb layer maintainer: Scott Ellis <scott@jumpnowtek.com>
 
@@ -22,11 +22,11 @@ Instructions for using this layer can be found on the [jumpnowtek site][jumpnowt
 
 Major Software Versions
 
-* Yocto 1.8.1 [fido] branch
+* Yocto 2.0.0 [jethro] branch
 * Linux kernel 4.2.5 (linux-stable)
 * U-Boot 2015.07
 
-The qt5-image includes [Qt 5.4.2][qt] built for framebuffer use only.
+The qt5-image includes [Qt 5.5.1][qt] built for framebuffer use only.
 
 Launch Qt5 apps with the following args 
 
