@@ -1,11 +1,4 @@
 #!/bin/bash
-#
-# (c) Copyright 2012 Scott Ellis <scott@pansenti.com>
-# Licensed under terms of GPLv2
-#
-# Based in large on the mksdcard.sh script from Steve Sakoman
-# http://www.sakoman.com/category/3-bootable-sd-microsd-card-creation-script.html
-#
 
 function ver() {
 	printf "%03d%03d%03d" $(echo "$1" | tr '.' ' ')
@@ -45,8 +38,8 @@ SIZE=`fdisk -l $DRIVE | grep "Disk $DRIVE" | cut -d' ' -f5`
 
 echo DISK SIZE – $SIZE bytes
 
-if [ "$SIZE" -lt 4000000000 ]; then
-	echo "Require an SD card of at least 4GB"
+if [ "$SIZE" -lt 1800000000 ]; then
+	echo "Require an SD card of at least 2GB"
 	exit 1
 fi
 
@@ -66,19 +59,19 @@ echo -e "\nOkay, here we go ...\n"
 echo -e "=== Zeroing the MBR ===\n"
 dd if=/dev/zero of=$DRIVE bs=1024 count=1024
 
-## Standard 2 partitions
+# 3 partitions
 # Sectors are 512 bytes
 # 0-127: 64KB, no partition, MBR then empty
-# 128-131071: ~64 MB, dos partition, MLO, u-boot, kernel
-# 131072-4194303: ~2GB, linux partition, root filesystem
-# 4194304-end: 2GB+, linux partition, no assigned use
+# 128-131071: ~64 MB, FAT partition, bootloader 
+# 131072-2097151: ~1GB, linux partition, root filesystem
+# 2097152-end: 1GB+, linux partition, no assigned use
 
 echo -e "\n=== Creating 3 partitions ===\n"
 {
 echo 128,130944,0x0C,*
-echo 131072,4063232,0x83,-
-echo 4194304,+,0x83,-
-} | sfdisk --force -D -uS -H 255 -S 63 -C $CYLINDERS $DRIVE
+echo 131072,1966080,0x83,-
+echo 2097152,+,0x83,-
+} | $SFDISK_CMD $DRIVE
 
 
 sleep 1
