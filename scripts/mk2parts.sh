@@ -1,5 +1,4 @@
 #!/bin/bash
-#
 
 function ver() {
         printf "%03d%03d%03d" $(echo "$1" | tr '.' ' ')
@@ -58,16 +57,16 @@ echo -e "\nOkay, here we go ...\n"
 echo -e "=== Zeroing the MBR ===\n"
 dd if=/dev/zero of=$DRIVE bs=1024 count=1024
 
-# Standard 2 partitions
+# Minimum required 2 partitions
 # Sectors are 512 bytes
 # 0-127: 64KB, no partition, MBR then empty
-# 128-131071: ~64 MB, dos partition, MLO, u-boot, kernel
+# 128-131071: ~64 MB, FAT partition, bootloader 
 # 131072-end: 2GB+, linux partition, root filesystem
 
 echo -e "\n=== Creating 2 partitions ===\n"
 {
 echo 128,130944,0x0C,*
-echo 131072,,,-
+echo 131072,+,0x83,-
 } | $SFDISK_CMD $DRIVE
 
 
