@@ -9,6 +9,7 @@ RDEPENDS_kernel-base += "kernel-devicetree"
 KERNEL_DEVICETREE_beaglebone = " \
     am335x-boneblack.dtb \
     bbb-hdmi.dtb \
+    bbb-nohdmi.dtb \
     bbb-4dcape70t.dtb \
     bbb-nh5cape.dtb \
  "
@@ -20,7 +21,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-4.3:"
 
 S = "${WORKDIR}/git"
 
-PR = "r1"
+PR = "r2"
 
 # v4.3  
 SRCREV = "6a13feb9c82803e2b815eca72fa7a9f5561d7861"
@@ -34,5 +35,7 @@ SRC_URI = " \
     file://0005-dts-Add-bbb-4dcape70t-dts.patch \
     file://0006-Add-ft5x06_ts-touchscreen-driver.patch \
     file://0007-dts-Add-bbb-nh5cape-dts.patch \
+    file://0008-Add-bbb-can0-and-can1-dtsi.patch \
+    file://0009-Add-bbb-uart1-uart2-and-uart5-dtsi.patch \
+    file://0010-Add-bbb-nohdmi-dts.patch \
  "
-
