@@ -27,7 +27,7 @@ index 0000000..4e2d305
 +#include "am335x-bone-common.dtsi"
 +#include "bbb-spi1-spidev.dtsi"
 +#include "bbb-i2c1.dtsi"
-+/* #include "bbb-i2c2.dtsi" */
++#include "bbb-i2c2.dtsi"
 +#include "bbb-uart4.dtsi"
 +
 +/ {
