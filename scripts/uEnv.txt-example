@@ -12,9 +12,9 @@ loadaddr=0x82000000
 mmcroot=/dev/mmcblk0p2 ro
 mmcrootfstype=ext4 rootwait
 optargs=consoleblank=0
-touchscreen_dtb=bbb-4dcape70t.dtb
+nohdmi=bbb-nohdmi.dtb
 mmcargs=setenv bootargs console=${console} ${optargs} root=${mmcroot} rootfstype=${mmcrootfstype}
-findfdtfile=if test -e mmc ${bootpart} ${bootdir}/use_touchscreen; then setenv fdtfile ${touchscreen_dtb}; fi;
+findfdtfile=if test -e mmc ${bootpart} ${bootdir}/nohdmi; then setenv fdtfile ${nohdmi}; fi;
 loadfdt=run findfdtfile; load mmc ${bootpart} ${fdtaddr} ${bootdir}/${fdtfile}
 loadimage=load mmc ${bootpart} ${loadaddr} ${bootdir}/${bootfile}
 uenvcmd=if run loadfdt; then echo Loaded ${fdtfile}; if run loadimage; then run mmcargs; bootz ${loadaddr} - ${fdtaddr}; fi; fi;
