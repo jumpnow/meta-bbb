@@ -1,0 +1,101 @@
+From e6d923da52a4373072303877f2b8ea2e996a5ace Mon Sep 17 00:00:00 2001
+From: Scott Ellis <scott@jumpnowtek.com>
+Date: Thu, 12 Nov 2015 05:54:46 -0500
+Subject: [PATCH 2/3] Add bbb uart1 uart2 and uart5 dtsi
+
+---
+ arch/arm/boot/dts/bbb-uart1.dtsi | 22 ++++++++++++++++++++++
+ arch/arm/boot/dts/bbb-uart2.dtsi | 22 ++++++++++++++++++++++
+ arch/arm/boot/dts/bbb-uart5.dtsi | 22 ++++++++++++++++++++++
+ 3 files changed, 66 insertions(+)
+ create mode 100644 arch/arm/boot/dts/bbb-uart1.dtsi
+ create mode 100644 arch/arm/boot/dts/bbb-uart2.dtsi
+ create mode 100644 arch/arm/boot/dts/bbb-uart5.dtsi
+
+diff --git a/arch/arm/boot/dts/bbb-uart1.dtsi b/arch/arm/boot/dts/bbb-uart1.dtsi
+new file mode 100644
+index 0000000..fa6779f
+--- /dev/null
++++ b/arch/arm/boot/dts/bbb-uart1.dtsi
+@@ -0,0 +1,22 @@
++/*
++ * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++
++&am33xx_pinmux {
++	uart1_pins: uart1_pins {
++		pinctrl-single,pins = <
++			0x180 (PIN_INPUT_PULLUP | MUX_MODE0)     /* P9.26, uart1_rxd */
++			0x184 (PIN_OUTPUT_PULLDOWN | MUX_MODE0)  /* P9.24, uart1_txd */
++		>;
++	};
++};
++
++&uart1 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&uart1_pins>;
++};
+diff --git a/arch/arm/boot/dts/bbb-uart2.dtsi b/arch/arm/boot/dts/bbb-uart2.dtsi
+new file mode 100644
+index 0000000..d80b343
+--- /dev/null
++++ b/arch/arm/boot/dts/bbb-uart2.dtsi
+@@ -0,0 +1,22 @@
++/*
++ * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++
++&am33xx_pinmux {
++	uart2_pins: uart2_pins {
++		pinctrl-single,pins = <
++			0x150 (PIN_INPUT_PULLUP | MUX_MODE1)     /* P9.22, uart2_rxd */
++			0x154 (PIN_OUTPUT_PULLDOWN | MUX_MODE1)  /* P9.21, uart2_txd */
++		>;
++	};
++};
++
++&uart2 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&uart2_pins>;
++};
+diff --git a/arch/arm/boot/dts/bbb-uart5.dtsi b/arch/arm/boot/dts/bbb-uart5.dtsi
+new file mode 100644
+index 0000000..ce0e4e76
+--- /dev/null
++++ b/arch/arm/boot/dts/bbb-uart5.dtsi
+@@ -0,0 +1,22 @@
++/*
++ * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++
++&am33xx_pinmux {
++	uart5_pins: uart5_pins {
++		pinctrl-single,pins = <
++			0xc4 (PIN_INPUT_PULLUP | MUX_MODE4)     /* P8.38, uart5_rxd */
++			0xc0 (PIN_OUTPUT_PULLDOWN | MUX_MODE4)  /* P8.37, uart5_txd */
++		>;
++	};
++};
++
++&uart5 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&uart5_pins>;
++};
+-- 
+2.5.0
+
