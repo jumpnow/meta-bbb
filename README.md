@@ -13,7 +13,7 @@ This layer depends on:
     URI: https://github.com/meta-qt5/meta-qt5.git
     branch: fido
     revision: HEAD
-    commit: f39bc18 
+    commit: 0454fb0 
 
     meta-bbb layer maintainer: Scott Ellis <scott@jumpnowtek.com>
 
@@ -36,16 +36,20 @@ There is a demo qt5 app installed - [tspress][tspress].
 
 There is a *spidev* loopback test app installed - [spiloop][spiloop].
 
-The default dtb enables HDMI
+The default dtb with the example `uEnv.txt` enables HDMI
 
 * bbb-hdmi.dtb
 
-There are dtbs for a couple of touchscreen capes installed in `/boot`
+There is a dtb without HDMI/display support, freeing up some GPIO pins and UART5
+
+* bbb-nohdmi.dtb
+
+And there are dtbs for a couple of touchscreen capes
 
 * bbb-4dcape70.dtb - for the 4D Systems LCD, 7-inch, 800x480 touchscreen 
 * bbb-nh5cape.dtb - for the NewHaven Capacitive, 5-inch, 800x480 touchscreen 
 
-All dtbs add the following
+All the dtbs include the following
 
 * /dev/spidev1.0 - pins P9.28 cs0, P9.29 d0, P9.30 d1, P9.31 sclk - d0 is MOSI
 * /dev/i2c1 - pins P9.17 scl and P9.18 sda
