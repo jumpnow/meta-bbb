@@ -9,6 +9,7 @@ RDEPENDS_kernel-base += "kernel-devicetree"
 KERNEL_DEVICETREE_beaglebone = " \
     am335x-boneblack.dtb \
     bbb-hdmi.dtb \
+    bbb-nohdmi.dtb \
     bbb-4dcape70t.dtb \
     bbb-nh5cape.dtb \
  "
@@ -20,7 +21,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-4.1:"
 
 S = "${WORKDIR}/git"
 
-PR = "r17"
+PR = "r18"
 
 # v4.1.13  
 SRCREV = "1f2ce4a2e7aea3a2123b17aff62a80553df31e21"
@@ -41,5 +42,8 @@ SRC_URI = " \
     file://0013-Add-uart4-dtsi.patch \
     file://0014-Include-uart4-dtsi-in-bbb-dts-files.patch \
     file://0015-bbb-nh5cape-Fix-bpp-for-24-bit-color.patch \
+    file://0016-Add-bbb-can0-and-can1-dtsi.patch \
+    file://0017-Add-bbb-uart1-uart2-and-uart5-dtsi.patch \
+    file://0018-Add-bbb-nohdmi-dts.patch \
  "
 
