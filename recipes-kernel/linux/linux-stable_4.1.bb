@@ -21,7 +21,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-4.1:"
 
 S = "${WORKDIR}/git"
 
-PR = "r18"
+PR = "r19"
 
 # v4.1.13  
 SRCREV = "1f2ce4a2e7aea3a2123b17aff62a80553df31e21"
@@ -45,5 +45,7 @@ SRC_URI = " \
     file://0016-Add-bbb-can0-and-can1-dtsi.patch \
     file://0017-Add-bbb-uart1-uart2-and-uart5-dtsi.patch \
     file://0018-Add-bbb-nohdmi-dts.patch \
+    file://0019-dts-Add-adc-dtsi.patch \
+    file://0020-dts-Add-adc-dtsi-to-hdmi-nohdmi-and-nh5cape-dts.patch \
  "
 
