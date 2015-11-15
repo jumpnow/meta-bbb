@@ -1,7 +1,7 @@
-From e74a8620ea2d291d215daa98e58abf9fbec4744c Mon Sep 17 00:00:00 2001
+From 62cf6c33445e0275934adb0145fb9e36ec2b8e8e Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
 Date: Thu, 4 Jun 2015 14:24:54 -0400
-Subject: [PATCH] Add ft5x06_ts touchscreen driver
+Subject: [PATCH 2/3] Add ft5x06_ts touchscreen driver
 
 ---
  drivers/input/touchscreen/Kconfig     |   8 +
@@ -13,10 +13,10 @@ Subject: [PATCH] Add ft5x06_ts touchscreen driver
  create mode 100644 include/linux/input/ft5x06_ts.h
 
 diff --git a/drivers/input/touchscreen/Kconfig b/drivers/input/touchscreen/Kconfig
-index 6261fd6..5093c2a 100644
+index 80f6386..d92c149 100644
 --- a/drivers/input/touchscreen/Kconfig
 +++ b/drivers/input/touchscreen/Kconfig
-@@ -239,6 +239,14 @@ config TOUCHSCREEN_DA9052
+@@ -252,6 +252,14 @@ config TOUCHSCREEN_DA9052
  	  To compile this driver as a module, choose M here: the
  	  module will be called da9052_tsi.
  
@@ -32,10 +32,10 @@ index 6261fd6..5093c2a 100644
  	tristate "Dynapro serial touchscreen"
  	select SERIO
 diff --git a/drivers/input/touchscreen/Makefile b/drivers/input/touchscreen/Makefile
-index 0242fea..77ac48d 100644
+index 44deea7..d07c45c 100644
 --- a/drivers/input/touchscreen/Makefile
 +++ b/drivers/input/touchscreen/Makefile
-@@ -34,6 +34,7 @@ obj-$(CONFIG_TOUCHSCREEN_EETI)		+= eeti_ts.o
+@@ -35,6 +35,7 @@ obj-$(CONFIG_TOUCHSCREEN_EETI)		+= eeti_ts.o
  obj-$(CONFIG_TOUCHSCREEN_ELAN)		+= elants_i2c.o
  obj-$(CONFIG_TOUCHSCREEN_ELO)		+= elo.o
  obj-$(CONFIG_TOUCHSCREEN_EGALAX)	+= egalax_ts.o
@@ -45,7 +45,7 @@ index 0242fea..77ac48d 100644
  obj-$(CONFIG_TOUCHSCREEN_ILI210X)	+= ili210x.o
 diff --git a/drivers/input/touchscreen/ft5x06_ts.c b/drivers/input/touchscreen/ft5x06_ts.c
 new file mode 100644
-index 0000000..344a268
+index 0000000..af9b177
 --- /dev/null
 +++ b/drivers/input/touchscreen/ft5x06_ts.c
 @@ -0,0 +1,490 @@
@@ -579,5 +579,5 @@ index 0000000..51a9cb0
 +
 +#endif /* FT5X06_TS_H */
 -- 
-2.1.4
+2.5.0
 
