@@ -21,7 +21,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-4.3:"
 
 S = "${WORKDIR}/git"
 
-PR = "r2"
+PR = "r3"
 
 # v4.3  
 SRCREV = "6a13feb9c82803e2b815eca72fa7a9f5561d7861"
@@ -30,12 +30,6 @@ SRC_URI = " \
     file://defconfig \
     file://0001-spidev-Add-a-generic-compatible-id.patch \
     file://0002-dts-Revoke-Beaglebone-i2c2-definitions.patch \
-    file://0003-dts-Add-some-dtsi-files-for-common-controllers.patch \
-    file://0004-dts-Add-bbb-hdmi-dts.patch \
-    file://0005-dts-Add-bbb-4dcape70t-dts.patch \
-    file://0006-Add-ft5x06_ts-touchscreen-driver.patch \
-    file://0007-dts-Add-bbb-nh5cape-dts.patch \
-    file://0008-Add-bbb-can0-and-can1-dtsi.patch \
-    file://0009-Add-bbb-uart1-uart2-and-uart5-dtsi.patch \
-    file://0010-Add-bbb-nohdmi-dts.patch \
+    file://0003-Add-ft5x06_ts-touchscreen-driver.patch  \
+    file://0004-dts-Add-custom-bbb-dts-files.patch \
  "
