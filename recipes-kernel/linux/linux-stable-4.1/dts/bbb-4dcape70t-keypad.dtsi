@@ -1,0 +1,74 @@
+/*
+ * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+&am33xx_pinmux {
+	keymap_pins: pinmux_keymap_pins {
+		pinctrl-single,pins = <
+			0x040 (PIN_INPUT_PULLDOWN | ALTELECTRICALSEL | MUX_MODE7) /* P9.15, gpio1[16] */
+			0x044 (PIN_INPUT_PULLDOWN | ALTELECTRICALSEL | MUX_MODE7) /* P9.23, gpio1[17] */
+			0x04c (PIN_INPUT_PULLDOWN | ALTELECTRICALSEL | MUX_MODE7) /* P9.16, gpio1[19] */
+			0x198 (PIN_INPUT_PULLDOWN | ALTELECTRICALSEL | MUX_MODE7) /* P9.30, gpio3[16] */
+			0x154 (PIN_INPUT_PULLDOWN | ALTELECTRICALSEL | MUX_MODE7) /* P9.21, gpio0[3] */
+		>;
+	};
+};
+
+/ {
+	gpio_keys {
+		compatible = "gpio-keys";
+		pinctrl-names = "default";
+		pinctrl-0 = <&keymap_pins>;
+
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		button@1 {
+			debounce_interval = <50>;
+			linux,code = <105>;
+			label = "left";
+			gpios = <&gpio1 16 0x1>;
+			gpio-key,wakeup;
+			autorepeat;
+		};
+
+		button@2 {
+			debounce_interval = <50>;
+			linux,code = <106>;
+			label = "right";
+			gpios = <&gpio1 17 0x1>;
+			gpio-key,wakeup;
+			autorepeat;
+		};
+
+		button@3 {
+			debounce_interval = <50>;
+			linux,code = <103>;
+			label = "up";
+			gpios = <&gpio1 19 0x1>;
+			gpio-key,wakeup;
+			autorepeat;
+		};
+
+		button@4 {
+			debounce_interval = <50>;
+			linux,code = <108>;
+			label = "down";
+			gpios = <&gpio3 16 0x1>;
+			gpio-key,wakeup;
+			autorepeat;
+		};
+
+		button@5 {
+			debounce_interval = <50>;
+			linux,code = <28>;
+			label = "enter";
+			gpios = <&gpio0 3 0x1>;
+			gpio-key,wakeup;
+		};
+	};
+};

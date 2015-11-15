@@ -1,0 +1,34 @@
+/*
+ * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+&am33xx_pinmux {
+	spi1_pins: spi1_pins {
+		pinctrl-single,pins = <
+			0x19c (PIN_OUTPUT_PULLUP | MUX_MODE3)  /* P9.28, spi1_cs0 */
+			0x194 (PIN_OUTPUT_PULLUP | MUX_MODE3)  /* P9.29, spi1_d0 */
+			0x198 (PIN_INPUT_PULLUP | MUX_MODE3)   /* P9.30, spi1_d1 */
+			0x190 (PIN_INPUT_PULLUP | MUX_MODE3)   /* P9.31, spi1_sclk */
+		>;
+	};
+};
+
+&spi1 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&spi1_pins>;
+	ti,pindir-d0-out-d1-in = <1>; /* d0 is MOSI, d1 is MISO */
+
+	spidev1_0: spidev1@0 {
+		compatible = "generic,spi";
+		reg = <0>;
+		spi-max-frequency = <12000000>;
+		/* spi-cpha; sets CPHA=1, default is CPHA=0 */
+		/* spi-cpol; sets CPOL=1, default is CPOL=0 */
+		/* spi-cs-high; default is spi cs low */
+	};
+};
