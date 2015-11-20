@@ -8,7 +8,7 @@ This layer depends on:
     URI: git://git.openembedded.org/meta-openembedded
     branch: jethro 
     revision: HEAD
-    commit: 7341805 
+    commit: 4fdb203 
 
     URI: https://github.com/meta-qt5/meta-qt5.git
     branch: fido
