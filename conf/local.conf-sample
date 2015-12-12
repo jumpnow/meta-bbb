@@ -28,7 +28,7 @@ MACHINE = "beaglebone"
 
 #SSTATE_DIR = "/oe7/bbb/sstate-cache"
 
-#TMPDIR = "/oe7/bbb/tmp-poky-jethro-build"
+#TMPDIR = "/oe7/bbb/tmp-jethro"
 
 DISTRO = "poky"
 
