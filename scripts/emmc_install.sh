@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SUPPORT_SCRIPTS="emmc_mk2parts.sh emmc_mk4parts.sh emmc_copy_boot.sh emmc_copy_rootfs.sh"
+SUPPORT_SCRIPTS="emmc_mk2parts.sh emmc_copy_boot.sh emmc_copy_rootfs.sh"
 
 if [ "x${1}" = "x" ]; then
 	IMAGE=console

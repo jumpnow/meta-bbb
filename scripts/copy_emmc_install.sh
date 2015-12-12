@@ -3,7 +3,6 @@
 MACHINE=beaglebone
 SUPPORT_SCRIPTS="emmc-uEnv.txt \
                  emmc_mk2parts.sh \
-                 emmc_mk4parts.sh \
                  emmc_copy_boot.sh \
                  emmc_copy_rootfs.sh \
                  emmc_install.sh"
