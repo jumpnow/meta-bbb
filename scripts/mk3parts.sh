@@ -61,16 +61,16 @@ dd if=/dev/zero of=$DRIVE bs=1024 count=1024
 
 # 3 partitions
 # Sectors are 512 bytes
-# 0-127: 64KB, no partition, MBR then empty
-# 128-131071: ~64 MB, FAT partition, bootloader 
-# 131072-2097151: ~1GB, linux partition, root filesystem
-# 2097152-end: 1GB+, linux partition, no assigned use
+# 0      : 64KB, no partition, MBR then empty
+# 128    : 64 MB, FAT partition, bootloader 
+# 131200 : 1GB, linux partition, root filesystem
+# 2228352: 1GB+, linux partition, no assigned use
 
 echo -e "\n=== Creating 3 partitions ===\n"
 {
-echo 128,130944,0x0C,*
-echo 131072,1966080,0x83,-
-echo 2097152,+,0x83,-
+echo 128,131072,0x0C,*
+echo 131200,2097152,0x83,-
+echo 2228352,+,0x83,-
 } | $SFDISK_CMD $DRIVE
 
 

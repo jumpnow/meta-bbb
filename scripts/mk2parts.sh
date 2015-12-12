@@ -59,14 +59,14 @@ dd if=/dev/zero of=$DRIVE bs=1024 count=1024
 
 # Minimum required 2 partitions
 # Sectors are 512 bytes
-# 0-127: 64KB, no partition, MBR then empty
-# 128-131071: ~64 MB, FAT partition, bootloader 
-# 131072-end: 2GB+, linux partition, root filesystem
+# 0     : 64KB, no partition, MBR then empty
+# 128   : 64 MB, FAT partition, bootloader 
+# 131200: 2GB+, linux partition, root filesystem
 
 echo -e "\n=== Creating 2 partitions ===\n"
 {
-echo 128,130944,0x0C,*
-echo 131072,+,0x83,-
+echo 128,131072,0x0C,*
+echo 131200,+,0x83,-
 } | $SFDISK_CMD $DRIVE
 
 
