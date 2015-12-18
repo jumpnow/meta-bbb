@@ -1,0 +1,23 @@
+/*
+ * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+&am33xx_pinmux {
+	i2c2_pins: i2c2_pins {
+		pinctrl-single,pins = <
+			0x178 (SLEWCTRL_SLOW | PIN_INPUT_PULLUP | MUX_MODE3)  /* P9.20, i2c2_sda */
+			0x17c (SLEWCTRL_SLOW | PIN_INPUT_PULLUP | MUX_MODE3)  /* P9.19, i2c2_scl */
+		>;
+	};
+};
+
+&i2c2 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2c2_pins>;
+	clock-frequency = <100000>;
+};
