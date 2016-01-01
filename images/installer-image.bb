@@ -6,14 +6,6 @@ IMAGE_LINGUAS = "en-us"
 
 inherit core-image
 
-CORE_OS = " \
-    openssh openssh-keygen openssh-sftp-server \
- "
-
-KERNEL_EXTRA_INSTALL = " \
-    kernel-modules \
- "
-
 IMAGE_INSTALL += " \
     emmc-installer \
  "
@@ -22,14 +14,16 @@ disable_bootlogd() {
     echo BOOTLOGD_ENABLE=no > ${IMAGE_ROOTFS}/etc/default/bootlogd
 }
 
-disable_rc5_scripts() {
+fixup_rc_scripts() {
+    rm ${IMAGE_ROOTFS}/etc/rcS.d/S37populate-volatile.sh
     rm ${IMAGE_ROOTFS}/etc/rc5.d/S[0-8]*
+    cd ${IMAGE_ROOTFS}/etc/rc5.d
+    ln -sf ../init.d/emmc-installer S99emmc-installer
 }
 
 ROOTFS_POSTPROCESS_COMMAND += " \
     disable_bootlogd ; \
-    disable_rc5_scripts ; \
+    fixup_rc_scripts ; \
  "
 
 export IMAGE_BASENAME = "installer-image"
-
