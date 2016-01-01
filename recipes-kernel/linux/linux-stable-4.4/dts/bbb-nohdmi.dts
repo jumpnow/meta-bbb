@@ -16,6 +16,7 @@
 #include "bbb-uart4.dtsi"
 #include "bbb-uart5.dtsi"
 #include "bbb-adc.dtsi"
+#include "bbb-1wire.dtsi"
 
 / {
 	model = "TI AM335x BeagleBone Black";
@@ -41,5 +42,5 @@
 };
 
 &rtc {
-	system-powero-controller;
+	system-power-controller;
 };

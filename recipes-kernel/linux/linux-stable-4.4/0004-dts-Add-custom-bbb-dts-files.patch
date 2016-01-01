@@ -1,26 +1,28 @@
-From 307f64698ab9a84dab7277ea95940ef3684841ae Mon Sep 17 00:00:00 2001
+From b14e48d0e63da443722cb501e5bfa94cb0eb6f3b Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
-Date: Fri, 18 Dec 2015 11:14:28 -0500
+Date: Fri, 1 Jan 2016 09:52:32 -0500
 Subject: [PATCH 4/4] dts: Add custom bbb dts files
 
 ---
- arch/arm/boot/dts/bbb-4dcape70t-keypad.dtsi |  74 +++++++++++++
- arch/arm/boot/dts/bbb-4dcape70t.dts         | 153 ++++++++++++++++++++++++++
+ arch/arm/boot/dts/bbb-1wire.dtsi            |  25 ++++
+ arch/arm/boot/dts/bbb-4dcape70t-keypad.dtsi |  74 ++++++++++++
+ arch/arm/boot/dts/bbb-4dcape70t.dts         | 164 +++++++++++++++++++++++++++
  arch/arm/boot/dts/bbb-adc.dtsi              |  15 +++
  arch/arm/boot/dts/bbb-dcan0.dtsi            |  22 ++++
  arch/arm/boot/dts/bbb-dcan1.dtsi            |  22 ++++
- arch/arm/boot/dts/bbb-hdmi.dts              | 103 ++++++++++++++++++
+ arch/arm/boot/dts/bbb-hdmi.dts              | 103 +++++++++++++++++
  arch/arm/boot/dts/bbb-i2c1.dtsi             |  23 ++++
  arch/arm/boot/dts/bbb-i2c2.dtsi             |  23 ++++
- arch/arm/boot/dts/bbb-nh5cape.dts           | 159 ++++++++++++++++++++++++++++
- arch/arm/boot/dts/bbb-nohdmi.dts            |  45 ++++++++
+ arch/arm/boot/dts/bbb-nh5cape.dts           | 170 ++++++++++++++++++++++++++++
+ arch/arm/boot/dts/bbb-nohdmi.dts            |  46 ++++++++
  arch/arm/boot/dts/bbb-spi0-spidev.dtsi      |  34 ++++++
  arch/arm/boot/dts/bbb-spi1-spidev.dtsi      |  34 ++++++
  arch/arm/boot/dts/bbb-uart1.dtsi            |  22 ++++
  arch/arm/boot/dts/bbb-uart2.dtsi            |  22 ++++
  arch/arm/boot/dts/bbb-uart4.dtsi            |  22 ++++
  arch/arm/boot/dts/bbb-uart5.dtsi            |  22 ++++
- 16 files changed, 795 insertions(+)
+ 17 files changed, 843 insertions(+)
+ create mode 100644 arch/arm/boot/dts/bbb-1wire.dtsi
  create mode 100644 arch/arm/boot/dts/bbb-4dcape70t-keypad.dtsi
  create mode 100644 arch/arm/boot/dts/bbb-4dcape70t.dts
  create mode 100644 arch/arm/boot/dts/bbb-adc.dtsi
@@ -38,6 +40,37 @@ Subject: [PATCH 4/4] dts: Add custom bbb dts files
  create mode 100644 arch/arm/boot/dts/bbb-uart4.dtsi
  create mode 100644 arch/arm/boot/dts/bbb-uart5.dtsi
 
+diff --git a/arch/arm/boot/dts/bbb-1wire.dtsi b/arch/arm/boot/dts/bbb-1wire.dtsi
+new file mode 100644
+index 0000000..bc9a927
+--- /dev/null
++++ b/arch/arm/boot/dts/bbb-1wire.dtsi
+@@ -0,0 +1,25 @@
++/*
++ * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
++ *
++ * This program is free software; you can redistribute it and/or modify
++ * it under the terms of the GNU General Public License version 2 as
++ * published by the Free Software Foundation.
++ */
++
++&am33xx_pinmux {
++	onewire_pin: onewire_pin {
++		pinctrl-single,pins = <
++			0x48 (PIN_INPUT_PULLUP | MUX_MODE7)     /* P9.14, gpio1[18] */
++		>;
++	};
++};
++
++/ {
++	onewire@0 {
++		status = "okay";
++		compatible = "w1-gpio";
++		pinctrl-names = "default";
++		pinctrl-0 = <&onewire_pin>;
++		gpios = <&gpio1 18 0>;
++	};
++};
 diff --git a/arch/arm/boot/dts/bbb-4dcape70t-keypad.dtsi b/arch/arm/boot/dts/bbb-4dcape70t-keypad.dtsi
 new file mode 100644
 index 0000000..e4782a5
@@ -120,10 +153,10 @@ index 0000000..e4782a5
 +};
 diff --git a/arch/arm/boot/dts/bbb-4dcape70t.dts b/arch/arm/boot/dts/bbb-4dcape70t.dts
 new file mode 100644
-index 0000000..2ed9534
+index 0000000..6cddb86
 --- /dev/null
 +++ b/arch/arm/boot/dts/bbb-4dcape70t.dts
-@@ -0,0 +1,153 @@
+@@ -0,0 +1,164 @@
 +/*
 + * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
 + *
@@ -205,6 +238,11 @@ index 0000000..2ed9534
 +
 +&lcdc {
 +	status = "okay";
++	port {
++		lcdc_0: endpoint@0 {
++			remote-endpoint = <&panel_0>;
++		};
++	};
 +};
 +
 +/ {
@@ -244,6 +282,12 @@ index 0000000..2ed9534
 +				vsync-active = <0>;
 +				de-active = <1>;
 +				pixelclk-active = <0>;
++			};
++		};
++
++		port {
++			panel_0: endpoint@0 {
++				remote-endpoint = <&lcdc_0>;
 +			};
 +		};
 +	};
@@ -523,10 +567,10 @@ index 0000000..f5d38a2
 +};
 diff --git a/arch/arm/boot/dts/bbb-nh5cape.dts b/arch/arm/boot/dts/bbb-nh5cape.dts
 new file mode 100644
-index 0000000..4e0f0f2
+index 0000000..2d7ef1e
 --- /dev/null
 +++ b/arch/arm/boot/dts/bbb-nh5cape.dts
-@@ -0,0 +1,159 @@
+@@ -0,0 +1,170 @@
 +/*
 + * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
 + *
@@ -614,6 +658,11 @@ index 0000000..4e0f0f2
 +
 +&lcdc {
 +	status = "okay";
++	port {
++		lcdc_0: endpoint@0 {
++			remote-endpoint = <&panel_0>;
++		};
++	};
 +};
 +
 +/ {
@@ -653,6 +702,12 @@ index 0000000..4e0f0f2
 +				vsync-active = <0>;
 +			};
 +		};
++
++		port {
++			panel_0: endpoint@0 {
++				remote-endpoint = <&lcdc_0>;
++			};
++		};
 +	};
 +
 +	backlight {
@@ -688,10 +743,10 @@ index 0000000..4e0f0f2
 +};
 diff --git a/arch/arm/boot/dts/bbb-nohdmi.dts b/arch/arm/boot/dts/bbb-nohdmi.dts
 new file mode 100644
-index 0000000..ec0d6b3
+index 0000000..7c2e851
 --- /dev/null
 +++ b/arch/arm/boot/dts/bbb-nohdmi.dts
-@@ -0,0 +1,45 @@
+@@ -0,0 +1,46 @@
 +/*
 + * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
 + *
@@ -710,6 +765,7 @@ index 0000000..ec0d6b3
 +#include "bbb-uart4.dtsi"
 +#include "bbb-uart5.dtsi"
 +#include "bbb-adc.dtsi"
++#include "bbb-1wire.dtsi"
 +
 +/ {
 +	model = "TI AM335x BeagleBone Black";
@@ -735,7 +791,7 @@ index 0000000..ec0d6b3
 +};
 +
 +&rtc {
-+	system-powero-controller;
++	system-power-controller;
 +};
 diff --git a/arch/arm/boot/dts/bbb-spi0-spidev.dtsi b/arch/arm/boot/dts/bbb-spi0-spidev.dtsi
 new file mode 100644
