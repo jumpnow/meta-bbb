@@ -13,22 +13,22 @@ cylon_sequence() {
 
 	while [ 1 -gt 0 ]; do
 		echo 1 > ${ONE}/brightness
-		sleep 0.4 
+		usleep 400000 
 		echo 0 > ${ONE}/brightness
 		echo 1 > ${TWO}/brightness
-		sleep 0.1 
+		usleep 100000 
 		echo 0 > ${TWO}/brightness
 		echo 1 > ${THREE}/brightness
-		sleep 0.1 
+		usleep 100000 
 		echo 0 > ${THREE}/brightness
 		echo 1 > ${FOUR}/brightness
-		sleep 0.4 
+		usleep 400000
 		echo 0 > ${FOUR}/brightness
 		echo 1 > ${THREE}/brightness
-		sleep 0.1 
+		usleep 100000 
 		echo 0 > ${THREE}/brightness
 		echo 1 > ${TWO}/brightness
-		sleep 0.1 
+		usleep 100000 
 		echo 0 > ${TWO}/brightness
 	done
 }
