@@ -21,6 +21,7 @@ KERNEL_EXTRA_INSTALL = " \
 WIFI_SUPPORT = " \
     crda \
     iw \
+    linux-firmware-ath9k \
     linux-firmware-ralink \
     linux-firmware-rtl8192ce \
     linux-firmware-rtl8192cu \
@@ -67,6 +68,7 @@ EXTRA_TOOLS_INSTALL = " \
     bzip2 \
     devmem2 \
     dosfstools \
+    emmc-installer \
     ethtool \
     findutils \
     i2c-tools \
