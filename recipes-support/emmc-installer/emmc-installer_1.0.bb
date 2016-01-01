@@ -1,4 +1,4 @@
-SUMMARY = "Script to support a BBB eMMC installation"
+SUMMARY = "Scripts to support a BBB eMMC installation"
 
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
@@ -17,11 +17,6 @@ SRC_URI = "file://init \
 PR = "r0"
 
 S = "${WORKDIR}"
-
-inherit update-rc.d
-
-INITSCRIPT_NAME = "emmc-installer"
-INITSCRIPT_PARAMS = "start 99 5 ."
 
 do_install_append () {
     install -d ${D}${sysconfdir}/init.d
