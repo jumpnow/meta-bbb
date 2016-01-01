@@ -13,7 +13,7 @@ This layer depends on:
     URI: https://github.com/meta-qt5/meta-qt5.git
     branch: fido
     revision: HEAD
-    commit: 0454fb0 
+    commit: d5536e3 
 
     meta-bbb layer maintainer: Scott Ellis <scott@jumpnowtek.com>
 
