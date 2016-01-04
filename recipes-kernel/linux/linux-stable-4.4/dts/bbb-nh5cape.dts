@@ -85,11 +85,6 @@
 
 &lcdc {
 	status = "okay";
-	port {
-		lcdc_0: endpoint@0 {
-			remote-endpoint = <&panel_0>;
-		};
-	};
 };
 
 / {
@@ -127,12 +122,6 @@
 				vsync-len = <3>;
 				hsync-active = <0>;
 				vsync-active = <0>;
-			};
-		};
-
-		port {
-			panel_0: endpoint@0 {
-				remote-endpoint = <&lcdc_0>;
 			};
 		};
 	};

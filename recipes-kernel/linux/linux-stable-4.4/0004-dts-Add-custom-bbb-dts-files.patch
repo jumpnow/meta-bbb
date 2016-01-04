@@ -1,19 +1,19 @@
-From b14e48d0e63da443722cb501e5bfa94cb0eb6f3b Mon Sep 17 00:00:00 2001
+From 84283edea51ebbf965c9aee346c003e45b47d5e7 Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
-Date: Fri, 1 Jan 2016 09:52:32 -0500
+Date: Mon, 4 Jan 2016 15:48:41 -0500
 Subject: [PATCH 4/4] dts: Add custom bbb dts files
 
 ---
- arch/arm/boot/dts/bbb-1wire.dtsi            |  25 ++++
- arch/arm/boot/dts/bbb-4dcape70t-keypad.dtsi |  74 ++++++++++++
- arch/arm/boot/dts/bbb-4dcape70t.dts         | 164 +++++++++++++++++++++++++++
+ arch/arm/boot/dts/bbb-1wire.dtsi            |  25 +++++
+ arch/arm/boot/dts/bbb-4dcape70t-keypad.dtsi |  74 +++++++++++++
+ arch/arm/boot/dts/bbb-4dcape70t.dts         | 153 ++++++++++++++++++++++++++
  arch/arm/boot/dts/bbb-adc.dtsi              |  15 +++
  arch/arm/boot/dts/bbb-dcan0.dtsi            |  22 ++++
  arch/arm/boot/dts/bbb-dcan1.dtsi            |  22 ++++
- arch/arm/boot/dts/bbb-hdmi.dts              | 103 +++++++++++++++++
+ arch/arm/boot/dts/bbb-hdmi.dts              | 103 ++++++++++++++++++
  arch/arm/boot/dts/bbb-i2c1.dtsi             |  23 ++++
  arch/arm/boot/dts/bbb-i2c2.dtsi             |  23 ++++
- arch/arm/boot/dts/bbb-nh5cape.dts           | 170 ++++++++++++++++++++++++++++
+ arch/arm/boot/dts/bbb-nh5cape.dts           | 159 ++++++++++++++++++++++++++++
  arch/arm/boot/dts/bbb-nohdmi.dts            |  46 ++++++++
  arch/arm/boot/dts/bbb-spi0-spidev.dtsi      |  34 ++++++
  arch/arm/boot/dts/bbb-spi1-spidev.dtsi      |  34 ++++++
@@ -21,7 +21,7 @@ Subject: [PATCH 4/4] dts: Add custom bbb dts files
  arch/arm/boot/dts/bbb-uart2.dtsi            |  22 ++++
  arch/arm/boot/dts/bbb-uart4.dtsi            |  22 ++++
  arch/arm/boot/dts/bbb-uart5.dtsi            |  22 ++++
- 17 files changed, 843 insertions(+)
+ 17 files changed, 821 insertions(+)
  create mode 100644 arch/arm/boot/dts/bbb-1wire.dtsi
  create mode 100644 arch/arm/boot/dts/bbb-4dcape70t-keypad.dtsi
  create mode 100644 arch/arm/boot/dts/bbb-4dcape70t.dts
@@ -153,10 +153,10 @@ index 0000000..e4782a5
 +};
 diff --git a/arch/arm/boot/dts/bbb-4dcape70t.dts b/arch/arm/boot/dts/bbb-4dcape70t.dts
 new file mode 100644
-index 0000000..6cddb86
+index 0000000..2ed9534
 --- /dev/null
 +++ b/arch/arm/boot/dts/bbb-4dcape70t.dts
-@@ -0,0 +1,164 @@
+@@ -0,0 +1,153 @@
 +/*
 + * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
 + *
@@ -238,11 +238,6 @@ index 0000000..6cddb86
 +
 +&lcdc {
 +	status = "okay";
-+	port {
-+		lcdc_0: endpoint@0 {
-+			remote-endpoint = <&panel_0>;
-+		};
-+	};
 +};
 +
 +/ {
@@ -282,12 +277,6 @@ index 0000000..6cddb86
 +				vsync-active = <0>;
 +				de-active = <1>;
 +				pixelclk-active = <0>;
-+			};
-+		};
-+
-+		port {
-+			panel_0: endpoint@0 {
-+				remote-endpoint = <&lcdc_0>;
 +			};
 +		};
 +	};
@@ -567,10 +556,10 @@ index 0000000..f5d38a2
 +};
 diff --git a/arch/arm/boot/dts/bbb-nh5cape.dts b/arch/arm/boot/dts/bbb-nh5cape.dts
 new file mode 100644
-index 0000000..2d7ef1e
+index 0000000..4e0f0f2
 --- /dev/null
 +++ b/arch/arm/boot/dts/bbb-nh5cape.dts
-@@ -0,0 +1,170 @@
+@@ -0,0 +1,159 @@
 +/*
 + * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
 + *
@@ -658,11 +647,6 @@ index 0000000..2d7ef1e
 +
 +&lcdc {
 +	status = "okay";
-+	port {
-+		lcdc_0: endpoint@0 {
-+			remote-endpoint = <&panel_0>;
-+		};
-+	};
 +};
 +
 +/ {
@@ -700,12 +684,6 @@ index 0000000..2d7ef1e
 +				vsync-len = <3>;
 +				hsync-active = <0>;
 +				vsync-active = <0>;
-+			};
-+		};
-+
-+		port {
-+			panel_0: endpoint@0 {
-+				remote-endpoint = <&lcdc_0>;
 +			};
 +		};
 +	};
