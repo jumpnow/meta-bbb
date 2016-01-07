@@ -17,8 +17,8 @@ QT_TOOLS = " \
 IMAGE_INSTALL += " \
     ${QT_TOOLS} \
     qcolorcheck \
+    qkeytest \
     tspress \
  "
 
 export IMAGE_BASENAME = "qt5-image"
-
