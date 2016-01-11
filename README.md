@@ -30,7 +30,7 @@ The qt5-image includes [Qt 5.5.1][qt] built for framebuffer use only.
 
 Launch Qt5 apps with the following args 
 
-    -platform linuxfb [-plugin evdevkeyboard] [-plugin evdevmouse] [-plugin evdevtouch]
+    -platform linuxfb
 
 There is a demo qt5 app installed - [tspress][tspress].
 
