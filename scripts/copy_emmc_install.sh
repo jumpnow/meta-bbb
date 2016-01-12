@@ -1,11 +1,7 @@
 #!/bin/bash
 
 MACHINE=beaglebone
-SUPPORT_SCRIPTS="emmc-uEnv.txt \
-                 emmc_mk2parts.sh \
-                 emmc_copy_boot.sh \
-                 emmc_copy_rootfs.sh \
-                 emmc_install.sh"
+SUPPORT_SCRIPTS="emmc-uEnv.txt"
 
 if [ "x${1}" = "x" ]; then
         echo -e "\nUsage: ${0} <block device> [ <image-type> ] ]\n"
@@ -24,8 +20,13 @@ else
 fi
 
 if [ -z "$OETMP" ]; then
-        echo -e "\nWorking from local directory"
-    SRCDIR=.
+	if [ -d ${HOME}/bbb/build/tmp/deploy/images/${MACHINE} ]; then
+		echo -e "\nUsing ${HOME}/elvaria/build/tmp"
+		SRCDIR=${HOME}/bbb/build/tmp
+	else
+		echo -e "\nWorking from local directory"
+		SRCDIR=.
+	fi
 else
         echo -e "\nOETMP: $OETMP"
 
