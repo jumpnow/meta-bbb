@@ -31,10 +31,12 @@ if [ ! -x "${PART_SCRIPT}" ]; then
 	exit 1
 fi
 
+echo "Running partition script: ${PART_SCRIPT}"
+
 ${PART_SCRIPT}
 
 if [ $? -ne 0 ]; then
-	echo "Script failed: emmc_mk2parts.sh"
+	echo "Script failed: ${PART_SCRIPT}"
 	exit 1
 fi
 
@@ -52,6 +54,23 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
+if [ ${PART_SCRIPT} == "/usr/bin/emmc_mk5parts.sh" ]; then
+	echo "Formatting partition /dev/mmcblk1p5 as FAT"
+	mkfs.vfat -F 32 /dev/mmcblk1p5 -n FLAG
+
+	if [ $? -ne 0 ]; then
+		echo "Failed formatting /dev/mmcblk1p5"
+		exit 1
+	fi
+
+	echo "Formatting partition /dev/mmcblk1p6 as ext4"
+	mkfs.ext4 -q /dev/mmcblk1p6
+
+	if [ $? -ne 0 ]; then
+		echo "Failed formatting /dev/mmcblk1p6"
+		exit 1
+	fi
+fi
+	
 echo "Success!"
 echo "Power off, remove SD card and power up" 
-

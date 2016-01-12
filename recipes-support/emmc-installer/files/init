@@ -14,13 +14,21 @@
 [ -f /etc/default/emmc-installer ] && . /etc/default/emmc-installer
 
 if [ -z "${SRCDIR}" ]; then
-	echo "SRCDIR environment variable not set"
-	exit 1
+	if [ -z "${DEFAULT_SRCDIR}" ]; then
+		echo "SRCDIR environment variable not set"
+		exit 1
+	fi
+
+	SRCDIR="${DEFAULT_SRCDIR}"
 fi
 
 if [ -z "${PART_SCRIPT}" ]; then
-	echo "PART_SCRIPT environment variable not set"
-	exit 1
+	if [ -z "${DEFAULT_PART_SCRIPT}" ]; then
+		echo "PART_SCRIPT environment variable not set"
+		exit 1
+	fi
+
+	PART_SCRIPT="${DEFAULT_PART_SCRIPT}"
 fi
 
 if [ ! -d "${SRCDIR}" ]; then
