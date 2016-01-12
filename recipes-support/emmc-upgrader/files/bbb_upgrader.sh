@@ -279,6 +279,7 @@ if [ "${NEW_ROOT}" == "/dev/mmcblk0p3" ]; then
 
 	echo "OK"
 
+	# might not exist since p2 is the default
 	if [ -f ${MOUNT_DIR}/two ]; then
 		# not necessary to delete /two since /three is checked first
 		# so this could fail and it would be okay, but it still shouldn't
@@ -303,6 +304,8 @@ else
 		exit 1
 	fi
 
+	echo "OK"
+
 	echo -e -n "Deleting file ${MOUNT_DIR}/three : "
 	rm ${MOUNT_DIR}/three
 
@@ -314,8 +317,6 @@ else
 
 	echo "OK"
 fi
-
-echo "OK"
 
 echo -e -n "Unmounting ${FLAGS_PARTITION} from ${MOUNT_DIR} : "
 

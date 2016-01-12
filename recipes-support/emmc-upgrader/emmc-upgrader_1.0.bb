@@ -9,7 +9,7 @@ SRC_URI = "file://init \
            file://bbb_upgrader.sh \
           "
 
-PR = "r2"
+PR = "r3"
 
 S = "${WORKDIR}"
 
