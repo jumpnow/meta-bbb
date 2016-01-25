@@ -3,7 +3,7 @@ This layer depends on:
     URI: git://git.yoctoproject.org/poky.git
     branch: jethro 
     revision: HEAD
-    commit: 8c8c4ed
+    commit: b9ad87b
 
     URI: git://git.openembedded.org/meta-openembedded
     branch: jethro 
@@ -24,7 +24,7 @@ Major Software Versions
 
 * Yocto 2.0.0 [jethro] branch
 * Linux kernel 4.4 (linux-stable)
-* U-Boot 2015.07
+* U-Boot 2016.01
 
 The qt5-image includes [Qt 5.5.1][qt] built for framebuffer use only.
 
