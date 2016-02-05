@@ -268,7 +268,7 @@ fi
 echo "OK"
 
 if [ "${NEW_ROOT}" == "/dev/mmcblk0p3" ]; then
-	echo -e -n "Creating file ${MOUNT_DIR}/three' : "
+	echo -e -n "Creating file ${MOUNT_DIR}/three : "
 	touch ${MOUNT_DIR}/three
 
 	if [ $? -ne 0 ]; then
@@ -279,10 +279,19 @@ if [ "${NEW_ROOT}" == "/dev/mmcblk0p3" ]; then
 
 	echo "OK"
 
-	# might not exist since p2 is the default
+	if [ -f ${MOUNT_DIR}/three_tried ]; then
+		echo -e -n "Deleting file ${MOUNT_DIR}/three_tried :"
+		rm ${MOUNT_DIR}/three_tried
+
+		if [ $? -ne 0 ]; then
+			echo "FAIL"
+			exit 1
+		fi
+
+		echo "OK"
+	fi
+
 	if [ -f ${MOUNT_DIR}/two ]; then
-		# not necessary to delete /two since /three is checked first
-		# so this could fail and it would be okay, but it still shouldn't
 		echo -e -n "Deleting file ${MOUNT_DIR}/two : "
 		rm ${MOUNT_DIR}/two
 		
@@ -306,16 +315,30 @@ else
 
 	echo "OK"
 
-	echo -e -n "Deleting file ${MOUNT_DIR}/three : "
-	rm ${MOUNT_DIR}/three
+	if [ -f ${MOUNT_DIR}/two_tried ]; then
+		echo -e -n "Deleting file ${MOUNT_DIR}/two_tried :"
+		rm ${MOUNT_DIR}/two_tried
 
-	if [ $? -ne 0 ]; then
-		echo "FAIL"
-		echo "Failed to delete old flag file ${MOUNT_DIR}/three"
-		exit 1
+		if [ $? -ne 0 ]; then
+			echo "FAIL"
+			exit 1
+		fi
+
+		echo "OK"
 	fi
 
-	echo "OK"
+	if [ -f ${MOUNT_DIR}/three ]; then
+		echo -e -n "Deleting file ${MOUNT_DIR}/three : "
+		rm ${MOUNT_DIR}/three
+
+		if [ $? -ne 0 ]; then
+			echo "FAIL"
+			echo "Failed to delete old flag file ${MOUNT_DIR}/three"
+			exit 1
+		fi
+
+		echo "OK"
+	fi
 fi
 
 echo -e -n "Unmounting ${FLAGS_PARTITION} from ${MOUNT_DIR} : "
