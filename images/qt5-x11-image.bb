@@ -18,6 +18,7 @@ IMAGE_INSTALL += " \
     ${QT_TOOLS} \
     qcolorcheck \
     qkeytest \
+    qshowfonts \
     tspress \
  "
 
