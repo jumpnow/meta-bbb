@@ -66,6 +66,7 @@ DEV_EXTRAS = " \
 EXTRA_TOOLS_INSTALL = " \
     bc \
     bzip2 \
+    cursor-blink \
     devmem2 \
     dosfstools \
     emmc-installer \
