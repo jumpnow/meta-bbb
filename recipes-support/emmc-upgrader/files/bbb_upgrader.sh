@@ -212,17 +212,6 @@ if [ $? -ne 0 ]; then
 	exit 1
 fi
 
-if [ ! -d ${MOUNT_DIR}/data ]; then
-	mkdir ${MOUNT_DIR}/data
-
-	if [ $? -ne 0 ]; then
-		echo "FAIL"
-		echo "Error creating /data directory on new system"
-		umount ${NEW_ROOT}
-		exit 1
-	fi 
-fi
-
 mkdir ${MOUNT_DIR}/mnt/upgrade
 
 if [ $? -ne 0 ]; then
