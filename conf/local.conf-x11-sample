@@ -1,5 +1,5 @@
 # Local configuration for meta-bbb X11 images
-# Yocto Project 2.0.0 Poky distribution [jethro] branch
+# Yocto Project 2.0.1 Poky distribution [jethro] branch
 # This is a sysvinit system
 
 LICENSE_FLAGS_WHITELIST = "commercial"
@@ -12,11 +12,11 @@ VIRTUAL_RUNTIME_init_manager = "sysvinit"
 
 MACHINE = "beaglebone"
 
-DL_DIR = "/oe-sources"
+#DL_DIR = "/oe-sources"
 
-SSTATE_DIR = "/oe7/bbbx/sstate-cache"
+#SSTATE_DIR = "/oe7/bbbx/sstate-cache"
 
-TMPDIR = "/oe7/bbbx/tmp-jethro"
+#TMPDIR = "/oe7/bbbx/tmp-jethro"
 
 DISTRO = "poky"
 
