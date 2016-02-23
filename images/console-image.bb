@@ -9,6 +9,7 @@ inherit core-image
 
 CORE_OS = " \
     openssh openssh-keygen openssh-sftp-server \
+    psplash \
     term-prompt \
     tzdata \
  "
