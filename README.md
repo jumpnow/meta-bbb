@@ -3,7 +3,7 @@ This layer depends on:
     URI: git://git.yoctoproject.org/poky.git
     branch: jethro 
     revision: HEAD
-    commit: eb9666a
+    commit: 7fe17a2
 
     URI: git://git.openembedded.org/meta-openembedded
     branch: jethro 
