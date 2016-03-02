@@ -3,7 +3,7 @@ This layer depends on:
     URI: git://git.yoctoproject.org/poky.git
     branch: jethro 
     revision: HEAD
-    commit: 7fe17a2
+    commit: b1f23d1
 
     URI: git://git.openembedded.org/meta-openembedded
     branch: jethro 
@@ -13,7 +13,7 @@ This layer depends on:
     URI: https://github.com/meta-qt5/meta-qt5.git
     branch: fido
     revision: HEAD
-    commit: d5536e3
+    commit: 9bfcf79
 
     meta-bbb layer maintainer: Scott Ellis <scott@jumpnowtek.com>
 
