@@ -20,7 +20,6 @@ KERNEL_EXTRA_INSTALL = " \
  "
 
 WIFI_SUPPORT = " \
-    crda \
     iw \
     linux-firmware-ath9k \
     linux-firmware-ralink \
