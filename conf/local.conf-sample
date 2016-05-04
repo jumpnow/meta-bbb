@@ -1,34 +1,33 @@
 # Local configuration for meta-bbb images
-# Yocto Project 2.0.1 Poky distribution [jethro] branch
+# Yocto Project 2.1 Poky distribution [krogoth] branch
 # This is a sysvinit system
 
 LICENSE_FLAGS_WHITELIST = "commercial"
 
 # Important to override DISTRO_FEATURES or by default x11 and all its dependencies
 # will get built whether or not you use it in an image.
-DISTRO_FEATURES = "ext2 systemd usbhost ${DISTRO_FEATURES_LIBC}"
+DISTRO_FEATURES = "ext2 usbhost ${DISTRO_FEATURES_LIBC}"
+
 # remove opengl so opencv builds cleanly, remove pulseaudio since it brings in x11
 DISTRO_FEATURES_BACKFILL_CONSIDERED += "pulseaudio opengl"
 
 PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
 
-PREFERRED_PROVIDER_udev = "systemd"
+PREFERRED_PROVIDER_udev = "eudev"
 VIRTUAL_RUNTIME_init_manager = "sysvinit"
 
 # To stay with another kernel version
-# PREFERRED_VERSION_linux-stable = "4.1"
+# PREFERRED_VERSION_linux-stable = "4.4"
 
-# Qt5 apps crash for me with any mouse events when built with directfb.
-# Using linuxfb instead.
 PACKAGECONFIG_FB_pn-qtbase = "linuxfb"
 
 MACHINE = "beaglebone"
 
-#DL_DIR = "/oe-sources"
+#DL_DIR = "${HOME}/oe-sources"
 
 #SSTATE_DIR = "/oe7/bbb/sstate-cache"
 
-#TMPDIR = "/oe7/bbb/tmp-jethro"
+#TMPDIR = "/oe7/bbb/tmp-krogoth"
 
 DISTRO = "poky"
 

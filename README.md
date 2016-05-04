@@ -1,19 +1,19 @@
 This layer depends on:
 
     URI: git://git.yoctoproject.org/poky.git
-    branch: jethro 
+    branch: krogoth
     revision: HEAD
-    commit: 6dba9ab
+    commit: 898a783
 
     URI: git://git.openembedded.org/meta-openembedded
-    branch: jethro 
+    branch: krogoth
     revision: HEAD
-    commit: c305ac5
+    commit: cb87e40
 
     URI: https://github.com/meta-qt5/meta-qt5.git
-    branch: jethro
+    branch: krogoth
     revision: HEAD
-    commit: 9bfcf79
+    commit: d715f2c
 
     meta-bbb layer maintainer: Scott Ellis <scott@jumpnowtek.com>
 
@@ -22,11 +22,11 @@ Instructions for using this layer can be found on the [jumpnowtek site][jumpnowt
 
 Major Software Versions
 
-* Yocto 2.0.1 [jethro] branch
+* Yocto 2.1 [krogoth] branch
 * Linux kernel 4.5.2 (linux-stable)
 * U-Boot 2016.01
 
-The qt5-image includes [Qt 5.5.1][qt] built for framebuffer use only.
+The qt5-image includes [Qt 5.6.1][qt] built for framebuffer use only.
 
 Launch Qt5 apps with the following args 
 
