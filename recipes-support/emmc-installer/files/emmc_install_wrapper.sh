@@ -64,7 +64,7 @@ if [ ${PART_SCRIPT} == "/usr/bin/emmc_mk5parts.sh" ]; then
 	fi
 
 	echo "Formatting partition /dev/mmcblk1p6 as ext4"
-	mkfs.ext4 -q /dev/mmcblk1p6
+	mkfs.ext4 -q -F /dev/mmcblk1p6
 
 	if [ $? -ne 0 ]; then
 		echo "Failed formatting /dev/mmcblk1p6"

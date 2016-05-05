@@ -62,7 +62,7 @@ fi
 echo -e "HOSTNAME: $TARGET_HOSTNAME\n"
 
 echo "Formatting $DEV as ext4"
-mkfs.ext4 -q -L ROOT $DEV
+mkfs.ext4 -q -F -L ROOT $DEV
 
 echo "Mounting $DEV as /media"
 mount $DEV /media
