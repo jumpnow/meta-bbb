@@ -13,7 +13,7 @@ This layer depends on:
     URI: https://github.com/meta-qt5/meta-qt5.git
     branch: jethro
     revision: HEAD
-    commit: 9bfcf79
+    commit: ea37a0b
 
     meta-bbb layer maintainer: Scott Ellis <scott@jumpnowtek.com>
 
@@ -23,7 +23,7 @@ Instructions for using this layer can be found on the [jumpnowtek site][jumpnowt
 Major Software Versions
 
 * Yocto 2.0.1 [jethro] branch
-* Linux kernel 4.5.2 (linux-stable)
+* Linux kernel 4.4.9 (from linux-stable, 4.1.23 and 4.5.3 recipes available)
 * U-Boot 2016.01
 
 The qt5-image includes [Qt 5.5.1][qt] built for framebuffer use only.
