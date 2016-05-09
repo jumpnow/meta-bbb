@@ -157,7 +157,7 @@ fi
 
 echo -e -n "Formatting partition ${NEW_ROOT} as ext4 : "
 
-mkfs.ext4 -q ${NEW_ROOT}
+mkfs.ext4 -q -F ${NEW_ROOT}
 
 if [ $? -ne 0 ]; then
 	echo "FAIL"
