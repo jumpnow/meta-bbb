@@ -4,6 +4,8 @@
 
 LICENSE_FLAGS_WHITELIST = "commercial"
 
+SANITY_TESTED_DISTROS += "Ubuntu-16.04"
+
 PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
 PREFERRED_PROVIDER_jpeg-native = "libjpeg-turbo-native"
 
