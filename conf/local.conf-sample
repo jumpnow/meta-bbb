@@ -4,8 +4,6 @@
 
 LICENSE_FLAGS_WHITELIST = "commercial"
 
-SANITY_TESTED_DISTROS += "Ubuntu-16.04"
-
 DISTRO_FEATURES = "ext2 usbhost ${DISTRO_FEATURES_LIBC}"
 
 # remove opengl so opencv builds cleanly, remove pulseaudio since it brings in x11
