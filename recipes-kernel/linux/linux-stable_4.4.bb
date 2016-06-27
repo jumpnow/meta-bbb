@@ -12,6 +12,7 @@ KERNEL_DEVICETREE_beaglebone = " \
     bbb-nohdmi.dtb \
     bbb-4dcape70t.dtb \
     bbb-nh5cape.dtb \
+    bbb-tt-can-cape.dtb \
  "
 
 LINUX_VERSION = "4.4"
@@ -21,10 +22,10 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-4.4:"
 
 S = "${WORKDIR}/git"
 
-PR = "r14"
+PR = "r16"
 
-# v4.4.13
-SRCREV = "ba760d4302e4fce130007b8bdbce7fcafc9bd9a9"
+# v4.4.14
+SRCREV = "9ca1d50fa959cda1f04f43275f7930a70f1a631e"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-4.4.y \
     file://defconfig \
