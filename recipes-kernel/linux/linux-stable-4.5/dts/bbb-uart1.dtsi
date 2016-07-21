@@ -10,7 +10,7 @@
 	uart1_pins: uart1_pins {
 		pinctrl-single,pins = <
 			AM33XX_IOPAD(0x980, PIN_INPUT_PULLUP | MUX_MODE0)      /* P9.26, uart1_rxd */
-			AM33XX_IOPAD(0x984, (PIN_OUTPUT_PULLDOWN | MUX_MODE0)  /* P9.24, uart1_txd */
+			AM33XX_IOPAD(0x984, PIN_OUTPUT_PULLDOWN | MUX_MODE0)   /* P9.24, uart1_txd */
 		>;
 	};
 };
