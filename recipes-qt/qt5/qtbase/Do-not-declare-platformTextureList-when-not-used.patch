@@ -1,0 +1,37 @@
+From d2c6a0027ee23b8eade5d276f467d26931a933a5 Mon Sep 17 00:00:00 2001
+From: Scott Ellis <scott@jumpnowtek.com>
+Date: Sat, 13 Aug 2016 11:09:17 -0400
+Subject: [PATCH] Disable declaration of platformTextureList when not used
+
+Commit 2a7cee47e5e84c73e32a6953e145771196645f1a
+added a new variable qt_dummy_platformTextureList
+that is only used if opengl is defined.
+
+The Yocto qtbase build now fails with a defined but not used
+warning when building for linuxfb only.
+
+This patch wraps the variable declaration with the same guard
+as when the variable is used.
+
+Signed-off-by: Scott Ellis <scott@jumpnowtek.com>
+---
+ src/widgets/kernel/qwidgetbackingstore.cpp | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/src/widgets/kernel/qwidgetbackingstore.cpp b/src/widgets/kernel/qwidgetbackingstore.cpp
+index 3f62e79..557e710 100644
+--- a/src/widgets/kernel/qwidgetbackingstore.cpp
++++ b/src/widgets/kernel/qwidgetbackingstore.cpp
+@@ -61,7 +61,9 @@ QT_BEGIN_NAMESPACE
+ 
+ extern QRegion qt_dirtyRegion(QWidget *);
+ 
++#ifndef QT_NO_OPENGL
+ Q_GLOBAL_STATIC(QPlatformTextureList, qt_dummy_platformTextureList)
++#endif
+ 
+ /**
+  * Flushes the contents of the \a backingStore into the screen area of \a widget.
+-- 
+2.7.4
+
