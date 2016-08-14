@@ -78,14 +78,15 @@ EXTRA_TOOLS_INSTALL = " \
     iperf \
     htop \
     less \
+    memtester \
     nano \
+    netcat \
     procps \
     rsync \
     sysfsutils \
     tcpdump \
     unzip \
     util-linux \
-    vim-tiny \
     wget \
     zip \
  "
