@@ -1,0 +1,22 @@
+/*
+ * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+&am33xx_pinmux {
+	uart1_pins: uart1_pins {
+		pinctrl-single,pins = <
+			AM33XX_IOPAD(0x980, PIN_INPUT_PULLUP | MUX_MODE0)      /* P9.26, uart1_rxd */
+			AM33XX_IOPAD(0x984, PIN_OUTPUT_PULLDOWN | MUX_MODE0)   /* P9.24, uart1_txd */
+		>;
+	};
+};
+
+&uart1 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart1_pins>;
+};

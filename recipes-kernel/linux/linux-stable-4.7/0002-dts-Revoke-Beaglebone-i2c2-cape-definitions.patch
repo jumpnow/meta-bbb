@@ -1,0 +1,90 @@
+From d81b03a77ed0cc742a2fdc0ac735322c1cbc1b29 Mon Sep 17 00:00:00 2001
+From: Scott Ellis <scott@jumpnowtek.com>
+Date: Sun, 14 Aug 2016 07:12:36 -0400
+Subject: [PATCH 2/4] dts: Revoke Beaglebone i2c2 cape definitions
+
+This reverts most of 5d1a2961adf906f965b00eb8059fd2e0585e0e09
+
+Not supporting BBB cape boards using capemanager utility so keep
+flexibility on which pins are used for i2c2.
+---
+ arch/arm/boot/dts/am335x-bone-common.dtsi | 56 -------------------------------
+ 1 file changed, 56 deletions(-)
+
+diff --git a/arch/arm/boot/dts/am335x-bone-common.dtsi b/arch/arm/boot/dts/am335x-bone-common.dtsi
+index 0cc150b..ccf7cb8 100644
+--- a/arch/arm/boot/dts/am335x-bone-common.dtsi
++++ b/arch/arm/boot/dts/am335x-bone-common.dtsi
+@@ -81,13 +81,6 @@
+ 		>;
+ 	};
+ 
+-	i2c2_pins: pinmux_i2c2_pins {
+-		pinctrl-single,pins = <
+-			AM33XX_IOPAD(0x978, PIN_INPUT_PULLUP | MUX_MODE3)	/* uart1_ctsn.i2c2_sda */
+-			AM33XX_IOPAD(0x97c, PIN_INPUT_PULLUP | MUX_MODE3)	/* uart1_rtsn.i2c2_scl */
+-		>;
+-	};
+-
+ 	uart0_pins: pinmux_uart0_pins {
+ 		pinctrl-single,pins = <
+ 			AM33XX_IOPAD(0x970, PIN_INPUT_PULLUP | MUX_MODE0)	/* uart0_rxd.uart0_rxd */
+@@ -237,55 +230,6 @@
+ 	};
+ };
+ 
+-&i2c2 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&i2c2_pins>;
+-
+-	status = "okay";
+-	clock-frequency = <100000>;
+-
+-	cape_eeprom0: cape_eeprom0@54 {
+-		compatible = "at,24c256";
+-		reg = <0x54>;
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		cape0_data: cape_data@0 {
+-			reg = <0 0x100>;
+-		};
+-	};
+-
+-	cape_eeprom1: cape_eeprom1@55 {
+-		compatible = "at,24c256";
+-		reg = <0x55>;
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		cape1_data: cape_data@0 {
+-			reg = <0 0x100>;
+-		};
+-	};
+-
+-	cape_eeprom2: cape_eeprom2@56 {
+-		compatible = "at,24c256";
+-		reg = <0x56>;
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		cape2_data: cape_data@0 {
+-			reg = <0 0x100>;
+-		};
+-	};
+-
+-	cape_eeprom3: cape_eeprom3@57 {
+-		compatible = "at,24c256";
+-		reg = <0x57>;
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		cape3_data: cape_data@0 {
+-			reg = <0 0x100>;
+-		};
+-	};
+-};
+-
+-
+ /include/ "tps65217.dtsi"
+ 
+ &tps {
+-- 
+2.7.4
+
