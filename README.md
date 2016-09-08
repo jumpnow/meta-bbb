@@ -8,7 +8,7 @@ This layer depends on:
     URI: git://git.openembedded.org/meta-openembedded
     branch: krogoth
     revision: HEAD
-    commit: 247b126
+    commit: 895b25b
 
     URI: https://github.com/meta-qt5/meta-qt5.git
     branch: krogoth
@@ -23,7 +23,7 @@ Instructions for using this layer can be found on the [jumpnowtek site][jumpnowt
 Major Software Versions
 
 * Yocto 2.1.1 [krogoth] branch
-* Linux kernel 4.4.19 (4.7.2 available)
+* Linux kernel 4.4.20 (4.7.3 available)
 * U-Boot 2016.07
 
 The qt5-image includes [Qt 5.6.2][qt] built for framebuffer use only.
