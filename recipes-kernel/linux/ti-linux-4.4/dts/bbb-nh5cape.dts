@@ -1,0 +1,159 @@
+/*
+ * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+/dts-v1/;
+
+#include "am33xx.dtsi"
+#include "am335x-bone-common.dtsi"
+#include "bbb-spi1-spidev.dtsi"
+#include "bbb-i2c1.dtsi"
+#include "bbb-i2c2.dtsi"
+#include "bbb-uart4.dtsi"
+
+/ {
+	model = "TI AM335x BeagleBone Black";
+	compatible = "ti,am335x-bone-black", "ti,am335x-bone", "ti,am33xx";
+};
+
+&ldo3_reg {
+	regulator-min-microvolt = <1800000>;
+	regulator-max-microvolt = <1800000>;
+	regulator-always-on;
+};
+
+&mmc1 {
+	vmmc-supply = <&vmmcsd_fixed>;
+};
+
+&mmc2 {
+	vmmc-supply = <&vmmcsd_fixed>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&emmc_pins>;
+	bus-width = <8>;
+	status = "okay";
+};
+
+&am33xx_pinmux {
+	lcd_pins: lcd_pins {
+		pinctrl-single,pins = <
+			0xa0 (PIN_OUTPUT | MUX_MODE0)            /* P9.45, lcd_data0 */
+			0xa4 (PIN_OUTPUT | MUX_MODE0)            /* P9.46, lcd_data1 */
+			0xa8 (PIN_OUTPUT | MUX_MODE0)            /* P9.43, lcd_data2 */
+			0xac (PIN_OUTPUT | MUX_MODE0)            /* P9.44, lcd_data3 */
+			0xb0 (PIN_OUTPUT | MUX_MODE0)            /* P9.41, lcd_data4 */
+			0xb4 (PIN_OUTPUT | MUX_MODE0)            /* P9.42, lcd_data5 */
+			0xb8 (PIN_OUTPUT | MUX_MODE0)            /* P9.39, lcd_data6 */
+			0xbc (PIN_OUTPUT | MUX_MODE0)            /* P9.40, lcd_data7 */
+			0xc0 (PIN_OUTPUT | MUX_MODE0)            /* P9.37, lcd_data8 */
+			0xc4 (PIN_OUTPUT | MUX_MODE0)            /* P9.38, lcd_data9 */
+			0xc8 (PIN_OUTPUT | MUX_MODE0)            /* P9.36, lcd_data10 */
+			0xcc (PIN_OUTPUT | MUX_MODE0)            /* P9.34, lcd_data11 */
+			0xd0 (PIN_OUTPUT | MUX_MODE0)            /* P9.35, lcd_data12 */
+			0xd4 (PIN_OUTPUT | MUX_MODE0)            /* P9.33, lcd_data13 */
+			0xd8 (PIN_OUTPUT | MUX_MODE0)            /* P9.31, lcd_data14 */
+			0xdc (PIN_OUTPUT | MUX_MODE0)            /* P9.32, lcd_data15 */
+			0x20 (PIN_OUTPUT | MUX_MODE1)            /* P9.19, lcd_data23 */
+			0x24 (PIN_OUTPUT | MUX_MODE1)            /* P9.13, lcd_data22 */
+			0x28 (PIN_OUTPUT | MUX_MODE1)            /* P9.14, lcd_data21 */
+			0x2c (PIN_OUTPUT | MUX_MODE1)            /* P9.17, lcd_data20 */
+			0x30 (PIN_OUTPUT | MUX_MODE1)            /* P9.12, lcd_data19 */
+			0x34 (PIN_OUTPUT | MUX_MODE1)            /* P9.11, lcd_data18 */
+			0x38 (PIN_OUTPUT | MUX_MODE1)            /* P9.16, lcd_data17 */
+			0x3c (PIN_OUTPUT | MUX_MODE1)            /* P9.15, lcd_data16 */
+			0xe0 (PIN_OUTPUT_PULLDOWN | MUX_MODE0)   /* P9.27, lcd_vsync */
+			0xe4 (PIN_OUTPUT_PULLDOWN | MUX_MODE0)   /* P9.29, lcd_hsync */
+			0xe8 (PIN_OUTPUT_PULLDOWN | MUX_MODE0)   /* P9.28, lcd_pclk */
+			0xec (PIN_OUTPUT_PULLDOWN | MUX_MODE0)   /* P9.30, lcd_ac_bias_en */
+			/* LCD enable */
+			0x8c (PIN_OUTPUT_PULLUP | MUX_MODE7)     /* P8.19, gpio2[1] */
+		>;
+	};
+
+	backlight_pin: backlight_pin {
+		pinctrl-single,pins = < 0x48 (PIN_OUTPUT_PULLUP | MUX_MODE7) >; /* P9.14, gpio1[18] */
+	};
+
+	touchscreen_pins: touchscreen_pins {
+		pinctrl-single,pins = < 0x1a4 (PIN_INPUT_PULLUP | MUX_MODE7) >; /* P9.27, gpio3[19] */
+	};
+};
+
+&lcdc {
+	status = "okay";
+};
+
+/ {
+	lcd0: display {
+		status = "okay";
+		compatible = "ti,tilcdc,panel";
+		label = "lcd";
+		pinctrl-names = "default";
+		pinctrl-0 = <&lcd_pins>;
+		enable-gpios = <&gpio2 1 GPIO_ACTIVE_HIGH>; /* P8.19 */
+
+		panel-info {
+			ac-bias           = <255>;
+			ac-bias-intrpt    = <0>;
+			dma-burst-sz      = <16>;
+			bpp               = <32>;
+			fdd               = <0x80>;
+			sync-edge         = <0>;
+			sync-ctrl         = <0>;
+			raster-order      = <0>;
+			fifo-th           = <0>;
+		};
+
+		display-timings {
+			native-mode = <&timing0>;
+			timing0: 800x480 {
+				clock-frequency = <45000000>;
+				hactive = <800>;
+				vactive = <480>;
+				hfront-porch = <40>;
+				hback-porch = <40>;
+				hsync-len = <48>;
+				vback-porch = <29>;
+				vfront-porch = <13>;
+				vsync-len = <3>;
+				hsync-active = <0>;
+				vsync-active = <0>;
+			};
+		};
+	};
+
+	backlight {
+		status = "okay";
+		compatible = "gpio-backlight";
+		pinctrl-names = "default";
+		pinctrl-0 = <&backlight_pin>;
+		gpios = <&gpio1 18 GPIO_ACTIVE_HIGH>; /* P9.14 */
+		default-on;
+	};
+};
+
+&i2c2 {
+	ft5x06_ts: ft5x06_ts@38 {
+		compatible = "focaltech,ft5x06";
+		pinctrl-names = "default";
+		pinctrl-0 = <&touchscreen_pins>;
+		reg = <0x38>;
+		interrupt-parent = <&gpio3>;
+		interrupts = <19 0>; /* P9.27 */
+		xmin = <0>;
+		xmax = <799>;
+		xfuzz = <0>;
+		ymin = <0>;
+		ymax = <479>;
+		yfuzz = <0>;
+		/* multitouch; */
+	};
+};
+
+&rtc {
+	system-power-controller;
+};
