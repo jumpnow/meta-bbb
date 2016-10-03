@@ -1,0 +1,583 @@
+From 7dc9d7b8096ba72b94ff26b74cb8cf948bbc1f0e Mon Sep 17 00:00:00 2001
+From: Scott Ellis <scott@jumpnowtek.com>
+Date: Sun, 14 Aug 2016 08:19:12 -0400
+Subject: [PATCH 3/4] Add ft5x06_ts touchscreen driver
+
+---
+ drivers/input/touchscreen/Kconfig     |   8 +
+ drivers/input/touchscreen/Makefile    |   1 +
+ drivers/input/touchscreen/ft5x06_ts.c | 490 ++++++++++++++++++++++++++++++++++
+ include/linux/input/ft5x06_ts.h       |  33 +++
+ 4 files changed, 532 insertions(+)
+ create mode 100644 drivers/input/touchscreen/ft5x06_ts.c
+ create mode 100644 include/linux/input/ft5x06_ts.h
+
+diff --git a/drivers/input/touchscreen/Kconfig b/drivers/input/touchscreen/Kconfig
+index 2fb1f43..71eea24 100644
+--- a/drivers/input/touchscreen/Kconfig
++++ b/drivers/input/touchscreen/Kconfig
+@@ -305,6 +305,14 @@ config TOUCHSCREEN_EGALAX_SERIAL
+ 	  To compile this driver as a module, choose M here: the
+ 	  module will be called egalax_ts_serial.
+ 
++config TOUCHSCREEN_FT5X06
++	tristate "FocalTech FT5x06 I2C Touchscreen support"
++	depends on I2C
++	help
++	  Say Y here if you have a capacitive touchscreen using a FocalTech
++	  FT5x06 controller. Several NewHaven displays use this controller.
++	  Note: not compatible with EDT "Polytouch" controllers.
++
+ config TOUCHSCREEN_FT6236
+ 	tristate "FT6236 I2C touchscreen"
+ 	depends on I2C
+diff --git a/drivers/input/touchscreen/Makefile b/drivers/input/touchscreen/Makefile
+index b4373d6..2cf0143 100644
+--- a/drivers/input/touchscreen/Makefile
++++ b/drivers/input/touchscreen/Makefile
+@@ -36,6 +36,7 @@ obj-$(CONFIG_TOUCHSCREEN_ELAN)		+= elants_i2c.o
+ obj-$(CONFIG_TOUCHSCREEN_ELO)		+= elo.o
+ obj-$(CONFIG_TOUCHSCREEN_EGALAX)	+= egalax_ts.o
+ obj-$(CONFIG_TOUCHSCREEN_EGALAX_SERIAL)	+= egalax_ts_serial.o
++obj-$(CONFIG_TOUCHSCREEN_FT5X06)	+= ft5x06_ts.o
+ obj-$(CONFIG_TOUCHSCREEN_FT6236)	+= ft6236.o
+ obj-$(CONFIG_TOUCHSCREEN_FUJITSU)	+= fujitsu_ts.o
+ obj-$(CONFIG_TOUCHSCREEN_GOODIX)	+= goodix.o
+diff --git a/drivers/input/touchscreen/ft5x06_ts.c b/drivers/input/touchscreen/ft5x06_ts.c
+new file mode 100644
+index 0000000..af9b177
+--- /dev/null
++++ b/drivers/input/touchscreen/ft5x06_ts.c
+@@ -0,0 +1,490 @@
++/*
++ * Copyright (C) 2010 Focal Tech Ltd.
++ * Copyright (C) 2013, Ash Charles <ash@gumstix.com>
++ * Copyright (C) 2014, Adam Lee <adam@gumstix.com>
++ *
++ * This software is licensed under the terms of the GNU General Public
++ * License version 2, as published by the Free Software Foundation, and
++ * may be copied, distributed, and modified under those terms.
++ *
++ * This program is distributed in the hope that it will be useful,
++ * but WITHOUT ANY WARRANTY; without even the implied warranty of
++ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++ * GNU General Public License for more details.
++ */
++
++/*
++ * This is a driver for the FocalTech FT5x06 family of touch controllers
++ * use in Newhaven capacitive touchscreens.  Note: this does not support with
++ * EDT "Polytouch" controllers.
++ */
++
++#include <linux/module.h>
++#include <linux/interrupt.h>
++#include <linux/input.h>
++#include <linux/of.h>
++#include <linux/of_gpio.h>
++#include <linux/i2c.h>
++#include <linux/delay.h>
++#include <linux/debugfs.h>
++#include <linux/slab.h>
++#include <linux/gpio.h>
++#include <linux/input/mt.h>
++#include <linux/input/ft5x06_ts.h>
++
++#define FT5X06_MT_INPUT_SLOTS      5
++
++#define FT5X06_EVENT_FLAG_MASK     0xc0
++#define FT5X06_EVENT_PUT_DOWN      0x00
++#define FT5X06_EVENT_PUT_UP        0x40
++#define FT5X06_EVENT_CONTACT       0x80
++#define FT5X06_EVENT_UNDEFINED     0xc0
++
++struct ft5x06_ts_data {
++	struct i2c_client *client;
++	struct input_dev *input;
++	struct delayed_work work;
++
++	int reset_gpio;
++	int irq_gpio;
++	int wake_gpio;
++	unsigned int xmin;
++	unsigned int xmax;
++	unsigned int xfuzz;
++	unsigned int ymin;
++	unsigned int ymax;
++	unsigned int yfuzz;
++	bool multitouch;
++};
++
++static int ft5x06_ts_readwrite(struct i2c_client *client, u16 wr_len,
++			       u8 *wr_buf, u16 rd_len, u8 *rd_buf)
++{
++	struct i2c_msg wrmsg[2];
++	int i = 0;
++	int ret;
++
++	if (wr_len) {
++		wrmsg[i].addr = client->addr;
++		wrmsg[i].flags = 0;
++		wrmsg[i].len = wr_len;
++		wrmsg[i].buf = wr_buf;
++		i++;
++	}
++
++	if (rd_len) {
++		wrmsg[i].addr = client->addr;
++		wrmsg[i].flags = I2C_M_RD;
++		wrmsg[i].len = rd_len;
++		wrmsg[i].buf = rd_buf;
++		i++;
++	}
++
++	ret = i2c_transfer(client->adapter, wrmsg, i);
++
++	if (ret < 0)
++		return ret;
++
++	if (ret != i)
++		return -EIO;
++
++	return 0;
++}
++
++static int ft5x06_register_read(struct ft5x06_ts_data *tsdata, u8 addr)
++{
++	u8 rdbuf;
++	int error;
++
++	error = ft5x06_ts_readwrite(tsdata->client, 1, &addr, 1, &rdbuf);
++
++	if (error) {
++		dev_err(&tsdata->client->dev,
++				"Unable to fetch data, error: %d\n",
++				error);
++
++		return error;
++	}
++
++	return rdbuf;
++}
++
++static unsigned char ft5x06_read_fw_ver(struct ft5x06_ts_data *tsdata)
++{
++	return ft5x06_register_read(tsdata, FT5X0X_REG_FIRMID);
++}
++
++static irqreturn_t ft5x06_ts_isr(int irq, void *dev_id)
++{
++	struct ft5x06_ts_data *tsdata = dev_id;
++
++	schedule_delayed_work(&tsdata->work, 0);
++	return IRQ_HANDLED;
++}
++
++static void ft5x06_ts_work(struct work_struct *work)
++{
++	struct delayed_work *dw = container_of(work, struct delayed_work, work);
++	struct ft5x06_ts_data *tsdata = container_of(dw,
++						     struct ft5x06_ts_data,
++						     work);
++	struct device *dev = &tsdata->client->dev;
++	u8 start_addr = 0x03;
++	u8 rdbuf[4];
++	int x, y, event;
++	int error;
++
++	error = ft5x06_ts_readwrite(tsdata->client, sizeof(start_addr),
++					    &start_addr, sizeof(rdbuf), rdbuf);
++
++	if (error) {
++		dev_err(dev, "Failed to fetch data, error: %d\n", error);
++		return;
++	}
++
++	x = ((rdbuf[0] << 8) | rdbuf[1]) & 0x0fff;
++	y = ((rdbuf[2] << 8) | rdbuf[3]) & 0x0fff;
++
++	event = rdbuf[0] & FT5X06_EVENT_FLAG_MASK;
++
++	input_report_abs(tsdata->input, ABS_X, x);
++	input_report_abs(tsdata->input, ABS_Y, y);
++
++	input_report_key(tsdata->input, BTN_TOUCH,
++			(event == FT5X06_EVENT_CONTACT));
++
++	input_sync(tsdata->input);
++}
++
++static void ft5x06_ts_multitouch_work(struct work_struct *work)
++{
++	struct delayed_work *dw = container_of(work, struct delayed_work, work);
++	struct ft5x06_ts_data *tsdata = container_of(dw,
++						     struct ft5x06_ts_data,
++						     work);
++	struct device *dev = &tsdata->client->dev;
++	u8 start_addr = 0x03;
++	u8 rdbuf[32];
++	int i, x, y, id;
++	bool pressed;
++	int error, event;
++
++	error = ft5x06_ts_readwrite(tsdata->client, sizeof(start_addr),
++					    &start_addr, sizeof(rdbuf), rdbuf);
++
++	if (error) {
++		dev_err(dev, "Failed to fetch data, error: %d\n", error);
++		return;
++	}
++
++	for (i = 0; i < FT5X06_MT_INPUT_SLOTS; i++) {
++		u8 *buf = &rdbuf[(i * 6) + 3];
++
++		event = buf[0] & FT5X06_EVENT_FLAG_MASK;
++
++		if (event == FT5X06_EVENT_UNDEFINED)
++			continue;
++
++		x = ((buf[0] << 8) | buf[1]) & 0x0fff;
++		y = ((buf[2] << 8) | buf[3]) & 0x0fff;
++		id = (buf[2] >> 4) & 0x0f;
++		pressed = (event != FT5X06_EVENT_PUT_UP);
++
++		input_mt_slot(tsdata->input, id);
++		input_mt_report_slot_state(tsdata->input,
++					   MT_TOOL_FINGER,
++					   pressed);
++
++		if (pressed) {
++			input_report_abs(tsdata->input, ABS_MT_POSITION_X, x);
++			input_report_abs(tsdata->input, ABS_MT_POSITION_Y, y);
++		}
++	}
++
++	input_mt_report_pointer_emulation(tsdata->input, true);
++	input_sync(tsdata->input);
++}
++
++static int ft5x06_ts_reset(struct i2c_client *client,
++			   struct ft5x06_ts_data *tsdata)
++{
++	int error;
++
++	if (gpio_is_valid(tsdata->wake_gpio)) {
++		/* reset is active low */
++		error = devm_gpio_request_one(&client->dev, tsdata->wake_gpio,
++					      GPIOF_OUT_INIT_LOW,
++					      "ft5x06 wake");
++
++		if (error) {
++			dev_err(&client->dev,
++			"Failed to request GPIO %d as wake pin, error %d\n",
++			tsdata->wake_gpio, error);
++
++			return error;
++		}
++
++		mdelay(20);
++		gpio_set_value(tsdata->wake_gpio, 1);
++	}
++
++	return 0;
++}
++
++/*
++  Nothing is really required, so check before reading to avoid
++  unnecessary dt warnings about missings props.
++*/
++static int ft5x06_ts_probe_dt(struct device *dev,
++				  struct ft5x06_ts_data *tsdata)
++{
++	struct device_node *np = dev->of_node;
++
++	tsdata->irq_gpio = -EINVAL;
++
++	if (of_find_property(np, "reset-gpios", 0))
++		tsdata->reset_gpio = of_get_named_gpio(np, "reset-gpios", 0);
++	else
++		tsdata->reset_gpio = -EINVAL;
++
++	if (of_find_property(np, "wake-gpios", 0))
++		tsdata->wake_gpio = of_get_named_gpio(np, "wake-gpios", 0);
++	else
++		tsdata->wake_gpio = -EINVAL;
++
++	if (of_find_property(np, "xmin", 0))
++		of_property_read_u32(np, "xmin", &tsdata->xmin);
++	else
++		tsdata->xmin = 0;
++
++	if (of_find_property(np, "xmax", 0))
++		of_property_read_u32(np, "xmax", &tsdata->xmax);
++	else
++		tsdata->xmax = 799;
++
++	if (of_find_property(np, "xfuzz", 0))
++		of_property_read_u32(np, "xfuzz", &tsdata->xfuzz);
++	else
++		tsdata->xfuzz = 0;
++
++	if (of_find_property(np, "ymin", 0))
++		of_property_read_u32(np, "ymin", &tsdata->ymin);
++	else
++		tsdata->ymin = 0;
++
++	if (of_find_property(np, "ymax", 0))
++		of_property_read_u32(np, "ymax", &tsdata->ymax);
++	else
++		tsdata->ymax = 479;
++
++	if (of_find_property(np, "yfuzz", 0))
++		of_property_read_u32(np, "yfuzz", &tsdata->yfuzz);
++	else
++		tsdata->yfuzz = 0;
++
++	tsdata->multitouch = of_property_read_bool(np, "multitouch");
++
++	return 0;
++}
++
++static int ft5x06_ts_probe(struct i2c_client *client,
++			   const struct i2c_device_id *id)
++{
++	const struct ft5x06_platform_data *pdata = NULL;
++	struct ft5x06_ts_data *tsdata;
++	struct input_dev *input;
++	int error;
++
++	tsdata = devm_kzalloc(&client->dev, sizeof(*tsdata), GFP_KERNEL);
++
++	if (!tsdata) {
++		dev_err(&client->dev, "Failed to allocate driver data\n");
++		return -ENOMEM;
++	}
++
++	if (client->dev.of_node) {
++		if (ft5x06_ts_probe_dt(&client->dev, tsdata)) {
++			dev_err(&client->dev, "Device tree probe failed\n");
++			return -1;
++		}
++	}
++	else {
++		pdata = dev_get_platdata(&client->dev);
++
++		if (!pdata) {
++			dev_err(&client->dev,
++				"No device tree or platform data\n");
++			return -1;
++		}
++
++		tsdata->irq_gpio = pdata->irq_gpio;
++		tsdata->reset_gpio = pdata->reset_gpio;
++		tsdata->wake_gpio = pdata->wake_gpio;
++		tsdata->xmin = pdata->xmin;
++		tsdata->xmax = pdata->xmax;
++		tsdata->xfuzz = pdata->xfuzz;
++		tsdata->ymin = pdata->ymin;
++		tsdata->ymax = pdata->ymax;
++		tsdata->yfuzz = pdata->yfuzz;
++		tsdata->multitouch = pdata->multitouch;
++	}
++
++	error = ft5x06_ts_reset(client, tsdata);
++
++	if (error)
++		return error;
++
++	/*
++	 * Init gpio for irq if using platform data, dt handles this
++	 * automaticaly via the <interrupts> property.
++	 */
++	if (pdata) {
++		if (gpio_is_valid(tsdata->irq_gpio)) {
++			error = devm_gpio_request_one(&client->dev, tsdata->irq_gpio,
++						      GPIOF_IN, "ft5x06 irq");
++
++			if (error) {
++				dev_err(&client->dev, "Failed to request GPIO %d, error %d\n",
++					tsdata->irq_gpio, error);
++				return error;
++			}
++		} else {
++			dev_dbg(&client->dev, "irq_gpio: %d\n", tsdata->irq_gpio);
++			dev_err(&client->dev, "irq_gpio is invalid\n");
++		}
++	}
++
++	input = devm_input_allocate_device(&client->dev);
++
++	if (!input) {
++		dev_err(&client->dev, "Failed to allocate input device\n");
++		return -ENOMEM;
++	}
++
++	if (tsdata->multitouch)
++		INIT_DELAYED_WORK(&tsdata->work, ft5x06_ts_multitouch_work);
++	else
++		INIT_DELAYED_WORK(&tsdata->work, ft5x06_ts_work);
++
++	tsdata->client = client;
++	tsdata->input = input;
++
++	dev_dbg(&client->dev, "Firmware version: 0x%02x\n",
++			ft5x06_read_fw_ver(tsdata));
++
++	input->name = FT5X0X_NAME;
++	input->id.bustype = BUS_I2C;
++	input->dev.parent = &client->dev;
++
++	__set_bit(EV_SYN, input->evbit);
++	__set_bit(EV_ABS, input->evbit);
++	__set_bit(EV_KEY, input->evbit);
++	__set_bit(BTN_TOUCH, input->keybit);
++
++	input_set_abs_params(input, ABS_X, tsdata->xmin, tsdata->xmax,
++			tsdata->xfuzz, 0);
++
++	input_set_abs_params(input, ABS_Y, tsdata->ymin, tsdata->ymax,
++			tsdata->yfuzz, 0);
++
++	if (tsdata->multitouch) {
++		input_mt_init_slots(input, FT5X06_MT_INPUT_SLOTS, 0);
++
++		input_set_abs_params(input, ABS_MT_POSITION_X, tsdata->xmin,
++				tsdata->xmax, tsdata->xfuzz, 0);
++
++		input_set_abs_params(input, ABS_MT_POSITION_Y, tsdata->ymin,
++				tsdata->ymax, tsdata->yfuzz, 0);
++	}
++
++	input_set_drvdata(input, tsdata);
++	i2c_set_clientdata(client, tsdata);
++
++	error = devm_request_irq(&client->dev, client->irq, ft5x06_ts_isr,
++				 IRQF_TRIGGER_FALLING, dev_name(&client->dev),
++				 tsdata);
++
++	if (error != 0) {
++		dev_err(&client->dev, "Failed to request touchscreen irq\n");
++		return error;
++	}
++
++	error = input_register_device(input);
++
++	if (error) {
++		dev_err(&client->dev,
++		"Failed to register input device: %s\n",
++		dev_name(&client->dev));
++
++		return error;
++	}
++
++	device_init_wakeup(&client->dev, 1);
++
++	return 0;
++}
++
++static int ft5x06_ts_remove(struct i2c_client *client)
++{
++	struct ft5x06_ts_data *tsdata = i2c_get_clientdata(client);
++
++	input_unregister_device(tsdata->input);
++
++	return 0;
++}
++
++#ifdef CONFIG_PM_SLEEP
++static int ft5x06_ts_suspend(struct device *dev)
++{
++	struct i2c_client *client = to_i2c_client(dev);
++
++	if (device_may_wakeup(dev))
++		enable_irq_wake(client->irq);
++
++	return 0;
++}
++
++static int ft5x06_ts_resume(struct device *dev)
++{
++	struct i2c_client *client = to_i2c_client(dev);
++
++	if (device_may_wakeup(dev))
++		disable_irq_wake(client->irq);
++
++	return 0;
++}
++#endif
++
++static SIMPLE_DEV_PM_OPS(ft5x06_ts_pm_ops, ft5x06_ts_suspend, ft5x06_ts_resume);
++
++static const struct i2c_device_id ft5x06_ts_id[] = {
++	{ FT5X0X_NAME, 0 },
++	{ }
++};
++
++MODULE_DEVICE_TABLE(i2c, ft5x06_ts_id);
++
++#ifdef CONFIG_OF
++static struct of_device_id ft5x06_dt_match[] = {
++	{ .compatible = "focaltech,ft5x06" },
++	{},
++};
++#endif
++
++static struct i2c_driver ft5x06_ts_driver = {
++	.driver	= {
++		.name	= FT5X0X_NAME,
++		.owner	= THIS_MODULE,
++		.of_match_table = ft5x06_dt_match,
++	},
++	.probe		= ft5x06_ts_probe,
++	.remove		= ft5x06_ts_remove,
++	.id_table	= ft5x06_ts_id,
++};
++
++module_i2c_driver(ft5x06_ts_driver);
++
++MODULE_AUTHOR("Ash Charles <ash@gumstix.com>");
++MODULE_AUTHOR("Adam Lee <adam@gumstix.com>");
++MODULE_DESCRIPTION("FocalTech FT5x06 Touchscreen driver");
++MODULE_LICENSE("GPL");
+diff --git a/include/linux/input/ft5x06_ts.h b/include/linux/input/ft5x06_ts.h
+new file mode 100644
+index 0000000..51a9cb0
+--- /dev/null
++++ b/include/linux/input/ft5x06_ts.h
+@@ -0,0 +1,33 @@
++/*
++ * Copyright (c) 2013 Ash Charles <ash@gumstix.com>
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms of the GNU General Public License version 2 as published by
++ * the Free Software Foundation.
++ */
++#ifndef FT5X06_TS_H
++#define FT5X06_TS_H
++
++#define SCREEN_MAX_X    470
++#define SCREEN_MAX_Y    275
++#define PRESS_MAX       255
++
++#define FT5X0X_NAME	"ft5x06_ts"
++#define FT5X0X_REG_POWER_MODE	0xa5
++#define FT5X0X_REG_FIRMID	0xa6
++
++
++struct ft5x06_platform_data {
++	int irq_gpio;
++	int reset_gpio;
++	int wake_gpio;
++	unsigned int xmin;
++	unsigned int xmax;
++	unsigned int xfuzz;
++	unsigned int ymin;
++	unsigned int ymax;
++	unsigned int yfuzz;
++	unsigned int multitouch;
++};
++
++#endif /* FT5X06_TS_H */
+-- 
+2.7.4
+

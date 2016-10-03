@@ -1,0 +1,22 @@
+/*
+ * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+&am33xx_pinmux {
+	dcan1_pins: dcan1_pins {
+		pinctrl-single,pins = <
+			AM33XX_IOPAD(0x984, PIN_INPUT_PULLUP | MUX_MODE2)   /* P9.24, ddcan1_rx */
+			AM33XX_IOPAD(0x980, PIN_OUTPUT_PULLUP | MUX_MODE2)  /* P9.26, ddcan1_tx */
+		>;
+	};
+};
+
+&dcan1 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&dcan1_pins>;
+};
