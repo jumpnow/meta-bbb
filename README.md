@@ -3,12 +3,12 @@ This layer depends on:
     URI: git://git.yoctoproject.org/poky.git
     branch: krogoth
     revision: HEAD
-    commit: 2ea93e2
+    commit: e93596f
 
     URI: git://git.openembedded.org/meta-openembedded
     branch: krogoth
     revision: HEAD
-    commit: 895b25b
+    commit: 851a064
 
     URI: https://github.com/meta-qt5/meta-qt5.git
     branch: krogoth
@@ -23,7 +23,7 @@ Instructions for using this layer can be found on the [jumpnowtek site][jumpnowt
 Major Software Versions
 
 * Yocto 2.1.1 [krogoth] branch
-* Linux kernel 4.4.22 (4.7.5 available)
+* Linux kernel 4.4.24 (4.7.7 and 4.8.1 available)
 * U-Boot 2016.07
 
 The qt5-image includes [Qt 5.6][qt] built for framebuffer use only.
