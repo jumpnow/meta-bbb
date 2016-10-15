@@ -12,6 +12,7 @@ CORE_OS = " \
     psplash \
     term-prompt \
     tzdata \
+	acpid \
  "
 
 KERNEL_EXTRA_INSTALL = " \
