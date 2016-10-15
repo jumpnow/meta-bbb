@@ -1,0 +1,104 @@
+/*
+ * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+/*
+  Support for TowerTech CAN-CAPE
+*/
+
+/dts-v1/;
+
+#include "am33xx.dtsi"
+#include "am335x-bone-common.dtsi"
+#include "bbb-dcan1.dtsi"
+
+&am33xx_pinmux {
+	spi1_pins: pinmux_spi1_pins {
+		pinctrl-single,pins = <
+			0x19c (PIN_OUTPUT_PULLUP | MUX_MODE3)	/* P9.28, spi1_cs0 */
+			0x164 (PIN_OUTPUT_PULLUP | MUX_MODE2)	/* P9.42, spi1_cs1 */
+			0x194 (PIN_INPUT_PULLUP | MUX_MODE3)	/* P9.29, spi1_d0, MISO */
+			0x198 (PIN_OUTPUT_PULLUP | MUX_MODE3)	/* P9.30, spi1_d1, MOSI */
+			0x190 (PIN_INPUT_PULLUP | MUX_MODE3)	/* P9.31, spi1_sclk */
+		>;
+	};
+
+	mcp2515_0_irq_pins: pinmux_mcp2515_0_irq_pins {
+		pinctrl-single,pins = <
+			0x1a4 (PIN_INPUT_PULLUP | MUX_MODE7)	/* P9.27, gpio3[19] */
+		>;
+	};
+
+	mcp2515_1_irq_pins: pinmux_mcp2515_1_irq_pins {
+		pinctrl-single,pins = <
+			0x044 (PIN_INPUT_PULLUP | MUX_MODE7)	/* P9.23, gpio1[17] */
+		>;
+	};
+};
+
+/ {
+	model = "TI AM335x BeagleBone Black";
+	compatible = "ti,am335x-bone-black", "ti,am33xx";
+};
+
+&prcm_clocks {
+	clk_mcp251x: clk_mcp251x {
+		#clock-cells = <0>;
+		compatible = "fixed-clock";
+		clock-frequency = <16000000>;
+	};
+};
+
+&spi1 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&spi1_pins>;
+
+	mcp2515_1: mcp2515@1 {
+		compatible = "microchip,mcp2515";
+		reg = <1>;	/* cs1 */
+		spi-max-frequency = <1000000>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&mcp2515_1_irq_pins>;
+		interrupt-parent = <&gpio1>;
+		interrupts = <17 0>;
+		clocks = <&clk_mcp251x>;
+	};
+
+	mcp2515_0: mcp2515@0 {
+		compatible = "microchip,mcp2515";
+		reg = <0>;	/* cs0 */
+		spi-max-frequency = <1000000>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&mcp2515_0_irq_pins>;
+		interrupt-parent = <&gpio3>;
+		interrupts = <19 0>;
+		clocks = <&clk_mcp251x>;
+	};
+};
+
+&ldo3_reg {
+	regulator-min-microvolt = <1800000>;
+	regulator-max-microvolt = <1800000>;
+	regulator-always-on;
+};
+
+&mmc1 {
+	vmmc-supply = <&vmmcsd_fixed>;
+};
+
+&mmc2 {
+	vmmc-supply = <&vmmcsd_fixed>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&emmc_pins>;
+	bus-width = <8>;
+	status = "okay";
+};
+
+&rtc {
+	system-power-controller;
+};

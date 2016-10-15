@@ -1,0 +1,153 @@
+/*
+ * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+/dts-v1/;
+
+#include "am33xx.dtsi"
+#include "am335x-bone-common.dtsi"
+#include "bbb-i2c1.dtsi"
+#include "bbb-i2c2.dtsi"
+#include "bbb-uart4.dtsi"
+
+/* The 4dcape DOWN button gpio3[16] conflicts with SPI1.d0
+   You can choose either the keypad.dtsi or the spi1-spidev dtsi,
+   but not both unless you comment out the 'DOWN' key defs in
+   bbb-4dcape70t-keypad.dtsi.
+*/
+#include "bbb-4dcape70t-keypad.dtsi"
+
+/ {
+	model = "TI AM335x BeagleBone Black";
+	compatible = "ti,am335x-bone-black", "ti,am33xx";
+};
+
+&ldo3_reg {
+	regulator-min-microvolt = <1800000>;
+	regulator-max-microvolt = <1800000>;
+	regulator-always-on;
+};
+
+&mmc1 {
+	vmmc-supply = <&vmmcsd_fixed>;
+};
+
+&mmc2 {
+	vmmc-supply = <&vmmcsd_fixed>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&emmc_pins>;
+	bus-width = <8>;
+	status = "okay";
+};
+
+&am33xx_pinmux {
+	lcd_pins: lcd_pins {
+		pinctrl-single,pins = <
+			0xa0 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data0 */
+			0xa4 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data1 */
+			0xa8 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data2 */
+			0xac (PIN_OUTPUT | MUX_MODE0)            /* lcd_data3 */
+			0xb0 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data4 */
+			0xb4 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data5 */
+			0xb8 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data6 */
+			0xbc (PIN_OUTPUT | MUX_MODE0)            /* lcd_data7 */
+			0xc0 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data8 */
+			0xc4 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data9 */
+			0xc8 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data10 */
+			0xcc (PIN_OUTPUT | MUX_MODE0)            /* lcd_data11 */
+			0xd0 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data12 */
+			0xd4 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data13 */
+			0xd8 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data14 */
+			0xdc (PIN_OUTPUT | MUX_MODE0)            /* lcd_data15 */
+			0xe0 (PIN_OUTPUT_PULLDOWN | MUX_MODE0)   /* lcd_vsync */
+			0xe4 (PIN_OUTPUT_PULLDOWN | MUX_MODE0)   /* lcd_hsync */
+			0xe8 (PIN_OUTPUT_PULLDOWN | MUX_MODE0)   /* lcd_pclk */
+			0xec (PIN_OUTPUT_PULLDOWN | MUX_MODE0)   /* lcd_ac_bias_en */
+			/* LCD enable */
+			0x150 (PIN_OUTPUT_PULLUP | MUX_MODE7)    /* P9.22, gpio0_2 */
+		>;
+	};
+
+	backlight_pin: backlight_pin {
+		pinctrl-single,pins = < 0x48 (PIN_OUTPUT_PULLUP | MUX_MODE7) >; /* P9.14, gpio1[18] */
+	};
+};
+
+&lcdc {
+	status = "okay";
+};
+
+/ {
+	lcd0: display {
+		status = "okay";
+		compatible = "ti,tilcdc,panel";
+		label = "lcd";
+		pinctrl-names = "default";
+		pinctrl-0 = <&lcd_pins>;
+		enable-gpios = <&gpio0 2 GPIO_ACTIVE_HIGH>;
+
+		panel-info {
+			ac-bias           = <255>;
+			ac-bias-intrpt    = <0>;
+			dma-burst-sz      = <16>;
+			bpp               = <16>;
+			fdd               = <0x80>;
+			sync-edge         = <0>;
+			sync-ctrl         = <1>;
+			raster-order      = <0>;
+			fifo-th           = <0>;
+		};
+
+		display-timings {
+			native-mode = <&timing0>;
+			timing0: 800x480 {
+				clock-frequency = <30000000>;
+				hactive = <800>;
+				vactive = <480>;
+				hfront-porch = <40>;
+				hback-porch = <40>;
+				hsync-len = <48>;
+				vback-porch = <30>;
+				vfront-porch = <13>;
+				vsync-len = <3>;
+				hsync-active = <0>;
+				vsync-active = <0>;
+				de-active = <1>;
+				pixelclk-active = <0>;
+			};
+		};
+	};
+
+	backlight {
+		status = "okay";
+		compatible = "gpio-backlight";
+		pinctrl-names = "default";
+		pinctrl-0 = <&backlight_pin>;
+		gpios = <&gpio1 18 GPIO_ACTIVE_HIGH>; /* P9.14 */
+		default-on;
+	};
+};
+
+&tscadc {
+	status = "okay";
+
+	tsc {
+		ti,wires = <4>;
+		ti,x-plate-resistance = <200>;
+		ti,coordinate-readouts = <5>;
+		ti,wire-config = <0x00 0x11 0x22 0x33>;
+		ti,charge-delay = <0x1000>;
+	};
+
+	adc {
+		ti,adc-channels = <4 5 6 7>;
+	};
+};
+
+&rtc {
+	system-power-controller;
+};

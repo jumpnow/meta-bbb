@@ -1,19 +1,19 @@
 This layer depends on:
 
     URI: git://git.yoctoproject.org/poky.git
-    branch: jethro 
+    branch: krogoth
     revision: HEAD
-    commit: 7fdad70 
+    commit: e93596f
 
     URI: git://git.openembedded.org/meta-openembedded
-    branch: jethro 
+    branch: krogoth
     revision: HEAD
-    commit: 4fdb203 
+    commit: 851a064
 
     URI: https://github.com/meta-qt5/meta-qt5.git
-    branch: fido
+    branch: krogoth
     revision: HEAD
-    commit: 0454fb0 
+    commit: 1ec7767
 
     meta-bbb layer maintainer: Scott Ellis <scott@jumpnowtek.com>
 
@@ -22,15 +22,15 @@ Instructions for using this layer can be found on the [jumpnowtek site][jumpnowt
 
 Major Software Versions
 
-* Yocto 2.0.0 [jethro] branch
-* Linux kernel 4.3.2 (linux-stable)
-* U-Boot 2015.07
+* Yocto 2.1.1 [krogoth] branch
+* Linux kernel 4.4.24 (4.7.7 and 4.8.1 available)
+* U-Boot 2016.07
 
-The qt5-image includes [Qt 5.5.1][qt] built for framebuffer use only.
+The qt5-image includes [Qt 5.6][qt] built for framebuffer use only.
 
 Launch Qt5 apps with the following args 
 
-    -platform linuxfb [-plugin evdevkeyboard] [-plugin evdevmouse] [-plugin evdevtouch]
+    -platform linuxfb
 
 There is a demo qt5 app installed - [tspress][tspress].
 

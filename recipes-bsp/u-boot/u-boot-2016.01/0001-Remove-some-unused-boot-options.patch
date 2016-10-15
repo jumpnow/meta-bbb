@@ -1,0 +1,43 @@
+From 045b8e38f85cec22365b3a51c7c6ea5cafe43cd8 Mon Sep 17 00:00:00 2001
+From: Scott Ellis <scott@jumpnowtek.com>
+Date: Sun, 24 Jan 2016 10:42:44 -0500
+Subject: [PATCH] Remove some unused boot options
+
+---
+ configs/am335x_boneblack_defconfig | 2 +-
+ include/configs/am335x_evm.h       | 4 ----
+ 2 files changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/configs/am335x_boneblack_defconfig b/configs/am335x_boneblack_defconfig
+index 8803da5..8a2bae6 100644
+--- a/configs/am335x_boneblack_defconfig
++++ b/configs/am335x_boneblack_defconfig
+@@ -3,7 +3,7 @@ CONFIG_TARGET_AM335X_EVM=y
+ CONFIG_SPL_STACK_R_ADDR=0x82000000
+ CONFIG_SPL=y
+ CONFIG_SPL_STACK_R=y
+-CONFIG_SYS_EXTRA_OPTIONS="EMMC_BOOT"
++CONFIG_SYS_EXTRA_OPTIONS="ENV_IS_NOWHERE"
+ CONFIG_AUTOBOOT_KEYED=y
+ CONFIG_AUTOBOOT_PROMPT="Press SPACE to abort autoboot in %d seconds\n"
+ CONFIG_AUTOBOOT_DELAY_STR="d"
+diff --git a/include/configs/am335x_evm.h b/include/configs/am335x_evm.h
+index 6ebe0b3..304d810 100644
+--- a/include/configs/am335x_evm.h
++++ b/include/configs/am335x_evm.h
+@@ -84,12 +84,8 @@
+ 	#devtypel #instance " "
+ 
+ #define BOOT_TARGET_DEVICES(func) \
+-	func(MMC, mmc, 0) \
+ 	func(LEGACY_MMC, legacy_mmc, 0) \
+-	func(MMC, mmc, 1) \
+ 	func(LEGACY_MMC, legacy_mmc, 1) \
+-	func(NAND, nand, 0) \
+-	func(PXE, pxe, na) \
+ 	func(DHCP, dhcp, na)
+ 
+ #define CONFIG_BOOTCOMMAND \
+-- 
+2.5.0
+

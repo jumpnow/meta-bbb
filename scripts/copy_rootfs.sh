@@ -20,7 +20,7 @@ fi
 
 if [ -z "$OETMP" ]; then
 	echo -e "\nWorking from local directory"
-    SRCDIR=.
+	SRCDIR=.
 else
 	echo -e "\nOETMP: $OETMP"
 

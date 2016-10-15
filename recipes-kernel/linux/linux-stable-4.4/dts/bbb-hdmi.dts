@@ -1,0 +1,103 @@
+/*
+ * Copyright (C) 2015 Jumpnow Technologies, LLC - http://jumpnowtek.com
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ */
+
+/dts-v1/;
+
+#include "am33xx.dtsi"
+#include "am335x-bone-common.dtsi"
+#include "bbb-spi1-spidev.dtsi"
+#include "bbb-i2c1.dtsi"
+#include "bbb-i2c2.dtsi"
+#include "bbb-uart4.dtsi"
+#include "bbb-adc.dtsi"
+
+/ {
+	model = "TI AM335x BeagleBone Black";
+	compatible = "ti,am335x-bone-black", "ti,am33xx";
+};
+
+&ldo3_reg {
+	regulator-min-microvolt = <1800000>;
+	regulator-max-microvolt = <1800000>;
+	regulator-always-on;
+};
+
+&mmc1 {
+	vmmc-supply = <&vmmcsd_fixed>;
+};
+
+&mmc2 {
+	vmmc-supply = <&vmmcsd_fixed>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&emmc_pins>;
+	bus-width = <8>;
+	status = "okay";
+};
+
+&am33xx_pinmux {
+	hdmi_pins: hdmi_pins {
+		pinctrl-single,pins = <
+			0x1b0 (PIN_OUTPUT_PULLDOWN | MUX_MODE3)  /* xdma_event_intr0 */
+			0xa0 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data0 */
+			0xa4 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data1 */
+			0xa8 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data2 */
+			0xac (PIN_OUTPUT | MUX_MODE0)            /* lcd_data3 */
+			0xb0 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data4 */
+			0xb4 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data5 */
+			0xb8 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data6 */
+			0xbc (PIN_OUTPUT | MUX_MODE0)            /* lcd_data7 */
+			0xc0 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data8 */
+			0xc4 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data9 */
+			0xc8 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data10 */
+			0xcc (PIN_OUTPUT | MUX_MODE0)            /* lcd_data11 */
+			0xd0 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data12 */
+			0xd4 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data13 */
+			0xd8 (PIN_OUTPUT | MUX_MODE0)            /* lcd_data14 */
+			0xdc (PIN_OUTPUT | MUX_MODE0)            /* lcd_data15 */
+			0xe0 (PIN_OUTPUT_PULLDOWN | MUX_MODE0)   /* lcd_vsync */
+			0xe4 (PIN_OUTPUT_PULLDOWN | MUX_MODE0)   /* lcd_hsync */
+			0xe8 (PIN_OUTPUT_PULLDOWN | MUX_MODE0)   /* lcd_pclk */
+			0xec (PIN_OUTPUT_PULLDOWN | MUX_MODE0)   /* lcd_ac_bias_en */
+		>;
+	};
+
+	hdmi_off_pins: hdmi_off_pins {
+		pinctrl-single,pins = <
+			0x1b0 (PIN_OUTPUT_PULLDOWN | MUX_MODE3)  /* xdma_event_intr0 */
+		>;
+	};
+};
+
+&lcdc {
+	status = "okay";
+	port {
+		lcdc_0: endpoint@0 {
+			remote-endpoint = <&hdmi_0>;
+		};
+	};
+};
+
+&i2c0 {
+	tda19988 {
+		compatible = "nxp,tda998x";
+		reg = <0x70>;
+		pinctrl-names = "default", "off";
+		pinctrl-0 = <&hdmi_pins>;
+		pinctrl-1 = <&hdmi_off_pins>;
+
+		port {
+			hdmi_0: endpoint@0 {
+				remote-endpoint = <&lcdc_0>;
+			};
+		};
+	};
+};
+
+&rtc {
+	system-power-controller;
+};

@@ -1,0 +1,15 @@
+#!/bin/sh
+
+[ -r /etc/default/boot-flags ] && . /etc/default/boot-flags
+
+case "${CHECK_BOOT_FLAGS_PARTITION}" in
+	[Nn]*)
+		exit 0
+		;;
+esac
+
+if [ ! -x /usr/bin/manage_boot_flag_partition.sh ]; then
+    exit 0
+fi
+
+/usr/bin/manage_boot_flag_partition.sh

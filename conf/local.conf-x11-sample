@@ -1,0 +1,39 @@
+# Local configuration for meta-bbb X11 images
+# Yocto Project 2.1 Poky distribution [krogoth] branch
+# This is a sysvinit system
+
+LICENSE_FLAGS_WHITELIST = "commercial"
+
+PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
+PREFERRED_PROVIDER_jpeg-native = "libjpeg-turbo-native"
+
+PREFERRED_PROVIDER_udev = "eudev"
+VIRTUAL_RUNTIME_init_manager = "sysvinit"
+
+# To change kernel version
+PREFERRED_VERSION_linux-stable = "4.4"
+
+MACHINE = "beaglebone"
+
+#DL_DIR = "${HOME}/oe-sources"
+
+#SSTATE_DIR = "/oe7/bbbx/sstate-cache"
+
+#TMPDIR = "/oe7/bbbx/tmp-krogoth"
+
+DISTRO = "poky"
+
+PACKAGE_CLASSES = "package_ipk"
+
+# i686 or x86_64
+SDKMACHINE = "x86_64"
+
+EXTRA_IMAGE_FEATURES = "debug-tweaks"
+
+USER_CLASSES = "image-mklibs image-prelink"
+
+PATCHRESOLVE = "noop"
+
+RM_OLD_IMAGE = "1"
+
+CONF_VERSION = "1"
