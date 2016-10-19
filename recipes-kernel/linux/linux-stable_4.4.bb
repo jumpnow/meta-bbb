@@ -25,7 +25,7 @@ S = "${WORKDIR}/git"
 PR = "r25"
 
 # v4.4.25
-SRCREV = "8866a28836924a0bfa84f1cbf574eb5138b7dec4"
+SRCREV = "6c789d9eddab3bff59e89aa6f2723b1ff652fed9"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-4.4.y \
     file://defconfig \
@@ -33,4 +33,5 @@ SRC_URI = " \
     file://0002-dts-Revoke-Beaglebone-i2c2-definitions.patch \
     file://0003-Add-ft5x06_ts-touchscreen-driver.patch  \
     file://0004-dts-Add-custom-bbb-dts-files.patch \
+    file://0005-tps65217-Enable-KEY_POWER-press-on-AC-loss-PWR_BUT.patch \
  "
