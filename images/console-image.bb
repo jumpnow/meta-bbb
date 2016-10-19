@@ -65,6 +65,7 @@ DEV_EXTRAS = " \
  "
 
 EXTRA_TOOLS_INSTALL = " \
+    acpid \
     bc \
     bzip2 \
     cursor-blink \
