@@ -1,0 +1,2 @@
+event=button[ /]power
+action=/sbin/shutdown -h -P now "Power button pressed"
