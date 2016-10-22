@@ -23,7 +23,7 @@ Instructions for using this layer can be found on the [jumpnowtek site][jumpnowt
 Major Software Versions
 
 * Yocto 2.1.1 [krogoth] branch
-* Linux kernel 4.4.26 (4.7.9 and 4.8.3 available)
+* Linux kernel 4.4.27 (4.7.10 and 4.8.4 available)
 * U-Boot 2016.07
 
 The qt5-image includes [Qt 5.6][qt] built for framebuffer use only.
