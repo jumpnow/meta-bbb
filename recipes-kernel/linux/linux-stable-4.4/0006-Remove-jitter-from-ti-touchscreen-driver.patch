@@ -1,0 +1,58 @@
+From 130d0ac9fae7309b6c65e01de4b4d5a33380e6c5 Mon Sep 17 00:00:00 2001
+From: Scott Ellis <scott@jumpnowtek.com>
+Date: Wed, 26 Oct 2016 17:21:06 -0400
+Subject: [PATCH 6/6] Remove jitter from ti touchscreen driver
+
+---
+ drivers/input/touchscreen/ti_am335x_tsc.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/input/touchscreen/ti_am335x_tsc.c b/drivers/input/touchscreen/ti_am335x_tsc.c
+index 191a1b8..174e77f 100644
+--- a/drivers/input/touchscreen/ti_am335x_tsc.c
++++ b/drivers/input/touchscreen/ti_am335x_tsc.c
+@@ -54,6 +54,7 @@ struct titsc {
+ 	u32			inp_xp, inp_xn, inp_yp, inp_yn;
+ 	u32			step_mask;
+ 	u32			charge_delay;
++	u32			prevZ;
+ };
+ 
+ static unsigned int titsc_readl(struct titsc *ts, unsigned int reg)
+@@ -269,6 +270,7 @@ static irqreturn_t titsc_irq(int irq, void *dev)
+ 	unsigned int fsm, status, irqclr = 0;
+ 	unsigned int x = 0, y = 0;
+ 	unsigned int z1, z2, z;
++	unsigned int deltaZ;
+ 
+ 	status = titsc_readl(ts_dev, REG_RAWIRQSTATUS);
+ 	if (status & IRQENB_HW_PEN) {
+@@ -314,7 +316,15 @@ static irqreturn_t titsc_irq(int irq, void *dev)
+ 			z /= z2;
+ 			z = (z + 2047) >> 12;
+ 
+-			if (z <= MAX_12BIT) {
++
++			if (z > ts_dev->prevZ)
++				deltaZ = z - ts_dev->prevZ;
++			else
++				deltaZ = ts_dev->prevZ - z;
++
++			ts_dev->prevZ = z;
++
++			if (z <= MAX_12BIT && deltaZ < 20) {
+ 				input_report_abs(input_dev, ABS_X, x);
+ 				input_report_abs(input_dev, ABS_Y, y);
+ 				input_report_abs(input_dev, ABS_PRESSURE, z);
+@@ -455,6 +465,8 @@ static int titsc_probe(struct platform_device *pdev)
+ 	input_set_abs_params(input_dev, ABS_Y, 0, MAX_12BIT, 0, 0);
+ 	input_set_abs_params(input_dev, ABS_PRESSURE, 0, MAX_12BIT, 0, 0);
+ 
++	ts_dev->prevZ = 0;
++
+ 	/* register to the input system */
+ 	err = input_register_device(input_dev);
+ 	if (err)
+-- 
+2.7.4
+

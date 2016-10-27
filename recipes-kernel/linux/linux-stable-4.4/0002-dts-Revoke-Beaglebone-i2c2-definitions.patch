@@ -1,7 +1,7 @@
-From 087b11a68e54ecef9e36adaeb90c440fe9c62929 Mon Sep 17 00:00:00 2001
+From ed09d9d669aef3fc0acb24bfc5a75561b5aa8e8e Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
 Date: Fri, 9 Oct 2015 07:02:25 -0600
-Subject: [PATCH 2/4] dts: Revoke Beaglebone i2c2 definitions
+Subject: [PATCH 2/6] dts: Revoke Beaglebone i2c2 definitions
 
 This reverts most of 5d1a2961adf906f965b00eb8059fd2e0585e0e09
 
@@ -85,5 +85,5 @@ index 5d370d5..8461ba6 100644
  
  &tps {
 -- 
-2.5.0
+2.7.4
 

@@ -1,7 +1,7 @@
-From ef38c50928577ad0430c41e6362ba930b1c06a37 Mon Sep 17 00:00:00 2001
+From 8e827f6c31b38a28bc84500df0a3463804a8a192 Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
 Date: Wed, 22 Jun 2016 05:20:06 -0400
-Subject: [PATCH 4/4] dts: Add custom bbb dts files
+Subject: [PATCH 4/6] dts: Add custom bbb dts files
 
 ---
  arch/arm/boot/dts/bbb-1wire.dtsi            |  25 +++++
@@ -855,7 +855,7 @@ index 0000000..87fff74
 +};
 diff --git a/arch/arm/boot/dts/bbb-tt-can-cape.dts b/arch/arm/boot/dts/bbb-tt-can-cape.dts
 new file mode 100644
-index 0000000..c5e6341
+index 0000000..f090071
 --- /dev/null
 +++ b/arch/arm/boot/dts/bbb-tt-can-cape.dts
 @@ -0,0 +1,104 @@

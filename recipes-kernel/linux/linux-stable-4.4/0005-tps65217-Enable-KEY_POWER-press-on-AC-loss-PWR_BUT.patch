@@ -1,7 +1,7 @@
-From 17ea3d01677549590feb8d6d7ba9a60e2aa02c8d Mon Sep 17 00:00:00 2001
+From 9e6c89126407d211ea029cdd7497254be37ada10 Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
 Date: Sun, 16 Oct 2016 11:27:54 -0400
-Subject: [PATCH] tps65217: Enable KEY_POWER press on AC loss / PWR_BUT
+Subject: [PATCH 5/6] tps65217: Enable KEY_POWER press on AC loss / PWR_BUT
 
 From github.com/beagleboard/linux
 

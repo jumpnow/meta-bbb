@@ -22,7 +22,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-4.4:"
 
 S = "${WORKDIR}/git"
 
-PR = "r27"
+PR = "r28"
 
 # v4.4.27
 SRCREV = "3afd8362fabd167bb04f79501f21dd67aa9cb99f"
@@ -34,4 +34,5 @@ SRC_URI = " \
     file://0003-Add-ft5x06_ts-touchscreen-driver.patch  \
     file://0004-dts-Add-custom-bbb-dts-files.patch \
     file://0005-tps65217-Enable-KEY_POWER-press-on-AC-loss-PWR_BUT.patch \
+    file://0006-Remove-jitter-from-ti-touchscreen-driver.patch \
  "
