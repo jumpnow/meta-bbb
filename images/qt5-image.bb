@@ -14,12 +14,20 @@ QT_TOOLS = " \
     qt5-env \
  "
 
+TSLIB = " \
+    tslib-conf \
+    tslib-calibrate \
+    tslib-dev \
+    tslib \
+ "
+
 IMAGE_INSTALL += " \
     ${QT_TOOLS} \
     qcolorcheck \
     qfontchooser \
     qkeytest \
     qshowfonts \
+    ${TSLIB} \
     tspress \
  "
 
