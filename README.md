@@ -22,7 +22,7 @@ Instructions for using this layer can be found on the [jumpnowtek site][jumpnowt
 
 Major Software Versions
 
-* Yocto 2.1.1 [krogoth] branch
+* Yocto 2.1.2 [krogoth] branch
 * Linux kernel 4.4.30 (4.8.6 available)
 * U-Boot 2016.07
 
