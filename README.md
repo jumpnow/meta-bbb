@@ -46,8 +46,9 @@ There is a dtb without HDMI/display support, freeing up some GPIO pins and UART5
 
 And there are dtbs for a couple of touchscreen capes
 
-* bbb-4dcape70.dtb - for the 4D Systems LCD, 7-inch, 800x480 touchscreen 
-* bbb-nh5cape.dtb - for the NewHaven Capacitive, 5-inch, 800x480 touchscreen 
+* bbb-4dcape43t.dtb - 4D Systems 4.3 inch touchscreen, 480x272 
+* bbb-4dcape70t.dtb - 4D Systems 7 inch touchscreen, 800x480 
+* bbb-nh5cape.dtb - NewHaven Capacitive, 5-inch, 800x480 touchscreen 
 
 All the dtbs include the following
 
