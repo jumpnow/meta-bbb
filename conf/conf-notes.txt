@@ -1,0 +1,8 @@
+Common targets are:
+    console-image
+    can-console-image
+    installer-image
+    qt5-image
+    qt5-x11-image
+    x11-image
+
