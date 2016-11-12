@@ -1,19 +1,13 @@
-# You can either hardcode your fdtfile or use some sort of test
-# like I did here with findfdtfile.
-# If you do not provide an uEnv.txt, then am335x-boneblack.dtb
-# will be the default. (Hard coded in u-boot).
-# U-Boot always sees the emmc as the second mmc device (mmc 1),
-# hence bootpart=1:2
-# When booting from the emmc, Linux will see it as /dev/mmcblk0,
-# hence mmcroot=/dev/mmcblk0p2
+# 4.4 kernel use mmcroot=/dev/mmcblk0p2 ro
+# 4.8 kernel use mmcroot=/dev/mmcblk1p2 ro
 bootpart=1:2
 bootdir=/boot
 bootfile=zImage
 console=ttyO0,115200n8
 fdtaddr=0x88000000
-fdtfile=bbb-hdmi.dtb
+fdtfile=bbb-4dcape43t.dtb
 loadaddr=0x82000000
-mmcroot=/dev/mmcblk0p2 ro
+mmcroot=/dev/mmcblk1p2 ro
 mmcrootfstype=ext4 rootwait
 optargs=consoleblank=0
 nohdmi=bbb-nohdmi.dtb
