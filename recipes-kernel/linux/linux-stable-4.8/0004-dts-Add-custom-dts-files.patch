@@ -1,7 +1,7 @@
-From d8655d430f0aec30974b8843121e0320a2c91441 Mon Sep 17 00:00:00 2001
+From 8c29cf35f8d02ea56df1ef3849591481f0cb8d04 Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
 Date: Sun, 14 Aug 2016 08:19:48 -0400
-Subject: [PATCH 4/4] dts: Add custom dts files
+Subject: [PATCH 4/8] dts: Add custom dts files
 
 ---
  arch/arm/boot/dts/bbb-1wire.dtsi            |  25 +++++
