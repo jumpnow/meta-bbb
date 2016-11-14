@@ -39,10 +39,12 @@ DEV_SDK_INSTALL = " \
     cpp-symlinks \
     diffutils \
     file \
-    gcc \
-    gcc-symlinks \
     g++ \
     g++-symlinks \
+    gdb \
+    gdbserver \
+    gcc \
+    gcc-symlinks \
     gettext \
     git \
     ldd \
