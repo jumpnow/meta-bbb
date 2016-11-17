@@ -6,11 +6,9 @@ SRC_URI = "file://disable-blanking.sh"
 
 S = "${WORKDIR}"
 
-FILES_${PN} =   "${bindir}/* ${sysconfdir}"
-
-do_install_append () {
+do_install () {
         install -d ${D}/${sysconfdir}/X11/Xsession.d
         install -m 755 disable-blanking.sh ${D}/${sysconfdir}/X11/Xsession.d/88disable-blanking.sh
 }
 
-FILES_${PN} =   "${sysconfdir}"
+FILES_${PN} = "${sysconfdir}"
