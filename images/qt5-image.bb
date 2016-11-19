@@ -7,12 +7,20 @@ require console-image.bb
 QT_TOOLS = " \
     qtbase \
     qtbase-dev \
-    qtbase-fonts \
     qtbase-mkspecs \
     qtbase-plugins \
     qtbase-tools \
+    qtserialport-dev \
+    qtserialport-mkspecs \
     qt5-env \
  "
+
+FONTS = " \
+    fontconfig \
+    fontconfig-dev \
+    fontconfig-utils \
+    ttf-bitstream-vera \
+"
 
 TSLIB = " \
     tslib-conf \
@@ -22,6 +30,7 @@ TSLIB = " \
  "
 
 IMAGE_INSTALL += " \
+    ${FONTS} \
     ${QT_TOOLS} \
     qcolorcheck \
     qfontchooser \

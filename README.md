@@ -1,19 +1,19 @@
 This layer depends on:
 
     URI: git://git.yoctoproject.org/poky.git
-    branch: krogoth
+    branch: morty
     revision: HEAD
-    commit: 3bf928a
+    commit: 7345447
 
     URI: git://git.openembedded.org/meta-openembedded
-    branch: krogoth
+    branch: morty
     revision: HEAD
-    commit: 851a064
+    commit: 659d9d3
 
     URI: https://github.com/meta-qt5/meta-qt5.git
-    branch: krogoth
+    branch: morty
     revision: HEAD
-    commit: 2b1871f
+    commit: 9aa870e
 
     meta-bbb layer maintainer: Scott Ellis <scott@jumpnowtek.com>
 
@@ -22,11 +22,11 @@ Instructions for using this layer can be found on the [jumpnowtek site][jumpnowt
 
 Major Software Versions
 
-* Yocto 2.1.2 [krogoth] branch
+* Yocto 2.2.0 [morty] branch
 * Linux kernel 4.4.32 (4.8.8 available)
 * U-Boot 2016.07
 
-The qt5-image includes [Qt 5.6.2][qt] built for framebuffer use only.
+The qt5-image includes [Qt 5.7.0][qt] built for framebuffer use only.
 
 There is a demo qt5 app installed - [tspress][tspress].
 

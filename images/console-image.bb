@@ -77,7 +77,6 @@ EXTRA_TOOLS_INSTALL = " \
     ethtool \
     findutils \
     i2c-tools \
-    iftop \
     iperf \
     htop \
     less \
@@ -90,6 +89,7 @@ EXTRA_TOOLS_INSTALL = " \
     tcpdump \
     unzip \
     util-linux \
+    util-linux-blkid \
     wget \
     zip \
  "

@@ -21,7 +21,7 @@ S = "${WORKDIR}/git"
 
 PR = "r5"
 
-# v4.4.32
+PV = "4.4.32"
 SRCREV = "b121b9789c92257b8f63e9862b1434baba1355c2"
 SRC_URI = " \
     git://git.ti.com/ti-linux-kernel/ti-linux-kernel.git;branch=ti-linux-4.4.y \
