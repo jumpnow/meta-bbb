@@ -1,0 +1,6 @@
+Some custom targets available
+
+    console-image
+    installer-image
+    qt5-image
+
