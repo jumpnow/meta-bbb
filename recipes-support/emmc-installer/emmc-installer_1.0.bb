@@ -14,7 +14,7 @@ SRC_URI = "file://init \
            file://cylon.sh \
           "
 
-PR = "r2"
+PR = "r3"
 
 S = "${WORKDIR}"
 

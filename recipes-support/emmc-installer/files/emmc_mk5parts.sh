@@ -12,7 +12,7 @@ fi
 
 DEV=/dev/mmcblk1
 
-SIZE=`fdisk -l $DEV | grep "Disk $DEV" | cut -d' ' -f5`
+SIZE=`fdisk -l $DEV | grep "$DEV" | cut -d' ' -f5 | grep -o -E '[0-9]+'`
 
 echo EMMC SIZE : $SIZE bytes
 
