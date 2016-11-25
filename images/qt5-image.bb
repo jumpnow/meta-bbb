@@ -23,10 +23,11 @@ FONTS = " \
 "
 
 TSLIB = " \
-    tslib-conf \
-    tslib-calibrate \
-    tslib-dev \
     tslib \
+    tslib-calibrate \
+    tslib-conf \
+    tslib-dev \
+    tslib-tests \
  "
 
 IMAGE_INSTALL += " \
