@@ -24,10 +24,10 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-4.8:"
 
 S = "${WORKDIR}/git"
 
-PR = "r11"
+PR = "r12"
 
-PV = "4.8.10"
-SRCREV = "cf5ae2989a32c391d7769933e0267e6fbfae8e14"
+PV = "4.8.11"
+SRCREV = "36bd5bfe43496f6bb9ab512af46c95b8d152ee99"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-4.8.y \
     file://defconfig \
@@ -39,4 +39,5 @@ SRC_URI = " \
     file://0006-Remove-jitter-from-ti-touchscreen-driver.patch \
     file://0007-dts-Add-support-for-4dcape43-touchscreen.patch \
     file://0008-dts-Add-bonegreen-wireless-files.patch \
+    file://0009-dts-Add-some-adc-knobs-to-4dcape.patch \
  "
