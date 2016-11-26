@@ -23,10 +23,10 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-4.4:"
 
 S = "${WORKDIR}/git"
 
-PR = "r36"
+PR = "r37"
 
-PV = "4.4.34"
-SRCREV = "4eb9a81002485a7abfa53a334dde5bc10328079f"
+PV = "4.4.35"
+SRCREV = "0a5b451a53d4d181f22ab309403646792e0ddad2"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-4.4.y \
     file://defconfig \
@@ -37,4 +37,5 @@ SRC_URI = " \
     file://0005-tps65217-Enable-KEY_POWER-press-on-AC-loss-PWR_BUT.patch \
     file://0006-Remove-jitter-from-ti-touchscreen-driver.patch \
     file://0007-dts-Add-support-for-4dcape43-touchscreen.patch \
+    file://0008-dts-Add-some-adc-knobs-to-4dcape.patch \
  "

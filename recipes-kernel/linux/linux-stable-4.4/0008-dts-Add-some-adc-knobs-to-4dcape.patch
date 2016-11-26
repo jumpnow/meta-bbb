@@ -1,0 +1,41 @@
+From 7972c85ca471db3855c5ebfcb3fd65bba422e514 Mon Sep 17 00:00:00 2001
+From: Scott Ellis <scott@jumpnowtek.com>
+Date: Sat, 26 Nov 2016 11:50:51 -0500
+Subject: [PATCH] dts: Add some adc knobs to 4dcape
+
+---
+ arch/arm/boot/dts/bbb-4dcape43t.dts | 3 +++
+ arch/arm/boot/dts/bbb-4dcape70t.dts | 3 +++
+ 2 files changed, 6 insertions(+)
+
+diff --git a/arch/arm/boot/dts/bbb-4dcape43t.dts b/arch/arm/boot/dts/bbb-4dcape43t.dts
+index b7606f3..8b3b232 100644
+--- a/arch/arm/boot/dts/bbb-4dcape43t.dts
++++ b/arch/arm/boot/dts/bbb-4dcape43t.dts
+@@ -145,6 +145,9 @@
+ 
+ 	adc {
+ 		ti,adc-channels = <4 5 6 7>;
++		ti,chan-step-opendelay = <0x2000 0x2000 0x2000 0x2000>; /* default 0x98, max 0x3ffff */
++		ti,chan-step-sampledelay = <0x10 0x10 0x10 0x10>;       /* default 0, max 0xff */
++		ti,chan-step-avg = <16 16 16 16>;                       /* default 16, range 0-16 */
+ 	};
+ };
+ 
+diff --git a/arch/arm/boot/dts/bbb-4dcape70t.dts b/arch/arm/boot/dts/bbb-4dcape70t.dts
+index 2ed9534..2bad76c 100644
+--- a/arch/arm/boot/dts/bbb-4dcape70t.dts
++++ b/arch/arm/boot/dts/bbb-4dcape70t.dts
+@@ -145,6 +145,9 @@
+ 
+ 	adc {
+ 		ti,adc-channels = <4 5 6 7>;
++		ti,chan-step-opendelay = <0x2000 0x2000 0x2000 0x2000>; /* default 0x98, max 0x3ffff */
++		ti,chan-step-sampledelay = <0x10 0x10 0x10 0x10>;       /* default 0, max 0xff */
++		ti,chan-step-avg = <16 16 16 16>;                       /* default 16, range 0-16 */
+ 	};
+ };
+ 
+-- 
+2.7.4
+
