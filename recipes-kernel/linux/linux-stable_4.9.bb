@@ -29,7 +29,7 @@ PR = "r1"
 PV = "4.9"
 SRCREV = "69973b830859bc6529a7a0468ba0d80ee5117826"
 SRC_URI = " \
-    git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=master \
+    git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-4.9.y \
     file://defconfig \
     file://0001-spidev-Add-a-generic-compatible-id.patch \
     file://0002-dts-Revoke-Beaglebone-i2c2-cape-definitions.patch \
