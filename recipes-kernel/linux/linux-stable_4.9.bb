@@ -20,14 +20,14 @@ KERNEL_DEVICETREE_beaglebone = " \
 LINUX_VERSION = "4.9"
 LINUX_VERSION_EXTENSION = "-jumpnow"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-4.8:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-4.9:"
 
 S = "${WORKDIR}/git"
 
-PR = "r1"
+PR = "r2"
 
-PV = "4.9"
-SRCREV = "69973b830859bc6529a7a0468ba0d80ee5117826"
+PV = "4.9.1"
+SRCREV = "6437abdb624edc4e68859e66768933d2b5eb9f09"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-4.9.y \
     file://defconfig \
