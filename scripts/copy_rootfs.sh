@@ -40,7 +40,7 @@ else
         TARGET_HOSTNAME=${3}
 fi
 
-echo -e "HOSTNAME: $TARGET_HOSTNAME\n"
+echo "HOSTNAME: $TARGET_HOSTNAME"
 
 
 if [ ! -f "${SRCDIR}/${IMAGE}-image-${MACHINE}.tar.xz" ]; then
@@ -48,37 +48,42 @@ if [ ! -f "${SRCDIR}/${IMAGE}-image-${MACHINE}.tar.xz" ]; then
         exit 1
 fi
 
-DEV=/dev/${1}2
-
-if [ -b $DEV ]; then
-	echo "Formatting $DEV as ext4"
-	sudo mkfs.ext4 -q -L ROOT $DEV
-
-	echo "Mounting $DEV"
-	sudo mount $DEV /media/card
-
-	echo "Extracting ${IMAGE}-image-${MACHINE}.tar.xz to /media/card"
-	sudo tar -C /media/card -xJf ${SRCDIR}/${IMAGE}-image-${MACHINE}.tar.xz
-
-	echo "Writing hostname to /etc/hostname"
-	export TARGET_HOSTNAME
-	sudo -E bash -c 'echo ${TARGET_HOSTNAME} > /media/card/etc/hostname'        
-
-	if [ -f ${SRCDIR}/interfaces ]; then
-		echo "Writing interfaces to /media/card/etc/network/"
-		sudo cp ${SRCDIR}/interfaces /media/card/etc/network/interfaces
-	fi
-
-	if [ -f ${SRCDIR}/wpa_supplicant.conf ]; then
-		echo "Writing wpa_supplicant.conf to /media/card/etc/"
-		sudo cp ${SRCDIR}/wpa_supplicant.conf /media/card/etc/wpa_supplicant.conf
-	fi
-
-	echo "Unmounting $DEV"
-	sudo umount $DEV
+if [ -b ${1} ]; then
+        DEV=${1}
+elif [ -b "/dev/${1}2" ]; then
+        DEV=/dev/${1}2
+elif [ -b "/dev/${1}p2" ]; then
+        DEV=/dev/${1}p2
 else
-	echo "Block device $DEV does not exist"
+        echo "Block device not found: /dev/${1}2 or /dev/${1}p2"
+        exit 1
 fi
+
+echo "Formatting $DEV as ext4"
+sudo mkfs.ext4 -q -L ROOT $DEV
+
+echo "Mounting $DEV"
+sudo mount $DEV /media/card
+
+echo "Extracting ${IMAGE}-image-${MACHINE}.tar.xz to /media/card"
+sudo tar -C /media/card -xJf ${SRCDIR}/${IMAGE}-image-${MACHINE}.tar.xz
+
+echo "Writing hostname to /etc/hostname"
+export TARGET_HOSTNAME
+sudo -E bash -c 'echo ${TARGET_HOSTNAME} > /media/card/etc/hostname'        
+
+if [ -f ${SRCDIR}/interfaces ]; then
+	echo "Writing interfaces to /media/card/etc/network/"
+	sudo cp ${SRCDIR}/interfaces /media/card/etc/network/interfaces
+fi
+
+if [ -f ${SRCDIR}/wpa_supplicant.conf ]; then
+	echo "Writing wpa_supplicant.conf to /media/card/etc/"
+	sudo cp ${SRCDIR}/wpa_supplicant.conf /media/card/etc/wpa_supplicant.conf
+fi
+
+echo "Unmounting $DEV"
+sudo umount $DEV
 
 echo "Done"
 

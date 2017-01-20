@@ -52,7 +52,7 @@ echo -e "\n***** Creating the loop device *****"
 LOOPDEV=`losetup -f`
 
 echo -e "\n***** Creating an empty SD image file *****"
-dd if=/dev/zero of=${DSTDIR}/${SDIMG} bs=${CARDSIZE}G count=1
+dd if=/dev/zero of=${DSTDIR}/${SDIMG} bs=1G count=${CARDSIZE}
 
 echo -e "\n***** Partitioning the SD image file *****"
 sudo fdisk ${DSTDIR}/${SDIMG} <<END
@@ -61,7 +61,7 @@ n
 p
 1
 
-+32M
++64M
 n
 p
 2
@@ -69,91 +69,42 @@ p
 
 t
 1
-e
+c
 a
 1
 w
 END
 
-echo -e "\n***** Attaching to the loop device *****"
+echo "***** Attaching to the loop device *****"
 sudo losetup -P ${LOOPDEV} ${DSTDIR}/${SDIMG}
 
-echo -e "\n***** Copying the boot partition *****"
+echo "***** Copying the boot partition *****"
 DEV=${LOOPDEV}p1
+./copy_boot.sh ${DEV}
 
-if [ -b "${DEV}" ]; then
-	echo "Formatting FAT partition on ${DEV}"
-	sudo mkfs.vfat -F 16 -n BOOT -I  ${DEV}
-
-        echo "Mounting $DEV at /media/card"
-        sudo mount ${DEV} /media/card
-
-        echo "Copying MLO"
-        sudo cp ${SRCDIR}/MLO-${MACHINE} /media/card/MLO
-
-        echo "Copying u-boot"
-        sudo cp ${SRCDIR}/u-boot-${MACHINE}.img /media/card/u-boot.img
-
-        if [ -f ${SRCDIR}/uEnv.txt ]; then
-                echo "Copying ${SRCDIR}/uEnv.txt to /media/card"
-                sudo cp ${SRCDIR}/uEnv.txt /media/card
-        elif [ -f ./uEnv.txt ]; then
-                echo "Copying ./uEnv.txt to /media/card"
-                sudo cp ./uEnv.txt /media/card
-        fi
-
-        echo "Unmounting ${DEV}"
-        sudo umount ${DEV}
-else
-	echo "Block device not found: ${DEV}"
+if [ $? -ne 0 ]; then
 	sudo losetup -D
 	exit
 fi
 
-echo -e "\n***** Copying the rootfs *****"
+echo "***** Copying the rootfs *****"
 DEV=${LOOPDEV}p2
+./copy_rootfs.sh ${DEV} ${IMG} ${HOSTNAME}
 
-if [ -b "${DEV}" ]; then
-        echo "Formatting $DEV as ext4"
-        sudo mkfs.ext4 -F -q -L ROOT $DEV
-
-        echo "Mounting $DEV at /media/card"
-        sudo mount $DEV /media/card
-
-        echo "Extracting ${IMG}-image-${MACHINE}.tar.xz to /media/card"
-        sudo tar -C /media/card -xJf ${SRCDIR}/${IMG}-image-${MACHINE}.tar.xz
-
-        echo "Writing ${TARGET_HOSTNAME} to /etc/hostname"
-        export TARGET_HOSTNAME=${HOSTNAME}
-        sudo -E bash -c 'echo ${TARGET_HOSTNAME} > /media/card/etc/hostname'
-
-        if [ -f ${SRCDIR}/interfaces ]; then
-                echo "Writing interfaces to /media/card/etc/network/"
-                sudo cp ${SRCDIR}/interfaces /media/card/etc/network/interfaces
-        fi
-
-        if [ -f ${SRCDIR}/wpa_supplicant.conf ]; then
-                echo "Writing wpa_supplicant.conf to /media/card/etc/"
-                sudo cp ${SRCDIR}/wpa_supplicant.conf /media/card/etc/wpa_supplicant.conf
-        fi
-
-        echo "Unmounting $DEV"
-        sudo umount $DEV
-else
-	echo "Block device not found: ${DEV}"
+if [ $? -ne 0 ]; then
 	sudo losetup -D
 	exit
 fi
 
-echo -e "\n***** Detatching loop device *****"
+echo "***** Detatching loop device *****"
 sudo losetup -D
 
-echo -e "\n***** Compressing the SD card image *****"
+echo "***** Compressing the SD card image *****"
 sudo xz -9 ${DSTDIR}/${SDIMG}
 
-echo -e "\n***** Creating an md5sum *****"
+echo "***** Creating an md5sum *****"
 cd ${DSTDIR}
 md5sum ${SDIMG}.xz > ${SDIMG}.xz.md5
 cd ${OLDPWD}
 
-echo -e "\n***** Done *****\n"
+echo "***** Done *****"

@@ -62,11 +62,15 @@ for file in $SUPPORT_SCRIPTS; do
 	fi
 done
 
-DEV=/dev/${1}2
-
-if [ ! -b ${DEV} ]; then
-	echo "Block device ${DEV} not found"
-	exit 1
+if [ -b ${1} ]; then
+        DEV=${1}
+elif [ -b "/dev/${1}2" ]; then
+        DEV=/dev/${1}2
+elif [ -b "/dev/${1}p2" ]; then
+        DEV=/dev/${1}p2
+else
+        echo "Block device not found: /dev/${1}2 or /dev/${1}p2"
+        exit 1
 fi
 
 echo "Mounting ${DEV} to /media/card"
