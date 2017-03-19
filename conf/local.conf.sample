@@ -15,7 +15,7 @@ PREFERRED_PROVIDER_udev = "eudev"
 VIRTUAL_RUNTIME_init_manager = "sysvinit"
 
 # To change kernel version
-PREFERRED_VERSION_linux-stable = "4.4.%"
+PREFERRED_VERSION_linux-stable = "4.9.%"
 
 MACHINE = "beaglebone"
 
@@ -39,6 +39,8 @@ USER_CLASSES = "image-mklibs image-prelink"
 PATCHRESOLVE = "noop"
 
 RM_OLD_IMAGE = "1"
+
+INHERIT += "rm_work"
 
 CONF_VERSION = "1"
 
