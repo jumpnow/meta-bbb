@@ -10,6 +10,7 @@ KERNEL_DEVICETREE_beaglebone = " \
     am335x-boneblack.dtb \
     bbb-hdmi.dtb \
     bbb-nohdmi.dtb \
+    bbb-4dcape70t.dtb \
  "
 
 LINUX_VERSION = "4.4"
