@@ -37,4 +37,5 @@ SRC_URI = " \
     file://0004-Remove-jitter-from-ti-touchscreen-driver.patch \
     file://0005-dts-Add-bonegreen-wireless-files.patch \
     file://0006-dts-Add-custom-dts-files.patch \
+    file://0007-wlcore-Change-no-NO_RX_BA_SESSION-warnings-to-debug.patch \
  "

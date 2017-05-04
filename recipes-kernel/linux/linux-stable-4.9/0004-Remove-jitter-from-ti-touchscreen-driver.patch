@@ -1,7 +1,7 @@
-From a8f563e5768cb7151eacf7dcb062980e69c17f75 Mon Sep 17 00:00:00 2001
+From 70148ec6b47cfae1ff1784ae8ce3044b3d592690 Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
 Date: Tue, 13 Dec 2016 05:59:11 -0500
-Subject: [PATCH 4/6] Remove jitter from ti touchscreen driver
+Subject: [PATCH 4/7] Remove jitter from ti touchscreen driver
 
 ---
  drivers/input/touchscreen/ti_am335x_tsc.c | 14 +++++++++++++-

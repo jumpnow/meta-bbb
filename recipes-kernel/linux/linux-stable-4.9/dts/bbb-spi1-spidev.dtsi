@@ -24,7 +24,7 @@
 	ti,pindir-d0-out-d1-in = <1>; /* d0 is MOSI, d1 is MISO */
 
 	spidev1_0: spidev1@0 {
-		compatible = "generic,spi";
+		compatible = "spidev";
 		reg = <0>;
 		spi-max-frequency = <12000000>;
 		/* spi-cpha; sets CPHA=1, default is CPHA=0 */

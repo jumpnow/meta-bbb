@@ -1,7 +1,7 @@
-From cb9716178846b85804d6687408da29e909c0a6a1 Mon Sep 17 00:00:00 2001
+From 9ddc440a039f2f2adf2e0f1809bc919275f5025c Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
 Date: Tue, 13 Dec 2016 06:02:56 -0500
-Subject: [PATCH 5/6] dts: Add bonegreen wireless files
+Subject: [PATCH 5/7] dts: Add bonegreen wireless files
 
 ---
  arch/arm/boot/dts/am335x-bonegreen-wireless.dts |  47 ++++++++

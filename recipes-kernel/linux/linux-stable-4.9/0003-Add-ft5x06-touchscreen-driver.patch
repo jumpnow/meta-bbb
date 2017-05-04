@@ -1,7 +1,7 @@
-From f85a9a60f99a532893dcb994b511f0dafb734c46 Mon Sep 17 00:00:00 2001
+From 867355f610d5899f910c131127ea5894fa546bdf Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
 Date: Tue, 13 Dec 2016 05:23:18 -0500
-Subject: [PATCH 3/6] Add ft5x06 touchscreen driver
+Subject: [PATCH 3/7] Add ft5x06 touchscreen driver
 
 ---
  drivers/input/touchscreen/Kconfig     |   8 +
