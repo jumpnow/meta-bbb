@@ -32,6 +32,11 @@ WIFI_SUPPORT = " \
     wpa-supplicant \
  "
 
+BT_SUPPORT = " \
+    bluez5 \
+    bbgw-wireless \
+"
+
 DEV_SDK_INSTALL = " \
     binutils \
     binutils-symlinks \
@@ -106,6 +111,7 @@ MQTT = " \
 "
 
 IMAGE_INSTALL += " \
+    ${BT_SUPPORT} \
     ${CORE_OS} \
     ${DEV_SDK_INSTALL} \
     ${DEV_EXTRAS} \
