@@ -1,7 +1,7 @@
-From f96cac912e23870ad5aadf69b4fb01a5be0c7a6a Mon Sep 17 00:00:00 2001
+From 95bcac0360fb8fbcb2db0e46449c0a7e913e0f29 Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
 Date: Mon, 3 Oct 2016 04:41:23 -0400
-Subject: [PATCH 2/7] dts: Revoke Beaglebone i2c2 cape definitions
+Subject: [PATCH 2/8] dts: Revoke Beaglebone i2c2 cape definitions
 
 ---
  arch/arm/boot/dts/am335x-bone-common.dtsi | 56 -------------------------------

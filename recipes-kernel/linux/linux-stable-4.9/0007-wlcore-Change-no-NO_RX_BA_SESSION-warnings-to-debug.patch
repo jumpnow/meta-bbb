@@ -1,7 +1,7 @@
-From 3b77c214800fd20945d7d408b333b0e2ef3b9abd Mon Sep 17 00:00:00 2001
+From c1da39821013591be02d56a0ed09af2314a6d67b Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
 Date: Mon, 10 Apr 2017 14:47:18 -0400
-Subject: [PATCH 7/7] wlcore: Change no NO_RX_BA_SESSION warnings to debug
+Subject: [PATCH 7/8] wlcore: Change no NO_RX_BA_SESSION warnings to debug
 
 ---
  drivers/net/wireless/ti/wlcore/acx.c | 2 +-
