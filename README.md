@@ -23,8 +23,8 @@ Instructions for using this layer can be found on the [jumpnowtek site][jumpnowt
 Major Software Versions
 
 * Yocto 2.2.1 [morty] branch
-* Linux kernel 4.9.24 (4.4.63 available)
-* U-Boot 2016.07
+* Linux kernel 4.9.28 (4.4.68 available)
+* U-Boot 2017.05
 
 The qt5-image includes [Qt 5.7.1][qt] built for framebuffer use only.
 
@@ -45,6 +45,7 @@ And there are dtbs for a couple of touchscreen capes
 * bbb-4dcape43t.dtb - 4D Systems 4.3 inch touchscreen, 480x272 
 * bbb-4dcape70t.dtb - 4D Systems 7 inch touchscreen, 800x480 
 * bbb-nh5cape.dtb - NewHaven Capacitive, 5-inch, 800x480 touchscreen 
+* bbb-nhd7cape.dtb - NewHaven 7-inch display capes, 800x480 touchscreen
 
 All the dtbs include the following
 
@@ -65,17 +66,10 @@ You can mount the boot partition like this
     -rwxr-xr-x 1 root root 410860 Jul 24 09:00 u-boot.img
     -rwxr-xr-x 1 root root   1112 Jul 24 09:00 uEnv.txt
 
-You can either modify `fdtfile=` or you can modify `touchscreen_dtb=` and also
-add a *use_touchscreen* file to the `/boot` directory on the root filesystem.
+Modify the `fdtfile=` line.
 
-    root@beaglebone:~# touch > /boot/use_touchscreen
-
-Those are just some examples. You can easily devise your own strategy for
-choosing which *dtb* to load at boot.
-
-To use the nh5cape you will need the `ft5x06_ts` touchscreen driver
-
-    root@beaglebone:~# echo ft5x06_ts >> /dev/modules
+If you want touchscreen support for either of the New Haven displays
+the `ft5x06_ts` touchscreen driver needs to be loaded
 
 You can load it manually with *modprobe*
 
