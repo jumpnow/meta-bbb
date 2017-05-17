@@ -1,1 +1,1 @@
-PACKAGECONFIG_append = " accessibility fontconfig linuxfb tslib"
+PACKAGECONFIG_append = " accessibility fontconfig linuxfb no-opengl tslib"
