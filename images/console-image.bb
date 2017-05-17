@@ -79,7 +79,7 @@ EXTRA_TOOLS_INSTALL = " \
     ethtool \
     findutils \
     i2c-tools \
-    iperf \
+    iperf3 \
     htop \
     less \
     memtester \
