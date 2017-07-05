@@ -12,7 +12,7 @@ DISTRO_FEATURES_BACKFILL_CONSIDERED += "pulseaudio opengl"
 PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
 
 PREFERRED_PROVIDER_udev = "eudev"
-VIRTUAL_RUNTIME_init_manager = "sysvinit"
+VIRTUAL-RUNTIME_init_manager = "sysvinit"
 
 # To change kernel version
 PREFERRED_VERSION_linux-stable = "4.9.%"
