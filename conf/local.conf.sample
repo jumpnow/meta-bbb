@@ -32,7 +32,9 @@ PACKAGE_CLASSES = "package_ipk"
 # i686 or x86_64
 SDKMACHINE = "x86_64"
 
-EXTRA_IMAGE_FEATURES = "debug-tweaks"
+#EXTRA_IMAGE_FEATURES = "debug-tweaks"
+INHERIT += "extrausers"
+EXTRA_USERS_PARAMS = "usermod -P changeme root; "
 
 USER_CLASSES = "image-mklibs image-prelink"
 

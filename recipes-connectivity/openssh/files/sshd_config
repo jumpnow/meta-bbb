@@ -41,7 +41,7 @@ Protocol 2
 # Authentication:
 
 #LoginGraceTime 2m
-#PermitRootLogin yes
+PermitRootLogin yes
 #StrictModes yes
 #MaxAuthTries 6
 #MaxSessions 10
@@ -69,8 +69,8 @@ AuthorizedKeysFile .ssh/authorized_keys
 #IgnoreRhosts yes
 
 # To disable tunneled clear text passwords, change to no here!
-#PasswordAuthentication yes
-PermitEmptyPasswords yes 
+PasswordAuthentication yes
+PermitEmptyPasswords no
 
 # Change to no to disable s/key passwords
 ChallengeResponseAuthentication no
@@ -96,8 +96,8 @@ ChallengeResponseAuthentication no
 # and ChallengeResponseAuthentication to 'no'.
 #UsePAM no
 
-AllowAgentForwarding no 
-AllowTcpForwarding no 
+AllowAgentForwarding no
+AllowTcpForwarding no
 #GatewayPorts no
 #X11Forwarding no
 #X11DisplayOffset 10
