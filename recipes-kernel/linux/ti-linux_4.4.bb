@@ -20,10 +20,10 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/ti-linux-4.4:"
 
 S = "${WORKDIR}/git"
 
-PR = "r16"
+PR = "r17"
 
 PV = "4.4.68"
-SRCREV = "c5a66910c41ba09e1d3715907d7649d3bd497216"
+SRCREV = "1b12699f77685c98a962b1fabff2ee82b775ffd1"
 SRC_URI = " \
     git://git.ti.com/ti-linux-kernel/ti-linux-kernel.git;branch=ti-linux-4.4.y \
     file://defconfig \
