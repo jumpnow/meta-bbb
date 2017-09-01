@@ -34,7 +34,7 @@ SDKMACHINE = "x86_64"
 
 #EXTRA_IMAGE_FEATURES = "debug-tweaks"
 INHERIT += "extrausers"
-EXTRA_USERS_PARAMS = "usermod -P changeme root; "
+EXTRA_USERS_PARAMS = "usermod -P jumpnowtek root; "
 
 USER_CLASSES = "image-mklibs image-prelink"
 
