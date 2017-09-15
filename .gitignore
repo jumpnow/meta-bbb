@@ -1,3 +1,5 @@
 scripts/boot.scr
 scripts/uEnv.txt
+scripts/interfaces
+scripts/wpa_supplicant.conf
 *~
