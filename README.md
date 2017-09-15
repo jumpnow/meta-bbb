@@ -3,7 +3,7 @@ This layer depends on:
     URI: git://git.yoctoproject.org/poky.git
     branch: pyro
     revision: HEAD
-    commit: 5fd0170
+    commit: 072430b
 
     URI: git://git.openembedded.org/meta-openembedded
     branch: pyro
@@ -13,7 +13,7 @@ This layer depends on:
     URI: git://code.qt.io/yocto/meta-qt5.git
     branch: 5.9
     revision: HEAD
-    commit: 545a669
+    commit: 6e6e8df
 
     meta-bbb layer maintainer: Scott Ellis <scott@jumpnowtek.com>
 
@@ -22,8 +22,8 @@ Instructions for using this layer can be found on the [jumpnowtek site][jumpnowt
 
 Major Software Versions
 
-* Yocto 2.3.1 [pyro] branch
-* Linux kernel 4.9.46 (4.4.85 available)
+* Yocto 2.3.2 [pyro] branch
+* Linux kernel 4.9.50 (4.4.88 and 4.13.2 available)
 * U-Boot 2017.05
 
 The qt5-image includes [Qt 5.9.2][qt] built for framebuffer use only.
