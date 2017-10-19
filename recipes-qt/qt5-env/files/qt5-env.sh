@@ -9,3 +9,11 @@ export QT_QPA_PLATFORM=linuxfb
 
 # replace with correct /dev/input/eventX if this is wrong
 #export TSLIB_TSDEVICE=/dev/input/touchscreen0
+
+if [ -z "${XDG_RUNTIME_DIR}" ]; then
+    export XDG_RUNTIME_DIR=/tmp/user/${UID}
+
+    if [ ! -d ${XDG_RUNTIME_DIR} ]; then
+        mkdir -p ${XDG_RUNTIME_DIR}
+    fi
+fi
