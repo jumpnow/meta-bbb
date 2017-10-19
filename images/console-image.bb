@@ -64,8 +64,6 @@ DEV_EXTRAS = " \
     ntp-tickadj \
     serialecho \
     spiloop \
-    zeromq \
-    zeromq-dev \
  "
 
 EXTRA_TOOLS_INSTALL = " \
@@ -80,7 +78,7 @@ EXTRA_TOOLS_INSTALL = " \
     findutils \
     i2c-tools \
     iperf3 \
-    htop \
+    iptables \
     less \
     memtester \
     nano \
@@ -96,22 +94,12 @@ EXTRA_TOOLS_INSTALL = " \
     zip \
  "
 
-MQTT = " \
-    libmosquitto1 \
-    libmosquittopp1 \
-    mosquitto \
-    mosquitto-dev \
-    mosquitto-clients \
-    python-paho-mqtt \
-"
-
 IMAGE_INSTALL += " \
     ${CORE_OS} \
     ${DEV_SDK_INSTALL} \
     ${DEV_EXTRAS} \
     ${EXTRA_TOOLS_INSTALL} \
     ${KERNEL_EXTRA_INSTALL} \
-    ${MQTT} \
     ${WIFI_SUPPORT} \
  "
 
