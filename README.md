@@ -3,17 +3,17 @@ This layer depends on:
     URI: git://git.yoctoproject.org/poky.git
     branch: pyro
     revision: HEAD
-    commit: 072430b
+    commit: 827eb5b
 
     URI: git://git.openembedded.org/meta-openembedded
     branch: pyro
     revision: HEAD
-    commit: 5e82995
+    commit: dfbdd28
 
     URI: git://code.qt.io/yocto/meta-qt5.git
     branch: 5.9
     revision: HEAD
-    commit: 6e6e8df
+    commit: e0db566
 
     meta-bbb layer maintainer: Scott Ellis <scott@jumpnowtek.com>
 
@@ -23,7 +23,7 @@ Instructions for using this layer can be found on the [jumpnowtek site][jumpnowt
 Major Software Versions
 
 * Yocto 2.3.2 [pyro] branch
-* Linux kernel 4.9.50 (4.4.88 and 4.13.2 available)
+* Linux kernel 4.9.57 (4.4.93 and 4.13.8 available)
 * U-Boot 2017.05
 
 The qt5-image includes [Qt 5.9.2][qt] built for framebuffer use only.
@@ -43,6 +43,7 @@ There is a dtb without HDMI/display support, freeing up some GPIO pins and UART5
 And there are dtbs for a couple of touchscreen capes
 
 * bbb-4dcape43t.dtb - 4D Systems 4.3 inch touchscreen, 480x272 
+* bbb-4dcape50t.dtb - 4D Systems 5 inch touchscreen, 800x480
 * bbb-4dcape70t.dtb - 4D Systems 7 inch touchscreen, 800x480 
 * bbb-nh5cape.dtb - NewHaven Capacitive, 5-inch, 800x480 touchscreen 
 * bbb-nhd7cape.dtb - NewHaven 7-inch display capes, 800x480 touchscreen
@@ -58,9 +59,9 @@ To switch between these dtbs, take a look at `uEnv.txt` on the boot partition.
 
 You can mount the boot partition like this
 
-    root@beaglebone~# mount /dev/mmcblk0p1 /mnt
+    root@bbb~# mount /dev/mmcblk0p1 /mnt
 
-    root@beaglebone:~# ls -l /mnt
+    root@bbb:~# ls -l /mnt
     total 466
     -rwxr-xr-x 1 root root  64408 Jul 24 09:00 MLO
     -rwxr-xr-x 1 root root 410860 Jul 24 09:00 u-boot.img
@@ -73,11 +74,14 @@ the `ft5x06_ts` touchscreen driver needs to be loaded
 
 You can load it manually with *modprobe*
 
-    root@beaglebone:~# modprobe ft5x06_ts
+    root@bbb:~# modprobe ft5x06_ts
 
-Or add it to `/etc/modules` to have it load every boot
+Add it to `/etc/modules` to have it load every boot.
 
-    root@beaglebone:~# echo ft5x06_ts >> /etc/modules
+The 4.3 and 7 inch 4D displays use the BBB built-in ADCs for the touchscreen.
+
+The 4D Systems 5.0 inch uses the ar1021_i2c driver which needs to be
+loaded at boot. Add the driver to /etc/modules.
 
 
 [jumpnowtek-bbb]: http://www.jumpnowtek.com/yocto/BeagleBone-Systems-with-Yocto.html
