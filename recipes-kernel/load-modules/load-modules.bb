@@ -4,6 +4,8 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/GPL-2.0;md5=801f80980d171dd6425
 
 SRC_URI = "file://modules"
 
+PR = "r1"
+
 S = "${WORKDIR}"
 
 do_install() {
