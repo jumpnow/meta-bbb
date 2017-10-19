@@ -13,6 +13,7 @@ KERNEL_DEVICETREE_beaglebone = " \
     bbb-hdmi.dtb \
     bbb-nohdmi.dtb \
     bbb-4dcape43t.dtb \
+    bbb-4dcape50t.dtb \
     bbb-4dcape70t.dtb \
     bbb-nh5cape.dtb \
     bbb-nhd7cape.dtb \
@@ -25,10 +26,10 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-4.9:"
 
 S = "${WORKDIR}/git"
 
-PR = "r47"
+PR = "r50"
 
-PV = "4.9.52"
-SRCREV = "d59dabdc4cb380b79c965af28cd4ba001f04834b"
+PV = "4.9.57"
+SRCREV = "5d7a76acad403638f635c918cc63d1d44ffa4065"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-4.9.y \
     file://defconfig \
@@ -40,4 +41,5 @@ SRC_URI = " \
     file://0006-dts-Add-custom-dts-files.patch \
     file://0007-wlcore-Change-no-NO_RX_BA_SESSION-warnings-to-debug.patch \
     file://0008-Add-dts-for-NewHaven-7-inch-display-cape.patch \
+    file://0009-Add-dts-for-4dcape-5-inch-resistive-touch-display.patch \
 "
