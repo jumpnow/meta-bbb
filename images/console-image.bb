@@ -90,6 +90,7 @@ EXTRA_TOOLS_INSTALL = " \
     unzip \
     util-linux \
     util-linux-blkid \
+    vim \
     wget \
     zip \
  "
