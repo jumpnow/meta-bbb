@@ -1,1 +1,8 @@
+# if using gpio (on/off backlight)
 gpio_backlight
+
+# for NewHaven displays
+#ft5x06_ts
+
+# for 4DCape 5 inch display
+#ar1021_i2c
