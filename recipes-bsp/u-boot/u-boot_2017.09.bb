@@ -5,7 +5,7 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/u-boot-2017.09:"
 PV = "2017.09"
 PR = "r1"
 
-COMPATIBLE_MACHINE = "none"
+COMPATIBLE_MACHINE = "beaglebone"
 
 UBOOT_LOCALVERSION = "-jumpnow"
 
