@@ -1,0 +1,25 @@
+From 9c6577c043957938c1580fc2d991f4833bc5100c Mon Sep 17 00:00:00 2001
+From: Scott Ellis <scott@jumpnowtek.com>
+Date: Wed, 6 Sep 2017 08:29:35 -0400
+Subject: [PATCH 3/3] wlcore: Change NO FW RX BA session warnings to debug
+
+---
+ drivers/net/wireless/ti/wlcore/acx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/drivers/net/wireless/ti/wlcore/acx.c b/drivers/net/wireless/ti/wlcore/acx.c
+index a485999..3d9941e 100644
+--- a/drivers/net/wireless/ti/wlcore/acx.c
++++ b/drivers/net/wireless/ti/wlcore/acx.c
+@@ -1449,7 +1449,7 @@ int wl12xx_acx_set_ba_receiver_session(struct wl1271 *wl, u8 tid_index,
+ 
+ 	/* sometimes we can't start the session */
+ 	if (ret == CMD_STATUS_NO_RX_BA_SESSION) {
+-		wl1271_warning("no fw rx ba on tid %d", tid_index);
++		wl1271_debug(DEBUG_ACX, "no fw rx ba on tid %d", tid_index);
+ 		ret = -EBUSY;
+ 		goto out;
+ 	}
+-- 
+2.7.4
+
