@@ -5,11 +5,12 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 SRC_URI = "file://init \
            file://default \
-           file://manage_boot_flag_partition.sh \
-           file://bbb_upgrader.sh \
+           file://syskeep \
+           file://sysrevert \
+           file://sysupgrade \
           "
 
-PR = "r4"
+PR = "r5"
 
 S = "${WORKDIR}"
 
@@ -26,8 +27,9 @@ do_install_append () {
     install -m 0644 default ${D}${sysconfdir}/default/boot-flags
 
     install -d ${D}${bindir}
-    install -m 0755 manage_boot_flag_partition.sh ${D}${bindir}
-    install -m 0755 bbb_upgrader.sh ${D}${bindir}
+    install -m 0755 syskeep ${D}${bindir}
+    install -m 0755 sysrevert ${D}${bindir}
+    install -m 0755 sysupgrade ${D}${bindir}
 }
 
 FILES_${PN} = "${sysconfdir} ${bindir}"

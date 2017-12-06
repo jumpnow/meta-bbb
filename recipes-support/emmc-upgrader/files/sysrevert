@@ -1,0 +1,206 @@
+#!/bin/sh
+#
+# Update flags partition to mark the currently non-active root as
+# the new active partition.
+# 
+
+root_dev=/dev/mmcblk1
+flags_part=${root_dev}p5
+
+mnt_root=/mnt
+flags_mnt=${mnt_root}/bootflags
+upgrade_mnt=${mnt_root}/upgrade
+
+echo -e -n "Finding the current root partition : "
+
+cat /proc/cmdline | grep -q ${root_dev}p2
+
+if [ $? -eq 0 ]; then
+    current_root=${root_dev}p2
+    new_root=${root_dev}p3
+else
+    cat /proc/cmdline | grep -q ${root_dev}p3
+
+    if [ $? -eq 0 ]; then
+        current_root=${root_dev}p3
+        new_root=${root_dev}p2
+    else
+        echo "fail"
+        echo "Current root device is not ${root_dev}p2 or ${root_dev}p3"
+        exit 1
+    fi
+fi
+
+echo "${current_root}"
+
+echo -e -n "Checking that ${mnt_root} is not in use : "
+
+mount | grep -q ${mnt_root} 
+
+if [ $? -eq 0 ]; then
+    echo "fail"
+    echo "${mnt_root} is already in use"
+    exit 1
+fi
+
+echo "ok"
+
+echo -e -n "Checking for a ${flags_part} partition : "
+
+fdisk -l ${root_dev} | grep -q ${flags_part} 
+
+if [ $? -eq 1 ]; then
+    echo "fail"
+    echo "There is no ${flags_part} partition"
+    exit 1
+fi
+
+echo "ok"
+
+echo -e -n "Checking that ${flags_part} is not in use : "
+
+mount | grep -q ${flags_part} 
+
+if [ $? -eq 0 ]; then
+    echo "fail"
+    echo "${flags_part} is already mounted"
+    exit 1
+fi
+
+echo "ok"
+
+echo -e -n "Checking if ${flags_mnt} mount point exists : "
+
+if [ ! -d ${flags_mnt} ]; then
+    echo "no"
+
+    echo -e -n "Attempting to create mount point ${flags_mnt} : "
+
+    mkdir ${flags_mnt}
+
+    if [ $? -eq 1 ]; then
+        echo "fail"
+        exit 1
+    else
+        echo "ok"
+    fi
+else
+    echo "ok"
+fi
+
+echo -e -n "Checking if ${upgrade_mnt} mount point exists : "
+
+if [ ! -d ${upgrade_mnt} ]; then
+    echo "no"
+
+    echo -e -n "Attempting to create mount point ${upgrade_mnt} : "
+
+    mkdir ${upgrade_mnt}
+
+    if [ $? -eq 1 ]; then
+        echo "fail"
+        exit 1
+    else
+        echo "ok"
+    fi
+else
+    echo "ok"
+fi
+
+echo -e -n "Mounting ${new_root} read-only on ${upgrade_mnt} : "
+mount -t ext4 -o ro ${new_root} ${upgrade_mnt}
+
+if [ $? -ne 0 ]; then
+    echo "fail"
+    exit 1
+else
+    echo "ok"
+fi
+
+echo -e -n "Sanity checking new rootfs : "
+
+check_dirs="/bin /boot /etc /root /lib /sbin /usr"
+
+for d in $check_dirs; do
+    if [ ! -d ${upgrade_mnt}$d ]; then
+        echo "fail"
+        echo "New rootfs is missing a $d directory"
+        umount ${upgrade_mnt}
+        exit 1
+    fi
+done
+
+echo "ok"
+
+echo -e -n "Unmounting the new rootfs : "
+
+umount ${upgrade_mnt}
+
+if [ $? -eq 1 ]; then
+    echo "fail"
+    echo "Failed to unmount the new rootfs"
+    exit 1
+else
+    echo "ok"
+fi
+
+
+echo -e -n "Mounting ${flags_part} read-write on ${flags_mnt} : "
+
+mount -t vfat ${flags_part} ${flags_mnt} 
+
+if [ $? -ne 0 ]; then
+    echo "fail"
+    echo "Failed to mount ${flags_part} on ${flags_mnt} as type vfat"
+    exit 1
+fi
+
+echo "ok"
+
+echo -e -n "Updating flags partition : "
+
+if [ "${new_root}" = "${root_dev}p2" ]; then
+    if [ ! -e ${flags_mnt}/two ]; then
+        touch ${flags_mnt}/two
+    fi
+
+    if [ ! -e ${flags_mnt}/two_ok ]; then
+        touch ${flags_mnt}/two_ok
+    fi
+
+    if [ -e ${flags_mnt}/two_tried ]; then
+        rm ${flags_mnt}/two_tried
+    fi
+
+    rm -rf ${flags_mnt}/three*
+else
+    if [ ! -e ${flags_mnt}/three ]; then
+        touch ${flags_mnt}/three
+    fi
+
+    if [ ! -e ${flags_mnt}/three_ok ]; then
+        touch ${flags_mnt}/three_ok
+    fi
+
+    if [ -e ${flags_mnt}/three_tried ]; then
+        rm ${flags_mnt}/three_tried
+    fi
+
+    rm -rf ${flags_mnt}/two*
+fi
+
+echo "ok"
+
+echo -e -n "Unmounting ${flags_part} : "
+
+umount ${flags_part} 
+
+if [ $? -ne 0 ]; then
+    echo "fail"
+    echo "Failed to unmount ${flags_part}"
+    exit 1
+fi
+
+echo "ok"
+
+echo "New root partition will be ${new_root}"

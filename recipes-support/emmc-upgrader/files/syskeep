@@ -1,0 +1,280 @@
+#!/bin/sh
+#
+# Update flags partition to keep current root as the active partition.
+# 
+
+root_dev=/dev/mmcblk1
+flags_part=${root_dev}p5
+
+mnt_root=/mnt
+flags_mnt=${mnt_root}/bootflags
+
+if [ "$1" == "-quiet" ]; then
+    QUIET="yes"
+else
+    QUIET="no"
+fi
+
+if [ "${QUIET}" == "no" ]; then
+    echo -e -n "Finding the current root partition : "
+fi
+
+cat /proc/cmdline | grep -q ${root_dev}p2
+
+if [ $? -eq 0 ]; then
+    current_root=${root_dev}p2
+else
+    cat /proc/cmdline | grep -q ${root_dev}p3
+
+    if [ $? -eq 0 ]; then
+        current_root=${root_dev}p3
+    else
+        if [ "${QUIET}" == "no" ]; then
+            echo "fail"
+        fi
+        echo "Current root device is not ${root_dev}p2 or ${root_dev}p3"
+        exit 1
+    fi
+fi
+
+if [ "${QUIET}" == "no" ]; then
+    echo "${current_root}"
+    echo -e -n "Checking that ${mnt_root} is not in use : "
+fi
+
+mount | grep -q ${mnt_root} 
+
+if [ $? -eq 0 ]; then
+    if [ "${QUIET}" == "no" ]; then
+        echo "fail"
+    fi
+    echo "${mnt_root} is already in use"
+    exit 1
+else
+    if [ "${QUIET}" == "no" ]; then
+        echo "ok"
+    fi
+fi
+
+if [ "${QUIET}" == "no" ]; then
+    echo -e -n "Checking for a ${flags_part} partition : "
+fi
+
+fdisk -l ${root_dev} | grep -q ${flags_part} 
+
+if [ $? -eq 1 ]; then
+    if [ "${QUIET}" == "no" ]; then
+        echo "fail"
+    fi
+    echo "There is no ${flags_part} partition"
+    exit 1
+else
+    if [ "${QUIET}" == "no" ]; then
+        echo "ok"
+    fi
+fi
+
+if [ "${QUIET}" == "no" ]; then
+    echo -e -n "Checking that ${flags_part} is not in use : "
+fi
+
+mount | grep -q ${flags_part} 
+
+if [ $? -eq 0 ]; then
+    if [ "${QUIET}" == "no" ]; then
+        echo "fail"
+    fi
+    echo "${flags_part} is already mounted"
+    exit 1
+else
+    if [ "${QUIET}" == "no" ]; then
+        echo "ok"
+    fi
+fi
+
+if [ "${QUIET}" == "no" ]; then
+    echo -e -n "Checking if ${flags_mnt} mount point exists : "
+fi
+
+if [ ! -d ${flags_mnt} ]; then
+    if [ "${QUIET}" == "no" ]; then
+        echo "no"
+        echo -e -n "Attempting to create mount point ${flags_mnt} : "
+    fi
+
+    mkdir ${flags_mnt}
+
+    if [ $? -eq 1 ]; then
+        if [ "${QUIET}" == "no" ]; then
+            echo "fail"
+        fi
+        echo "Failed to create mount point ${flags_mnt}"
+        exit 1
+    else
+        if [ "${QUIET}" == "no" ]; then
+            echo "ok"
+        fi
+    fi
+else
+    if [ "${QUIET}" == "no" ]; then
+        echo "ok"
+    fi
+fi
+
+if [ "${QUIET}" == "no" ]; then
+    echo -e -n "Mounting ${flags_part} read-only on ${flags_mnt} : "
+fi
+
+mount -t vfat -o ro ${flags_part} ${flags_mnt}
+
+if [ $? -ne 0 ]; then
+    if [ "${QUIET}" == "no" ]; then
+        echo "fail"
+    fi
+    echo "Failed to mount ${flags_part} on ${flags_mnt} as type vfat"
+    exit 1
+else
+    if [ "${QUIET}" == "no" ]; then
+        echo "ok"
+    fi
+fi
+
+if [ "${QUIET}" == "no" ]; then
+    echo -e -n "Checking flag files on ${flags_part} : "
+fi
+
+need_updates=0
+
+if [ "${current_root}" = "${root_dev}p2" ]; then
+    if [ ! -e ${flags_mnt}/two ]; then
+        need_updates=1
+    fi
+
+    if [ ! -e ${flags_mnt}/two_ok ]; then
+        need_updates=1
+    fi
+
+    if [ -e ${flags_mnt}/three ]; then
+        need_updates=1
+    fi
+
+    if [ -e ${flags_mnt}/three_ok ]; then
+        need_updates=1
+    fi
+else
+    if [ -e ${flags_mnt}/two ]; then
+        need_updates=1
+    fi
+
+    if [ -e ${flags_mnt}/two_ok ]; then
+        need_updates=1
+    fi
+
+    if [ ! -e ${flags_mnt}/three ]; then
+        need_updates=1
+    fi
+
+    if [ ! -e ${flags_mnt}/three_ok ]; then
+        need_updates=1
+    fi
+fi
+
+if [ "${QUIET}" == "no" ]; then
+    echo "ok"
+    echo -e -n "Unmounting ${flags_part} : "
+fi
+
+umount ${flags_part} 
+
+if [ $? -ne 0 ]; then
+    if [ "${QUIET}" == "no" ]; then
+        echo "fail"
+    fi
+    echo "Failed to unmount ${flags_part}"
+    exit 1
+else
+    if [ "${QUIET}" == "no" ]; then
+        echo "ok"
+    fi
+fi
+
+if [ ${need_updates} -eq 0 ]; then
+    # no updates required
+    echo "Boot flags are up to date"
+    exit 0
+else
+    echo "Boot flag updates are required..."
+fi
+
+if [ "${QUIET}" == "no" ]; then
+    echo -e -n "Mounting ${flags_part} read-write on ${flags_mnt} : "
+fi
+
+mount -t vfat ${flags_part} ${flags_mnt} 
+
+if [ $? -ne 0 ]; then
+    if [ "${QUIET}" == "no" ]; then
+        echo "fail"
+    fi
+    echo "Failed to mount ${flags_part} on ${flags_mnt} as type vfat"
+    exit 1
+else
+    if [ "${QUIET}" == "no" ]; then
+        echo "ok"
+    fi
+fi
+
+if [ "${QUIET}" == "no" ]; then
+    echo -e -n "Updating flags partition : "
+fi
+
+if [ "${current_root}" = "${root_dev}p2" ]; then
+    if [ ! -e ${flags_mnt}/two ]; then
+        touch ${flags_mnt}/two
+    fi
+
+    if [ ! -e ${flags_mnt}/two_ok ]; then
+        touch ${flags_mnt}/two_ok
+    fi
+
+    if [ -e ${flags_mnt}/two_tried ]; then
+        rm ${flags_mnt}/two_tried
+    fi
+
+    rm -rf ${flags_mnt}/three*
+else
+    if [ ! -e ${flags_mnt}/three ]; then
+        touch ${flags_mnt}/three
+    fi
+
+    if [ ! -e ${flags_mnt}/three_ok ]; then
+        touch ${flags_mnt}/three_ok
+    fi
+
+    if [ -e ${flags_mnt}/three_tried ]; then
+        rm ${flags_mnt}/three_tried
+    fi
+
+    rm -rf ${flags_mnt}/two*
+fi
+
+if [ "${QUIET}" == "no" ]; then
+    echo "ok"
+    echo -e -n "Unmounting ${flags_part} : "
+fi
+
+umount ${flags_part} 
+
+if [ $? -ne 0 ]; then
+    if [ "${QUIET}" == "no" ]; then
+        echo "fail"
+    fi
+    echo "Failed to unmount ${flags_part}"
+    exit 1
+else
+    if [ "${QUIET}" == "no" ]; then
+        echo "ok"
+    fi
+fi
+
+echo "Boot flags updated"
