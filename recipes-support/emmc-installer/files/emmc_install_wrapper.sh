@@ -71,6 +71,6 @@ if [ ${PART_SCRIPT} == "/usr/bin/emmc_mk5parts.sh" ]; then
 		exit 1
 	fi
 fi
-	
+
 echo "Success!"
 echo "Power off, remove SD card and power up" 
