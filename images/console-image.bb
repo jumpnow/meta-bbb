@@ -72,7 +72,6 @@ EXTRA_TOOLS_INSTALL = " \
     cursor-blink \
     devmem2 \
     dosfstools \
-    emmc-upgrader \
     ethtool \
     findutils \
     i2c-tools \
