@@ -3,7 +3,7 @@ This layer depends on:
     URI: git://git.yoctoproject.org/poky.git
     branch: rocko
     revision: HEAD
-    commit: 1c61ba0
+    commit: 16e22f3
 
     URI: git://git.openembedded.org/meta-openembedded
     branch: rocko
@@ -22,8 +22,8 @@ Instructions for using this layer can be found on the [jumpnowtek site][jumpnowt
 
 Major Software Versions
 
-* Yocto 2.4.0 [rocko] branch
-* Linux kernel 4.9.67 (4.14.4 available)
+* Yocto 2.4.1 [rocko] branch
+* Linux kernel 4.9.70 (4.14.7 available)
 * U-Boot 2017.09
 
 The qt5-image includes [Qt 5.9.2][qt] built for framebuffer use only.
