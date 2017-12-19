@@ -22,16 +22,14 @@ KERNEL_DEVICETREE_beaglebone = " \
 LINUX_VERSION = "4.9"
 LINUX_VERSION_EXTENSION = "-jumpnow"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-4.9:"
+FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-${LINUX_VERSION}:"
 
 S = "${WORKDIR}/git"
 
-PR = "r54"
-
-PV = "4.9.67"
-SRCREV = "284bbc782445283e9a5124666dda8010f379f179"
+PV = "4.9.70"
+SRCREV = "ee52d08d2e09539154f397c8a412c68189c4d6a0"
 SRC_URI = " \
-    git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-4.9.y \
+    git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-${LINUX_VERSION}.y \
     file://defconfig \
     file://0001-spidev-Add-a-generic-compatible-id.patch \
     file://0002-dts-Revoke-Beaglebone-i2c2-cape-definitions.patch \
