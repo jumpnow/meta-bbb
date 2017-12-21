@@ -52,9 +52,7 @@ DEV_SDK_INSTALL = " \
     libstdc++-dev \
     libtool \
     make \
-    perl-modules \
     pkgconfig \
-    python-modules \
     python3-modules \
  "
 
