@@ -41,8 +41,6 @@ DEV_SDK_INSTALL = " \
     file \
     g++ \
     g++-symlinks \
-    gdb \
-    gdbserver \
     gcc \
     gcc-symlinks \
     gettext \
@@ -65,7 +63,6 @@ DEV_EXTRAS = " \
 
 EXTRA_TOOLS_INSTALL = " \
     acpid \
-    bc \
     bzip2 \
     cursor-blink \
     devmem2 \
@@ -76,7 +73,6 @@ EXTRA_TOOLS_INSTALL = " \
     iperf3 \
     iptables \
     less \
-    memtester \
     nano \
     netcat \
     procps \
