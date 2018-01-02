@@ -1,7 +1,5 @@
 require recipes-kernel/linux/linux-yocto.inc
 
-KERNEL_IMAGETYPE = "zImage"
-
 COMPATIBLE_MACHINE = "beaglebone"
 
 RDEPENDS_kernel-base += "kernel-devicetree"
@@ -13,8 +11,8 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-${LINUX_VERSION}:"
 
 S = "${WORKDIR}/git"
 
-PV = "4.14.9"
-SRCREV = "dad5c1402c570cd07a80113784bc20a7f930c8ae"
+PV = "4.14.10"
+SRCREV = "b8ce8232fcc37fe7a97db79ea0a5f32098c25e72"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-${LINUX_VERSION}.y \
     file://defconfig \
