@@ -6,7 +6,6 @@ LICENSE_FLAGS_WHITELIST = "commercial"
 
 DISTRO_FEATURES = "ext2 usbhost ${DISTRO_FEATURES_LIBC}"
 
-# remove pulseaudio since it brings in x11
 DISTRO_FEATURES_BACKFILL_CONSIDERED += "pulseaudio opengl"
 
 PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
@@ -14,16 +13,13 @@ PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
 PREFERRED_PROVIDER_udev = "eudev"
 VIRTUAL-RUNTIME_init_manager = "sysvinit"
 
-# To change kernel version
-PREFERRED_VERSION_linux-stable = "4.9.%"
-
 MACHINE = "beaglebone"
 
 #DL_DIR = "${HOME}/oe-sources"
 
-#SSTATE_DIR = "/oe8/bbb/sstate-cache"
+#SSTATE_DIR = "/oe7/mender/sstate-cache"
 
-#TMPDIR = "/oe8/bbb/tmp-rocko"
+#TMPDIR = "/oe7/mender/tmp-rocko"
 
 DISTRO = "poky"
 
@@ -45,4 +41,20 @@ RM_OLD_IMAGE = "1"
 INHERIT += "rm_work"
 
 CONF_VERSION = "1"
+
+KERNEL_DEVICETREE = "am335x-bonegreen.dtb"
+
+# mender stuff
+MENDER_ARTIFACT_NAME = "bbg-1"
+INHERIT += "mender-image mender-install mender-uboot"
+MENDER_SERVER_URL = "https://octo.jumpnow"
+
+MENDER_STORAGE_DEVICE = "/dev/mmcblk0"
+IMAGE_ROOTFS_SIZE = "1048576"
+MENDER_STORAGE_TOTAL_SIZE_MB = "3616"
+MENDER_PARTITION_ALIGNMENT_KB = "4096"
+MENDER_BOOT_PART_SIZE_MB = "8"
+MENDER_DATA_PART_SIZE_MB = "1536"
+MENDER_UBOOT_ENV_STORAGE_DEVICE_OFFSET_1 = "0x400000"
+MENDER_UBOOT_ENV_STORAGE_DEVICE_OFFSET_2 = "0x600000"
 

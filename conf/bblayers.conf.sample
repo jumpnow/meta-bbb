@@ -11,6 +11,6 @@ BBLAYERS ?= " \
   ${HOME}/poky-rocko/meta-openembedded/meta-oe \
   ${HOME}/poky-rocko/meta-openembedded/meta-networking \
   ${HOME}/poky-rocko/meta-openembedded/meta-python \
-  ${HOME}/poky-rocko/meta-qt5 \
-  ${HOME}/bbb/meta-bbb \
-  "
+  ${HOME}/mender/meta-mender/meta-mender-core \
+  ${HOME}/bbb-mender/meta-bbb \
+"
