@@ -1,24 +1,30 @@
 #!/bin/bash
 
-MACHINE=beaglebone
 IMG=mender-test
 
-TOPDIR="${HOME}/bbb-mender/build"
+TOPDIR="${HOME}/bbb-mender"
 
-if [ ! -d ${TOPDIR} ]; then
-    echo "TOPDIR directory not found: ${TOPDIR}"
+if [ ! -d ${TOPDIR}/build ]; then
+    echo "Build directory not found: ${TOPDIR}/build"
     exit 1
 fi
 
-OETMP=$(grep TMPDIR ${TOPDIR}/conf/local.conf | awk '{ print $3; }' | sed 's/"//g')
-NAME=$(grep MENDER_ARTIFACT_NAME ${TOPDIR}/conf/local.conf | awk '{ print $3; }' | sed 's/"//g')
-UPLOAD_DIR=${HOME}/bbb-mender/upload
+if [ ! -d ${TOPDIR}/mender-keys ]; then
+    echo "mender-keys directory not found: ${TOPDIR}/mender-keys"
+    exit 1
+fi
+
+OETMP=$(grep "^TMPDIR" ${TOPDIR}/build/conf/local.conf | awk '{ print $3; }' | sed 's/"//g')
+NAME=$(grep "^MENDER_ARTIFACT_NAME" ${TOPDIR}/build/conf/local.conf | awk '{ print $3; }' | sed 's/"//g')
+MACHINE=$(grep "^MACHINE" ${TOPDIR}/build/conf/local.conf | awk '{ print $3; }' | sed 's/"//g')
+
+UPLOAD_DIR=${TOPDIR}/upload
 
 SRC="${OETMP}/deploy/images/${MACHINE}/${IMG}-image-${MACHINE}.ext4"
 DST="${UPLOAD_DIR}/${NAME}-signed.mender"
 
-PRIVATE_KEY="${HOME}/bbb-mender/mender-keys/private.key"
-PUBLIC_KEY="${HOME}/bbb-mender/mender-keys/public.key"
+PRIVATE_KEY="${TOPDIR}/mender-keys/private.key"
+PUBLIC_KEY="${TOPDIR}/mender-keys/public.key"
 
 MENDER="/usr/local/bin/mender-artifact"
 
