@@ -10,10 +10,10 @@ This layer depends on:
     revision: HEAD
     commit: 6e3fc5b
 
-    URI: https://github.com/meta-qt5/meta-qt5.git
+    URI: git://github.com/mendersoftware/meta-mender
     branch: rocko
     revision: HEAD
-    commit: d87335a
+    commit: 7c187e3
 
     meta-bbb layer maintainer: Scott Ellis <scott@jumpnowtek.com>
 
