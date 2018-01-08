@@ -2,9 +2,6 @@
 # Yocto Project 2.4 Poky distribution [rocko] branch
 # This is a sysvinit system
 
-# mask for non-mender builds
-BBMASK = "meta-bbb/recipes-mender"
-
 LICENSE_FLAGS_WHITELIST = "commercial"
 
 DISTRO_FEATURES = "ext2 usbhost ${DISTRO_FEATURES_LIBC}"
@@ -17,8 +14,7 @@ PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
 PREFERRED_PROVIDER_udev = "eudev"
 VIRTUAL-RUNTIME_init_manager = "sysvinit"
 
-# To change kernel version
-#PREFERRED_VERSION_linux-stable = "4.9.%"
+KERNEL_DEVICETREE = "am335x-bonegreen.dtb"
 
 MACHINE = "beaglebone"
 
@@ -48,3 +44,17 @@ RM_OLD_IMAGE = "1"
 INHERIT += "rm_work"
 
 CONF_VERSION = "1"
+
+# mender stuff
+MENDER_ARTIFACT_NAME = "wandq-1"
+INHERIT += "mender-image mender-install mender-uboot"
+MENDER_SERVER_URL = "https://fractal.jumpnow"
+
+MENDER_STORAGE_DEVICE = "/dev/mmcblk0"
+IMAGE_ROOTFS_SIZE = "1048576"
+MENDER_STORAGE_TOTAL_SIZE_MB = "3616"
+MENDER_PARTITION_ALIGNMENT_KB = "4096"
+MENDER_BOOT_PART_SIZE_MB = "8"
+MENDER_DATA_PART_SIZE_MB = "1536"
+MENDER_UBOOT_ENV_STORAGE_DEVICE_OFFSET_1 = "0x400000"
+MENDER_UBOOT_ENV_STORAGE_DEVICE_OFFSET_2 = "0x600000"
