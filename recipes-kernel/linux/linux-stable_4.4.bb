@@ -1,7 +1,5 @@
 require recipes-kernel/linux/linux-yocto.inc
 
-KERNEL_IMAGETYPE = "zImage"
-
 COMPATIBLE_MACHINE = "beaglebone"
 
 RDEPENDS_kernel-base += "kernel-devicetree"
