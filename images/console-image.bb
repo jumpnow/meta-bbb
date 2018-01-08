@@ -62,7 +62,6 @@ DEV_EXTRAS = " \
  "
 
 EXTRA_TOOLS_INSTALL = " \
-    acpid \
     bzip2 \
     cursor-blink \
     devmem2 \
