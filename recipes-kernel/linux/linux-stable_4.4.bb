@@ -4,7 +4,7 @@ COMPATIBLE_MACHINE = "beaglebone"
 
 RDEPENDS_kernel-base += "kernel-devicetree"
 
-KERNEL_DEVICETREE_beaglebone = " \
+KERNEL_DEVICETREE_beaglebone ?= " \
     am335x-boneblack.dtb \
     bbb-hdmi.dtb \
     bbb-nohdmi.dtb \
