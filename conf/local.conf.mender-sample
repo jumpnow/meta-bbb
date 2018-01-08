@@ -46,7 +46,7 @@ INHERIT += "rm_work"
 CONF_VERSION = "1"
 
 # mender stuff
-MENDER_ARTIFACT_NAME = "wandq-1"
+MENDER_ARTIFACT_NAME = "bbg-test-1"
 INHERIT += "mender-image mender-install mender-uboot"
 MENDER_SERVER_URL = "https://fractal.jumpnow"
 
