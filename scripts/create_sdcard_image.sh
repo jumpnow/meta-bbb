@@ -3,7 +3,7 @@
 MACHINE=beaglebone
 HOSTNAME=bbb
 DSTDIR=~/bbb/upload
-IMG=qt5
+IMG=console
 IMG_LONG="${IMG}-image-${MACHINE}"
 
 if [ ! -d /media/card ]; then
@@ -40,6 +40,16 @@ fi
 
 SDIMG=bbb-${IMG}-${CARDSIZE}gb.img
 
+if [ ! -d "${DSTDIR}" ]; then
+	echo "Creating ${DSTDIR}"
+	mkdir ${DSTDIR}
+
+	if [ $? -ne 0 ]; then
+		echo "Failed to create ${DSTDIR}"
+		exit 1
+	fi
+fi
+
 if [ -f "${DSTDIR}/${SDIMG}" ]; then
 	rm ${DSTDIR}/${SDIMG}
 fi
@@ -55,25 +65,10 @@ echo -e "\n***** Creating an empty SD image file *****"
 dd if=/dev/zero of=${DSTDIR}/${SDIMG} bs=1G count=${CARDSIZE}
 
 echo -e "\n***** Partitioning the SD image file *****"
-sudo fdisk ${DSTDIR}/${SDIMG} <<END
-o
-n
-p
-1
-
-+64M
-n
-p
-2
-
-
-t
-1
-c
-a
-1
-w
-END
+{
+echo 128,131072,0x0C,*
+echo 131200,+,0x83,-
+} | sfdisk ${DSTDIR}/${SDIMG}
 
 echo "***** Attaching to the loop device *****"
 sudo losetup -P ${LOOPDEV} ${DSTDIR}/${SDIMG}
