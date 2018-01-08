@@ -5,36 +5,36 @@ function ver() {
 }
 
 if [ -n "$1" ]; then
-	DRIVE=/dev/$1
+	DEV=/dev/$1
 else
 	echo -e "\nUsage: sudo $0 <device>\n"
 	echo -e "Example: sudo $0 sdb\n"
 	exit 1
 fi
 
-if [ "$DRIVE" = "/dev/sda" ] ; then
-	echo "Sorry, not going to format $DRIVE"
+if [ "$DEV" = "/dev/sda" ] ; then
+	echo "Sorry, not going to format $DEV"
 	exit 1
 fi
 
 
-echo -e "\nWorking on $DRIVE\n"
+echo -e "\nWorking on $DEV\n"
 
 #make sure that the SD card isn't mounted before we start
-if [ -b ${DRIVE}1 ]; then
-	umount ${DRIVE}1
-	umount ${DRIVE}2
-	umount ${DRIVE}3
-elif [ -b ${DRIVE}p1 ]; then
-	umount ${DRIVE}p1
-	umount ${DRIVE}p2
-	umount ${DRIVE}p3
+if [ -b ${DEV}1 ]; then
+	umount ${DEV}1
+	umount ${DEV}2
+	umount ${DEV}3
+elif [ -b ${DEV}p1 ]; then
+	umount ${DEV}p1
+	umount ${DEV}p2
+	umount ${DEV}p3
 else
-	umount ${DRIVE}
+	umount ${DEV}
 fi
 
 
-SIZE=`fdisk -l $DRIVE | grep "$DRIVE" | cut -d' ' -f5 | grep -o -E '[0-9]+'`
+SIZE=`fdisk -l $DEV | grep "$DEV" | cut -d' ' -f5 | grep -o -E '[0-9]+'`
 
 echo DISK SIZE – $SIZE bytes
 
@@ -57,7 +57,7 @@ fi
 echo -e "\nOkay, here we go ...\n"
 
 echo -e "=== Zeroing the MBR ===\n"
-dd if=/dev/zero of=$DRIVE bs=1024 count=1024
+dd if=/dev/zero of=$DEV bs=1024 count=1024
 
 # 3 partitions
 # Sectors are 512 bytes
@@ -71,7 +71,7 @@ echo -e "\n=== Creating 3 partitions ===\n"
 echo 128,131072,0x0C,*
 echo 131200,2097152,0x83,-
 echo 2228352,+,0x83,-
-} | $SFDISK_CMD $DRIVE
+} | $SFDISK_CMD $DEV
 
 
 sleep 1
