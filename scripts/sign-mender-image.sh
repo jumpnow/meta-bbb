@@ -92,6 +92,7 @@ if [ $? -eq 0 ]; then
     echo ""
     ${MENDER} read ${DST} -k ${PUBLIC_KEY} 
     echo ""
+    echo "Result from mender-artifact read: $?"
 else
     echo "Failed to create signed artifact"
 fi
