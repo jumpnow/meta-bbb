@@ -48,7 +48,7 @@ else
 fi
 
 echo "Formatting FAT partition on $DEV"
-sudo mkfs.vfat -F 32 ${DEV} -n BOOT
+sudo mkfs.vfat ${DEV}
 
 echo "Mounting $DEV"
 sudo mount ${DEV} /media/card
