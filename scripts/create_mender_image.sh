@@ -5,7 +5,6 @@ if [ -z ${TOPDIR} ]; then
 fi
 
 img_name=mender-test
-cardsize=4
 
 if [ ! -d /media/card ]; then
     echo "Temporary mount point [/media/card] not found"
@@ -59,7 +58,7 @@ if [ ! -f "${srcdir}/${img_long}.tar.xz" ]; then
     exit 1
 fi
 
-sdimg=${MACHINE}-${img_name}-${cardsize}gb.img
+sdimg=${MACHINE}-${img_name}.img
 
 if [ -f "${dstdir}/${sdimg}" ]; then
     rm ${dstdir}/${sdimg}
@@ -92,21 +91,27 @@ if [ -z "${mender_data_part_size_mb}" ]; then
     exit 1
 fi
 
+boot_env_sectors=$((8 * 1024 * 2))
 boot_part_sectors=$(($mender_boot_part_size_mb * 1024 * 2))
 rootfs_part_sectors=$(($image_rootfs_size * 2))
 data_part_sectors=$(($mender_data_part_size_mb * 1024 * 2))
 
 # p1_start assumes 8 MB of unpartitioned space
-p1_start=$((8 * 1024 * 2))
+p1_start=$boot_env_sectors
 p2_start=$(($p1_start + $boot_part_sectors))
 p3_start=$(($p2_start + $rootfs_part_sectors))
 p4_start=$(($p3_start + $rootfs_part_sectors))
+
+pad_sectors=$((64 * 1024 * 2))
+total_sectors=$(($p4_start + $data_part_sectors + $pad_sectors))
 
 echo "***** Creating the loop device *****"
 loopdev=`losetup -f`
 
 echo "***** Creating an empty SD image file *****"
-dd if=/dev/zero of=${dstdir}/${sdimg} bs=1G count=${cardsize}
+#dd if=/dev/zero of=${dstdir}/${sdimg} bs=1G count=${cardsize}
+dd if=/dev/zero of=${dstdir}/${sdimg} bs=512 count=${total_sectors}
+
 
 echo "***** Partitioning *****"
 {
