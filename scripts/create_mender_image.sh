@@ -1,7 +1,9 @@
 #!/bin/bash
 
 if [ -z ${TOPDIR} ]; then
-    TOPDIR=${HOME}/bbb
+    cd ../..
+    TOPDIR=${PWD}
+    cd ${OLDPWD}
 fi
 
 img_name=mender-test

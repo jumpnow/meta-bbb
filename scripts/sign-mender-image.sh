@@ -3,7 +3,9 @@
 IMG=mender-test
 
 if [ -z ${TOPDIR} ]; then
-    TOPDIR="${HOME}/bbb"
+    cd ../..
+    TOPDIR=${PWD}
+    cd ${OLDPWD}
 fi
 
 if [ ! -d ${TOPDIR}/build ]; then
@@ -92,7 +94,7 @@ if [ $? -eq 0 ]; then
     echo ""
     ${MENDER} read ${DST} -k ${PUBLIC_KEY} 
     echo ""
-    echo "Result from mender-artifact read: $?"
+    echo "mender-artifact read result: $?"
 else
     echo "Failed to create signed artifact"
 fi
