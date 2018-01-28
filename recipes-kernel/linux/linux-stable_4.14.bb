@@ -4,7 +4,7 @@ COMPATIBLE_MACHINE = "beaglebone"
 
 RDEPENDS_kernel-base += "kernel-devicetree"
 
-KERNEL_DEVICETREE_beaglebone ?= " \
+KERNEL_DEVICETREE ?= " \
     am335x-boneblack.dtb \
     am335x-boneblack-wireless.dtb \
     am335x-bonegreen.dtb \
@@ -18,8 +18,8 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-${LINUX_VERSION}:"
 
 S = "${WORKDIR}/git"
 
-PV = "4.14.13"
-SRCREV = "b8447222eb207d5a5ec20a0f357065963dabdcd0"
+PV = "4.14.15"
+SRCREV = "a16134b082346b7e7c34f594a0763eafacdcea92"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-${LINUX_VERSION}.y \
     file://defconfig \
