@@ -83,6 +83,7 @@ EXTRA_TOOLS_INSTALL = " \
     util-linux-blkid \
     vim \
     wget \
+    xz \
     zip \
  "
 
