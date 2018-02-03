@@ -91,10 +91,16 @@ ${MENDER} write rootfs-image -t ${MACHINE} -n ${NAME} -u ${SRC} -k ${PRIVATE_KEY
 if [ $? -eq 0 ]; then
     echo "Wrote artifact to ${DST}"
     echo "Checking artifact"
-    echo ""
+    ${MENDER} validate ${DST} -k ${PUBLIC_KEY}
+
+    if [ $? -ne 0 ]; then
+        echo "FAIL - Artifact signing validation failed!!!"
+        # so we don't accidently use it
+        mv ${DST} ${DST}-bad
+        exit 1
+    fi
+
     ${MENDER} read ${DST} -k ${PUBLIC_KEY} 
-    echo ""
-    echo "mender-artifact read result: $?"
 else
     echo "Failed to create signed artifact"
 fi
