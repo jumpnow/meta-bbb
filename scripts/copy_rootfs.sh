@@ -13,14 +13,14 @@ if [ ! -d /media/card ]; then
 fi
 
 if [ "x${2}" = "x" ]; then
-        IMAGE=console
+	image=console
 else
-        IMAGE=${2}
+	image=${2}
 fi
 
 if [ -z "$OETMP" ]; then
 	echo -e "\nWorking from local directory"
-	SRCDIR=.
+	srcdir=.
 else
 	echo -e "\nOETMP: $OETMP"
 
@@ -29,23 +29,31 @@ else
 		exit 1
 	fi
 
-	SRCDIR=${OETMP}/deploy/images/${MACHINE}
+	srcdir=${OETMP}/deploy/images/${MACHINE}
 fi 
 
-echo "IMAGE: $IMAGE"
+echo "IMAGE: $image"
 
 if [ "x${3}" = "x" ]; then
-        TARGET_HOSTNAME=$MACHINE
+	TARGET_HOSTNAME=$MACHINE
 else
-        TARGET_HOSTNAME=${3}
+	TARGET_HOSTNAME=${3}
 fi
 
 echo "HOSTNAME: $TARGET_HOSTNAME"
 
-
-if [ ! -f "${SRCDIR}/${IMAGE}-image-${MACHINE}.tar.xz" ]; then
-        echo "File not found: ${SRCDIR}/${IMAGE}-image-${MACHINE}.tar.xz"
-        exit 1
+if [ -f "${srcdir}/${image}-image-${MACHINE}.tar.xz" ]; then
+	rootfs=${srcdir}/${image}-image-${MACHINE}.tar.xz
+elif [ -f "${srcdir}/${image}-${MACHINE}.tar.xz" ]; then
+	rootfs=${srcdir}/${image}-${MACHINE}.tar.xz
+elif [ -f "${srcdir}/${image}" ]; then
+	rootfs=${srcdir}/${image}
+else
+	echo "Rootfs file not found. Tried"
+	echo " ${srcdir}/${image}-image-${MACHINE}.tar.xz"
+	echo " ${srcdir}/${image}-${MACHINE}.tar.xz"
+	echo " ${srcdir}/${image}"
+	exit 1
 fi
 
 if [ -b ${1} ]; then
@@ -65,24 +73,24 @@ sudo mkfs.ext4 -q -L ROOT $DEV
 echo "Mounting $DEV"
 sudo mount $DEV /media/card
 
-echo "Extracting ${IMAGE}-image-${MACHINE}.tar.xz to /media/card"
-sudo tar -C /media/card -xJf ${SRCDIR}/${IMAGE}-image-${MACHINE}.tar.xz
+echo "Extracting ${rootfs} /media/card"
+sudo tar -C /media/card -xJf ${rootfs}
 
 echo "Writing hostname to /etc/hostname"
 export TARGET_HOSTNAME
 sudo -E bash -c 'echo ${TARGET_HOSTNAME} > /media/card/etc/hostname'        
 
-if [ -f ${SRCDIR}/interfaces ]; then
+if [ -f ${srcdir}/interfaces ]; then
 	echo "Writing interfaces to /media/card/etc/network/"
-	sudo cp ${SRCDIR}/interfaces /media/card/etc/network/interfaces
+	sudo cp ${srcdir}/interfaces /media/card/etc/network/interfaces
 elif [ -f ./interfaces ]; then
 	echo "Writing ./interfaces to /media/card/etc/network/"
 	sudo cp ./interfaces /media/card/etc/network/interfaces
 fi
 
-if [ -f ${SRCDIR}/wpa_supplicant.conf ]; then
+if [ -f ${srcdir}/wpa_supplicant.conf ]; then
 	echo "Writing wpa_supplicant.conf to /media/card/etc/"
-	sudo cp ${SRCDIR}/wpa_supplicant.conf /media/card/etc/wpa_supplicant.conf
+	sudo cp ${srcdir}/wpa_supplicant.conf /media/card/etc/wpa_supplicant.conf
 elif [ -f ./wpa_supplicant.conf ]; then
 	echo "Writing ./wpa_supplicant.conf to /media/card/etc/"
 	sudo cp ./wpa_supplicant.conf /media/card/etc/wpa_supplicant.conf
