@@ -1,5 +1,7 @@
+*~
 scripts/boot.scr
 scripts/uEnv.txt
 scripts/interfaces
 scripts/wpa_supplicant.conf
-*~
+recipes-mender/mender/files/artifact-verify-key.pem
+recipes-mender/mender/files/server.crt
