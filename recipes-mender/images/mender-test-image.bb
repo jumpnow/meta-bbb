@@ -37,6 +37,7 @@ EXTRA_TOOLS_INSTALL = " \
 
 MENDER_EXTRA += " \
     mender-sysvinit \
+    state-scripts \
     u-boot-fw-utils \
 "
 
