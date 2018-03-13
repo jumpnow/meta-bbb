@@ -2,7 +2,7 @@ This layer depends on:
 
     URI: git://git.yoctoproject.org/poky.git
     branch: rocko
-    commit: 5ba69a9
+    commit: fe2c3c5
 
     URI: git://git.openembedded.org/meta-openembedded
     branch: rocko
@@ -10,7 +10,7 @@ This layer depends on:
 
     URI: https://github.com/meta-qt5/meta-qt5.git
     branch: rocko
-    commit: db881bb
+    commit: 32bb7d1
 
 If using mender
 
