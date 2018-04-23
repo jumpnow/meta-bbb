@@ -10,7 +10,7 @@ This layer depends on:
 
     URI: https://github.com/meta-qt5/meta-qt5.git
     branch: rocko
-    commit: bf68f8b
+    commit: 7a52f92
 
 If using mender
 
