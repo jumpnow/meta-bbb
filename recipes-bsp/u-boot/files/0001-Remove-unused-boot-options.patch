@@ -1,0 +1,77 @@
+From fee6f190ff1a3f8f29d3fd04de2d09df5a70d176 Mon Sep 17 00:00:00 2001
+From: Scott Ellis <scott@jumpnowtek.com>
+Date: Sun, 24 Sep 2017 09:32:27 -0400
+Subject: [PATCH 1/3] Remove unused boot options
+
+---
+ configs/am335x_boneblack_defconfig | 35 +++++++++++++++++------------------
+ 1 file changed, 17 insertions(+), 18 deletions(-)
+
+diff --git a/configs/am335x_boneblack_defconfig b/configs/am335x_boneblack_defconfig
+index b8526fc..6ff4076 100644
+--- a/configs/am335x_boneblack_defconfig
++++ b/configs/am335x_boneblack_defconfig
+@@ -5,43 +5,42 @@ CONFIG_AM33XX=y
+ # CONFIG_SPL_NAND_SUPPORT is not set
+ CONFIG_SPL_STACK_R_ADDR=0x82000000
+ CONFIG_DISTRO_DEFAULTS=y
+-CONFIG_SYS_EXTRA_OPTIONS="EMMC_BOOT"
+ CONFIG_SYS_CONSOLE_INFO_QUIET=y
+ CONFIG_VERSION_VARIABLE=y
+ CONFIG_ARCH_MISC_INIT=y
+ CONFIG_SPL=y
+ CONFIG_SPL_STACK_R=y
+-CONFIG_SPL_MUSB_NEW_SUPPORT=y
++# CONFIG_SPL_MUSB_NEW_SUPPORT is not set
+ CONFIG_SPL_OS_BOOT=y
+ CONFIG_AUTOBOOT_KEYED=y
+ CONFIG_AUTOBOOT_PROMPT="Press SPACE to abort autoboot in %d seconds\n"
+ CONFIG_AUTOBOOT_DELAY_STR="d"
+ CONFIG_AUTOBOOT_STOP_STR=" "
+ CONFIG_FASTBOOT=y
+-CONFIG_USB_FUNCTION_FASTBOOT=y
++# CONFIG_USB_FUNCTION_FASTBOOT is not set
+ # CONFIG_CMD_IMLS is not set
+ CONFIG_CMD_SPL=y
+ # CONFIG_CMD_FLASH is not set
+ # CONFIG_CMD_SETEXPR is not set
+-CONFIG_ENV_IS_IN_MMC=y
+-CONFIG_DFU_TFTP=y
+-CONFIG_DFU_MMC=y
+-CONFIG_DFU_RAM=y
++CONFIG_ENV_IS_NOWHERE=y
++# CONFIG_DFU_TFTP is not set
++# CONFIG_DFU_MMC is not set
++# CONFIG_DFU_RAM is not set
+ CONFIG_MMC_OMAP_HS=y
+-CONFIG_SPI_FLASH=y
+-CONFIG_SPI_FLASH_WINBOND=y
++# CONFIG_SPI_FLASH is not set
++# CONFIG_SPI_FLASH_WINBOND is not set
+ CONFIG_PHYLIB=y
+ CONFIG_SYS_NS16550=y
+ CONFIG_OMAP3_SPI=y
+-CONFIG_USB=y
+-CONFIG_USB_MUSB_HOST=y
+-CONFIG_USB_MUSB_GADGET=y
+-CONFIG_USB_STORAGE=y
+-CONFIG_USB_GADGET=y
+-CONFIG_USB_GADGET_DOWNLOAD=y
+-CONFIG_G_DNL_MANUFACTURER="Texas Instruments"
+-CONFIG_G_DNL_VENDOR_NUM=0x0451
+-CONFIG_G_DNL_PRODUCT_NUM=0xd022
++# CONFIG_USB is not set
++# CONFIG_USB_MUSB_HOST is not set
++# CONFIG_USB_MUSB_GADGET is not set
++# CONFIG_USB_STORAGE is not set
++# CONFIG_USB_GADGET is not set
++# CONFIG_USB_GADGET_DOWNLOAD is not set
++# CONFIG_G_DNL_MANUFACTURER="Texas Instruments"
++# CONFIG_G_DNL_VENDOR_NUM=0x0451
++# CONFIG_G_DNL_PRODUCT_NUM=0xd022
+ CONFIG_LZO=y
+ CONFIG_OF_LIBFDT=y
+ CONFIG_OF_LIBFDT_OVERLAY=y
+-- 
+2.7.4
+

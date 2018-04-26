@@ -1,0 +1,41 @@
+From 8acb4115d9058ae78e6ea7aa13a711210609bdd9 Mon Sep 17 00:00:00 2001
+From: Scott Ellis <scott@jumpnowtek.com>
+Date: Sun, 24 Sep 2017 08:32:50 -0400
+Subject: [PATCH 3/3] Skip check for boot scr
+
+---
+ include/environment/ti/mmc.h | 18 +++++++-----------
+ 1 file changed, 7 insertions(+), 11 deletions(-)
+
+diff --git a/include/environment/ti/mmc.h b/include/environment/ti/mmc.h
+index 4305ebd..58a40ea 100644
+--- a/include/environment/ti/mmc.h
++++ b/include/environment/ti/mmc.h
+@@ -29,17 +29,13 @@
+ 	"envboot=mmc dev ${mmcdev}; " \
+ 		"if mmc rescan; then " \
+ 			"echo SD/MMC found on device ${mmcdev};" \
+-			"if run loadbootscript; then " \
+-				"run bootscript;" \
+-			"else " \
+-				"if run loadbootenv; then " \
+-					"echo Loaded env from ${bootenvfile};" \
+-					"run importbootenv;" \
+-				"fi;" \
+-				"if test -n $uenvcmd; then " \
+-					"echo Running uenvcmd ...;" \
+-					"run uenvcmd;" \
+-				"fi;" \
++			"if run loadbootenv; then " \
++				"echo Loaded env from ${bootenvfile};" \
++				"run importbootenv;" \
++			"fi;" \
++			"if test -n $uenvcmd; then " \
++				"echo Running uenvcmd ...;" \
++				"run uenvcmd;" \
+ 			"fi;" \
+ 		"fi;\0" \
+ 	"mmcloados=run args_mmc; " \
+-- 
+2.7.4
+

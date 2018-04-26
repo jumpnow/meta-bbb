@@ -1,0 +1,33 @@
+From b2b6c65e9dd5b17e781856275f21eff6ccf3409c Mon Sep 17 00:00:00 2001
+From: Scott Ellis <scott@jumpnowtek.com>
+Date: Sun, 24 Sep 2017 08:30:33 -0400
+Subject: [PATCH 2/3] Always check for envboot first
+
+---
+ include/configs/am335x_evm.h | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/include/configs/am335x_evm.h b/include/configs/am335x_evm.h
+index 415ce46..2bf592f 100644
+--- a/include/configs/am335x_evm.h
++++ b/include/configs/am335x_evm.h
+@@ -83,12 +83,11 @@
+ 	func(DHCP, dhcp, na)
+ 
+ #define CONFIG_BOOTCOMMAND \
+-	"if test ${boot_fit} -eq 1; then "	\
+-		"run update_to_fit;"	\
+-	"fi;"	\
+-	"run findfdt; " \
+-	"run init_console; " \
+ 	"run envboot; " \
++	"setenv mmcdev 1; " \
++	"run envboot; " \
++	"setenv mmcdev 0; " \
++	"run findfdt; " \
+ 	"run distro_bootcmd"
+ 
+ #include <config_distro_bootcmd.h>
+-- 
+2.7.4
+
