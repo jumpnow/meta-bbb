@@ -35,7 +35,7 @@ dd if=/dev/zero of=$DEV bs=1024 count=1024
 echo -e "\n=== Creating 2 partitions ===\n"
 {
 echo 128,131072,0x0C,*
-echo 131200,+,0x83,-
+echo ,,0x83,-
 } | sfdisk $DEV
 
 
