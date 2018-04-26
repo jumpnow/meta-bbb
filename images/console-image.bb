@@ -19,6 +19,7 @@ KERNEL_EXTRA_INSTALL = " \
  "
 
 WIFI_SUPPORT = " \
+    bbgw-wireless \
     crda \
     iw \
     linux-firmware-ath9k \
