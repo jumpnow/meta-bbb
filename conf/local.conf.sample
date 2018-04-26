@@ -17,8 +17,8 @@ PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
 PREFERRED_PROVIDER_udev = "eudev"
 VIRTUAL-RUNTIME_init_manager = "sysvinit"
 
-# To change kernel version
-#PREFERRED_VERSION_linux-stable = "4.9.%"
+# Comment or change to use another kernel version
+PREFERRED_VERSION_linux-stable = "4.9.%"
 
 MACHINE = "beaglebone"
 
