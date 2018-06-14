@@ -2,8 +2,6 @@ require recipes-kernel/linux/linux-yocto.inc
 
 COMPATIBLE_MACHINE = "beaglebone"
 
-RDEPENDS_kernel-base += "kernel-devicetree"
-
 KERNEL_DEVICETREE_beaglebone ?= " \
     am335x-boneblack.dtb \
     am335x-bonegreen.dtb \
@@ -17,10 +15,8 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/ti-linux-4.9:"
 
 S = "${WORKDIR}/git"
 
-PR = "r6"
-
-PV = "4.9.40"
-SRCREV= "e14916d231784d5d03dbbce917248cbc6ea9c3f9"
+PV = "4.9.58"
+SRCREV= "4d4a6a3f8a12602ce8dc800123715fe7b5c1c3a1"
 SRC_URI = " \
     git://git.ti.com/ti-linux-kernel/ti-linux-kernel.git;branch=ti-linux-4.9.y \
     file://defconfig \

@@ -2,8 +2,6 @@ require recipes-kernel/linux/linux-yocto.inc
 
 COMPATIBLE_MACHINE = "beaglebone"
 
-RDEPENDS_kernel-base += "kernel-devicetree"
-
 KERNEL_DEVICETREE ?= " \
     am335x-boneblack.dtb \
     am335x-bonegreen.dtb \
@@ -24,8 +22,8 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-${LINUX_VERSION}:"
 
 S = "${WORKDIR}/git"
 
-PV = "4.9.99"
-SRCREV = "04cd74a759bf381f8f2c12e9ddb5fe8d0651c483"
+PV = "4.9.107"
+SRCREV = "3c3d05fc6e6653bdf9f7fb3fb6922b199c7ba3ec"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-${LINUX_VERSION}.y \
     file://defconfig \

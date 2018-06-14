@@ -1,5 +1,5 @@
 # Local configuration for meta-bbb images
-# Yocto Project 2.4 Poky distribution [rocko] branch
+# Yocto Project 2.5 Poky distribution [sumo] branch
 # This is a sysvinit system
 
 # mask for non-mender builds
@@ -26,7 +26,7 @@ MACHINE = "beaglebone"
 
 #SSTATE_DIR = "/oe8/bbb/sstate-cache"
 
-#TMPDIR = "/oe8/bbb/tmp-rocko"
+#TMPDIR = "/oe8/bbb/tmp-sumo"
 
 DISTRO = "poky"
 
