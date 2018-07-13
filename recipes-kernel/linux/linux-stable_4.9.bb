@@ -1,4 +1,6 @@
-require recipes-kernel/linux/linux-yocto.inc
+require linux-stable.inc
+
+LIC_FILES_CHKSUM = "file://COPYING;md5=d7810fab7487fb0aad327b76f1be7cd7"
 
 COMPATIBLE_MACHINE = "beaglebone"
 
@@ -22,8 +24,8 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-${LINUX_VERSION}:"
 
 S = "${WORKDIR}/git"
 
-PV = "4.9.107"
-SRCREV = "3c3d05fc6e6653bdf9f7fb3fb6922b199c7ba3ec"
+PV = "4.9.112"
+SRCREV = "060744011e93679f03932f050619744be895b772"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-${LINUX_VERSION}.y \
     file://defconfig \
