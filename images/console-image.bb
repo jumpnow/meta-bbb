@@ -80,6 +80,7 @@ EXTRA_TOOLS_INSTALL = " \
     rsync \
     sysfsutils \
     tcpdump \
+    tree \
     unzip \
     util-linux \
     util-linux-blkid \
