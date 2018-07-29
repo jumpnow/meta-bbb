@@ -1,7 +1,7 @@
-From 9c6577c043957938c1580fc2d991f4833bc5100c Mon Sep 17 00:00:00 2001
+From 0d1cf3ef84f67821efd4caa10706936765d5ffee Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
 Date: Wed, 6 Sep 2017 08:29:35 -0400
-Subject: [PATCH 3/3] wlcore: Change NO FW RX BA session warnings to debug
+Subject: [PATCH 3/5] wlcore: Change NO FW RX BA session warnings to debug
 
 ---
  drivers/net/wireless/ti/wlcore/acx.c | 2 +-

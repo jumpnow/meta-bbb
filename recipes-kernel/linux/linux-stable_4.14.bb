@@ -9,6 +9,12 @@ KERNEL_DEVICETREE ?= " \
     am335x-boneblack-wireless.dtb \
     am335x-bonegreen.dtb \
     am335x-bonegreen-wireless.dtb \
+    bbb-hdmi.dtb \
+    bbb-nohdmi.dtb \
+    bbb-4dcape43t.dtb \
+    bbb-4dcape70t.dtb \
+    bbb-nh5cape.dtb \
+    bbb-nhd7cape.dtb \
 "
 
 LINUX_VERSION = "4.14"
@@ -18,12 +24,14 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-${LINUX_VERSION}:"
 
 S = "${WORKDIR}/git"
 
-PV = "4.14.56"
-SRCREV = "cff26c95b24c7b7147db17b623dee946bd25ec95"
+PV = "4.14.59"
+SRCREV = "53208e12faa5b8c6eac4eb1d23d6e3fae450fc5a"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-${LINUX_VERSION}.y \
     file://defconfig \
     file://0001-spidev-Add-a-generic-compatible-id.patch \
     file://0002-dts-Revoke-Beaglebone-i2c2-cape-definitions.patch \
     file://0003-wlcore-Change-NO-FW-RX-BA-session-warnings-to-debug.patch \
+    file://0004-Add-ft5x06-touchscreen-driver.patch \
+    file://0005-dts-Add-custom-dts-files.patch \
 "
