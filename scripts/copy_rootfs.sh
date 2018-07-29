@@ -20,7 +20,7 @@ fi
 
 if [ -z "$OETMP" ]; then
 	echo -e "\nWorking from local directory"
-	srcdir=.
+	SRCDIR=.
 else
 	echo -e "\nOETMP: $OETMP"
 
@@ -29,7 +29,7 @@ else
 		exit 1
 	fi
 
-	srcdir=${OETMP}/deploy/images/${MACHINE}
+	SRCDIR=${OETMP}/deploy/images/${MACHINE}
 fi 
 
 echo "IMAGE: $image"
@@ -42,17 +42,17 @@ fi
 
 echo "HOSTNAME: $TARGET_HOSTNAME"
 
-if [ -f "${srcdir}/${image}-image-${MACHINE}.tar.xz" ]; then
-	rootfs=${srcdir}/${image}-image-${MACHINE}.tar.xz
-elif [ -f "${srcdir}/${image}-${MACHINE}.tar.xz" ]; then
-	rootfs=${srcdir}/${image}-${MACHINE}.tar.xz
-elif [ -f "${srcdir}/${image}" ]; then
-	rootfs=${srcdir}/${image}
+if [ -f "${SRCDIR}/${image}-image-${MACHINE}.tar.xz" ]; then
+	rootfs=${SRCDIR}/${image}-image-${MACHINE}.tar.xz
+elif [ -f "${SRCDIR}/${image}-${MACHINE}.tar.xz" ]; then
+	rootfs=${SRCDIR}/${image}-${MACHINE}.tar.xz
+elif [ -f "${SRCDIR}/${image}" ]; then
+	rootfs=${SRCDIR}/${image}
 else
 	echo "Rootfs file not found. Tried"
-	echo " ${srcdir}/${image}-image-${MACHINE}.tar.xz"
-	echo " ${srcdir}/${image}-${MACHINE}.tar.xz"
-	echo " ${srcdir}/${image}"
+	echo " ${SRCDIR}/${image}-image-${MACHINE}.tar.xz"
+	echo " ${SRCDIR}/${image}-${MACHINE}.tar.xz"
+	echo " ${SRCDIR}/${image}"
 	exit 1
 fi
 
@@ -80,17 +80,17 @@ echo "Writing hostname to /etc/hostname"
 export TARGET_HOSTNAME
 sudo -E bash -c 'echo ${TARGET_HOSTNAME} > /media/card/etc/hostname'        
 
-if [ -f ${srcdir}/interfaces ]; then
+if [ -f ${SRCDIR}/interfaces ]; then
 	echo "Writing interfaces to /media/card/etc/network/"
-	sudo cp ${srcdir}/interfaces /media/card/etc/network/interfaces
+	sudo cp ${SRCDIR}/interfaces /media/card/etc/network/interfaces
 elif [ -f ./interfaces ]; then
 	echo "Writing ./interfaces to /media/card/etc/network/"
 	sudo cp ./interfaces /media/card/etc/network/interfaces
 fi
 
-if [ -f ${srcdir}/wpa_supplicant.conf ]; then
+if [ -f ${SRCDIR}/wpa_supplicant.conf ]; then
 	echo "Writing wpa_supplicant.conf to /media/card/etc/"
-	sudo cp ${srcdir}/wpa_supplicant.conf /media/card/etc/wpa_supplicant.conf
+	sudo cp ${SRCDIR}/wpa_supplicant.conf /media/card/etc/wpa_supplicant.conf
 elif [ -f ./wpa_supplicant.conf ]; then
 	echo "Writing ./wpa_supplicant.conf to /media/card/etc/"
 	sudo cp ./wpa_supplicant.conf /media/card/etc/wpa_supplicant.conf
