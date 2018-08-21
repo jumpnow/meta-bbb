@@ -16,4 +16,4 @@ meta-bbb layer maintainer: Scott Ellis <scott@jumpnowtek.com>
 
 Instructions for using this layer can be found on the [jumpnowtek site][jumpnowtek-bbb].
 
-[jumpnowtek-bbb]: http://www.jumpnowtek.com/yocto/BeagleBone-Systems-with-Yocto.html
+[jumpnowtek-bbb]: http://www.jumpnowtek.com/beaglebone/BeagleBone-Systems-with-Yocto.html
