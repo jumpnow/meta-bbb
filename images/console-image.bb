@@ -9,15 +9,14 @@ inherit image
 CORE_OS = " \
     openssh openssh-keygen openssh-sftp-server \
     packagegroup-core-boot \
-    psplash \
     term-prompt \
     tzdata \
- "
+"
 
 KERNEL_EXTRA_INSTALL = " \
     kernel-modules \
     load-modules \
- "
+"
 
 WIFI_SUPPORT = " \
     bbgw-wireless \
@@ -31,7 +30,7 @@ WIFI_SUPPORT = " \
     linux-firmware-wl18xx \
     wireless-tools \
     wpa-supplicant \
- "
+"
 
 DEV_SDK_INSTALL = " \
     binutils \
@@ -40,44 +39,54 @@ DEV_SDK_INSTALL = " \
     cpp \
     cpp-symlinks \
     diffutils \
+    elfutils \
     file \
     g++ \
     g++-symlinks \
     gcc \
     gcc-symlinks \
+    gdb \
     gettext \
     git \
     ldd \
     libstdc++ \
     libstdc++-dev \
     libtool \
+    ltrace \
     make \
+    nasm \
+    perl-modules \
     pkgconfig \
+    python-modules \
     python3-modules \
- "
+    strace \
+"
 
 DEV_EXTRAS = " \
     ntp \
     ntp-tickadj \
     serialecho \
     spiloop \
- "
+"
 
 EXTRA_TOOLS_INSTALL = " \
     bzip2 \
     cursor-blink \
     devmem2 \
     dosfstools \
+    e2fsprogs-mke2fs \
+    emmc-upgrader \
     ethtool \
     findutils \
     i2c-tools \
     iperf3 \
+    iproute2 \
     iptables \
     less \
     nano \
     netcat \
+    parted \
     procps \
-    rsync \
     sysfsutils \
     tcpdump \
     tree \
@@ -87,7 +96,7 @@ EXTRA_TOOLS_INSTALL = " \
     wget \
     xz \
     zip \
- "
+"
 
 IMAGE_INSTALL += " \
     ${CORE_OS} \
@@ -96,7 +105,7 @@ IMAGE_INSTALL += " \
     ${EXTRA_TOOLS_INSTALL} \
     ${KERNEL_EXTRA_INSTALL} \
     ${WIFI_SUPPORT} \
- "
+"
 
 set_local_timezone() {
     ln -sf /usr/share/zoneinfo/EST5EDT ${IMAGE_ROOTFS}/etc/localtime
@@ -109,7 +118,7 @@ disable_bootlogd() {
 ROOTFS_POSTPROCESS_COMMAND += " \
     set_local_timezone ; \
     disable_bootlogd ; \
- "
+"
 
 export IMAGE_BASENAME = "console-image"
 
