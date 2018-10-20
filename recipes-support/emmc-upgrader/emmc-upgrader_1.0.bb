@@ -5,6 +5,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 SRC_URI = "file://init \
            file://default \
+           file://syshook \
            file://syskeep \
            file://sysrevert \
            file://sysupgrade \
@@ -27,6 +28,7 @@ do_install_append () {
     install -m 0644 default ${D}${sysconfdir}/default/boot-flags
 
     install -d ${D}${bindir}
+    install -m 0755 syshook ${D}${bindir}
     install -m 0755 syskeep ${D}${bindir}
     install -m 0755 sysrevert ${D}${bindir}
     install -m 0755 sysupgrade ${D}${bindir}

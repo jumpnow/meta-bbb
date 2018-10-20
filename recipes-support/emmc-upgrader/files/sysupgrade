@@ -130,9 +130,9 @@ else
     echo "ok"
 fi
 
-echo -e -n "Extracting new root filesystem ${1} to ${upgrade_mnt} : "
+echo -e -n "Extracting ${1} to ${upgrade_mnt} : "
 
-tar -C ${upgrade_mnt} -xJf ${1}
+EXTRACT_UNSAFE_SYMLINKS=1 tar -C ${upgrade_mnt} -xJf ${1}
 
 if [ $? -ne 0 ]; then
     echo "fail"
@@ -143,43 +143,15 @@ else
     echo "ok"
 fi
 
-# update config files or anything else on the new rootfs now
-# while it is still writable 
-#
-# this should be customized (probably a good place for a hook)
-# but here are some examples
-echo -e -n "Copying config files from current system : "
+if [ -x /usr/bin/syshook ]; then
+    echo "Running /usr/bin/syshook"
+    /usr/bin/syshook ${upgrade_mnt}
 
-cp /etc/fstab ${upgrade_mnt}/etc/fstab
-
-if [ $? -ne 0 ]; then
-    echo "fail"
-    echo "Error copying /etc/fstab to new system"
-    umount ${new_root}
-    exit 1
+    if [ $? -ne 0 ]; then
+        umount ${upgrade_root}
+        exit 1
+    fi
 fi
-
-# if we have a /data mount point in the current system
-# make sure we also have it in the new system
-grep -e '\s\/data\s' /etc/fstab
-
-if [ $? -eq 0 ]; then
-    mkdir -p ${upgrade_mnt}/data
-fi
-
-cp /etc/hostname ${upgrade_mnt}/etc/hostname
-
-if [ $? -ne 0 ]; then
-    echo "fail"
-    echo "Error copying /etc/hostname to new system"
-    umount ${new_root}
-    exit 1
-fi
-
-mkdir -p ${upgrade_mnt}/etc/ssh
-cp /etc/ssh/* ${upgrade_mnt}/etc/ssh/
-
-# end of the custom stuff
 
 echo -e -n "Unmounting new root ${new_root} : "
 
