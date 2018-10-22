@@ -17,15 +17,13 @@ PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
 PREFERRED_PROVIDER_udev = "eudev"
 VIRTUAL-RUNTIME_init_manager = "sysvinit"
 
-# Comment or change to use another kernel version
-PREFERRED_VERSION_linux-stable = "4.9.%"
+# Default is 4.19, but 4.14 has more custom dts files
+# PREFERRED_VERSION_linux-stable = "4.14.%"
 
 MACHINE = "beaglebone"
 
 #DL_DIR = "${HOME}/oe-sources"
-
 #SSTATE_DIR = "/oe8/bbb/sstate-cache"
-
 #TMPDIR = "/oe8/bbb/tmp-sumo"
 
 DISTRO = "poky"
@@ -42,9 +40,6 @@ EXTRA_USERS_PARAMS = "usermod -P jumpnowtek root; "
 USER_CLASSES = "image-mklibs image-prelink"
 
 PATCHRESOLVE = "noop"
-
 RM_OLD_IMAGE = "1"
-
 INHERIT += "rm_work"
-
 CONF_VERSION = "1"
