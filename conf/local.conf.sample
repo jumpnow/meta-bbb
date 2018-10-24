@@ -37,6 +37,9 @@ SDKMACHINE = "x86_64"
 INHERIT += "extrausers"
 EXTRA_USERS_PARAMS = "usermod -P jumpnowtek root; "
 
+INHERIT += "chageusers"
+CHAGE_USERS_PARAMS = "chage -d0 root; "
+
 USER_CLASSES = "image-mklibs image-prelink"
 
 PATCHRESOLVE = "noop"
