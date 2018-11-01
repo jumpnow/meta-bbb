@@ -76,6 +76,11 @@ sudo mount $DEV /media/card
 echo "Extracting ${rootfs} /media/card"
 sudo tar -C /media/card -xJf ${rootfs}
 
+echo "Generating a random-seed for urandom"
+mkdir -p /media/card/var/lib/urandom
+sudo dd if=/dev/urandom of=/media/card/var/lib/urandom/random-seed bs=512 count=1
+sudo chmod 600 /media/card/var/lib/urandom/random-seed
+
 echo "Writing hostname to /etc/hostname"
 export TARGET_HOSTNAME
 sudo -E bash -c 'echo ${TARGET_HOSTNAME} > /media/card/etc/hostname'        

@@ -1,9 +1,6 @@
 # Local configuration for meta-bbb images
-# Yocto Project 2.5 Poky distribution [sumo] branch
+# Yocto Project 2.6 Poky distribution [thud] branch
 # This is a sysvinit system
-
-# mask for non-mender builds
-BBMASK = "meta-bbb/recipes-mender"
 
 LICENSE_FLAGS_WHITELIST = "commercial"
 
@@ -24,7 +21,7 @@ MACHINE = "beaglebone"
 
 #DL_DIR = "${HOME}/oe-sources"
 #SSTATE_DIR = "/oe8/bbb/sstate-cache"
-#TMPDIR = "/oe8/bbb/tmp-sumo"
+#TMPDIR = "/oe8/bbb/tmp-thud"
 
 DISTRO = "poky"
 
@@ -33,10 +30,14 @@ PACKAGE_CLASSES = "package_ipk"
 # i686 or x86_64
 SDKMACHINE = "x86_64"
 
+# for no root password
 #EXTRA_IMAGE_FEATURES = "debug-tweaks"
+
+# to enable a root password of jumpnowtek
 INHERIT += "extrausers"
 EXTRA_USERS_PARAMS = "usermod -P jumpnowtek root; "
 
+# to force a password change on first login
 INHERIT += "chageusers"
 CHAGE_USERS_PARAMS = "chage -d0 root; "
 

@@ -107,4 +107,10 @@ if [ -f /etc/network/interfaces ]; then
     fi
 fi
 
+echo "  Generating a random-seed file for urandom"
+
+mkdir -p ${upgrade_mnt}/var/lib/urandom
+dd if=/dev/urandom of=${upgrade_mnt}/var/lib/urandom/random-seed bs=512 count=1
+chmod 600 ${upgrade_mnt}/var/lib/urandom/random-seed
+
 exit 0

@@ -3,10 +3,12 @@ HOMEPAGE = "http://www.jumpnowtek.com"
 
 IMAGE_LINGUAS = "en-us"
 
-inherit core-image
+inherit image
 
 IMAGE_INSTALL += " \
     emmc-installer \
+    packagegroup-core-boot \
+    rndaddtoentcnt \
 "
 
 disable_bootlogd() {

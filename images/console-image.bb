@@ -28,7 +28,6 @@ WIFI_SUPPORT = " \
     linux-firmware-rtl8192cu \
     linux-firmware-rtl8192su \
     linux-firmware-wl18xx \
-    wireless-tools \
     wpa-supplicant \
 "
 
@@ -71,6 +70,7 @@ DEV_EXTRAS = " \
 
 EXTRA_TOOLS_INSTALL = " \
     bzip2 \
+    curl \
     cursor-blink \
     devmem2 \
     dosfstools \
@@ -85,8 +85,11 @@ EXTRA_TOOLS_INSTALL = " \
     less \
     nano \
     netcat \
+    nmap \
     parted \
     procps \
+    rndaddtoentcnt \
+    rng-tools \
     sysfsutils \
     tcpdump \
     tree \

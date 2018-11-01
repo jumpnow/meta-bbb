@@ -1,4 +1,4 @@
-#	$OpenBSD: sshd_config,v 1.80 2008/07/02 02:24:18 djm Exp $
+#	$OpenBSD: sshd_config,v 1.102 2018/02/16 02:32:40 djm Exp $
 
 # This is the sshd server system-wide configuration file.  See
 # sshd_config(5) for more information.
@@ -7,34 +7,22 @@
 
 # The strategy used for options in the default sshd_config shipped with
 # OpenSSH is to specify options with their default value where
-# possible, but leave them commented.  Uncommented options change a
+# possible, but leave them commented.  Uncommented options override the
 # default value.
 
 #Port 22
-AddressFamily inet 
+AddressFamily inet
 #ListenAddress 0.0.0.0
 #ListenAddress ::
 
-# The default requires explicit activation of protocol 1
-Protocol 2
-
-# HostKey for protocol version 1
-#HostKey /etc/ssh/ssh_host_key
-# HostKeys for protocol version 2
 #HostKey /etc/ssh/ssh_host_rsa_key
-#HostKey /etc/ssh/ssh_host_dsa_key
 #HostKey /etc/ssh/ssh_host_ecdsa_key
 #HostKey /etc/ssh/ssh_host_ed25519_key
-
-# Lifetime and size of ephemeral version 1 server key
-#KeyRegenerationInterval 1h
-#ServerKeyBits 1024
 
 # Ciphers and keying
 #RekeyLimit default none
 
 # Logging
-# obsoletes QuietMode and FascistLogging
 #SyslogFacility AUTH
 #LogLevel INFO
 
@@ -46,12 +34,11 @@ PermitRootLogin yes
 #MaxAuthTries 6
 #MaxSessions 10
 
-#RSAAuthentication yes
 #PubkeyAuthentication yes
 
 # The default is to check both .ssh/authorized_keys and .ssh/authorized_keys2
 # but this is overridden so installations will only check .ssh/authorized_keys
-AuthorizedKeysFile .ssh/authorized_keys
+AuthorizedKeysFile	.ssh/authorized_keys
 
 #AuthorizedPrincipalsFile none
 
@@ -59,20 +46,19 @@ AuthorizedKeysFile .ssh/authorized_keys
 #AuthorizedKeysCommandUser nobody
 
 # For this to work you will also need host keys in /etc/ssh/ssh_known_hosts
-#RhostsRSAAuthentication no
-# similar for protocol version 2
 #HostbasedAuthentication no
 # Change to yes if you don't trust ~/.ssh/known_hosts for
-# RhostsRSAAuthentication and HostbasedAuthentication
+# HostbasedAuthentication
 #IgnoreUserKnownHosts no
 # Don't read the user's ~/.rhosts and ~/.shosts files
 #IgnoreRhosts yes
 
 # To disable tunneled clear text passwords, change to no here!
-PasswordAuthentication yes
-PermitEmptyPasswords no
+#PasswordAuthentication yes
+#PermitEmptyPasswords no
 
-# Change to no to disable s/key passwords
+# Change to yes to enable challenge-response passwords (beware issues with
+# some PAM modules and threads)
 ChallengeResponseAuthentication no
 
 # Kerberos options
@@ -96,8 +82,8 @@ ChallengeResponseAuthentication no
 # and ChallengeResponseAuthentication to 'no'.
 #UsePAM no
 
-AllowAgentForwarding no
-AllowTcpForwarding no
+#AllowAgentForwarding yes
+#AllowTcpForwarding yes
 #GatewayPorts no
 #X11Forwarding no
 #X11DisplayOffset 10
@@ -111,7 +97,7 @@ AllowTcpForwarding no
 Compression no
 ClientAliveInterval 15
 ClientAliveCountMax 4
-UseDNS no 
+#UseDNS no
 #PidFile /var/run/sshd.pid
 #MaxStartups 10:30:100
 #PermitTunnel no

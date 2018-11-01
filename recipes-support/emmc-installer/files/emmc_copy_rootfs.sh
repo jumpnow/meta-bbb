@@ -70,6 +70,11 @@ mount $DEV /media
 echo "Extracting ${FULLPATH} to  /media"
 EXTRACT_UNSAFE_SYMLINKS=1 tar -C /media -xJf ${FULLPATH}
 
+echo "Generating a random-seed for urandom"
+mkdir -p /media/var/lib/urandom
+dd if=/dev/urandom of=/media/var/lib/urandom/random-seed bs=512 count=1
+chmod 600 /media/var/lib/urandom/random-seed
+
 echo "Writing hostname to /etc/hostname"
 export TARGET_HOSTNAME
 echo ${TARGET_HOSTNAME} > /media/etc/hostname
