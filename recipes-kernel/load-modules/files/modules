@@ -1,5 +1,5 @@
 # if using gpio (on/off backlight)
-gpio_backlight
+#gpio_backlight
 
 # for NewHaven displays
 #ft5x06_ts
