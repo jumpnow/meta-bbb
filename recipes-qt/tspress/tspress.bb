@@ -5,9 +5,7 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 
 DEPENDS += "qtbase"
 
-PR = "r3"
-
-SRCREV = "${AUTOREV}"
+SRCREV = "82a7a614ad858818b0db4d91583a15602c44b42a"
 SRC_URI = "git://github.com/scottellis/tspress.git"
 
 S = "${WORKDIR}/git"
