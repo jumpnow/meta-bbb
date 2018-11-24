@@ -53,7 +53,6 @@ DEV_SDK_INSTALL = " \
     libtool \
     ltrace \
     make \
-    nasm \
     perl-modules \
     pkgconfig \
     python-modules \
