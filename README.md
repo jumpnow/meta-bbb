@@ -12,7 +12,7 @@ This layer depends on:
 Latest commits:
 
     poky 87e3a97
-    meta-openembedded a15d7f6
+    meta-openembedded 6094ae1
     meta-qt5 201fcf2
 
 
