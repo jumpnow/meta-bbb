@@ -75,6 +75,7 @@ EXTRA_TOOLS_INSTALL = " \
     emmc-upgrader \
     ethtool \
     findutils \
+    grep \
     i2c-tools \
     iperf3 \
     iproute2 \
