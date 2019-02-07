@@ -81,6 +81,7 @@ EXTRA_TOOLS_INSTALL = " \
     iproute2 \
     iptables \
     less \
+    lsof \
     nano \
     netcat-openbsd \
     nmap \
