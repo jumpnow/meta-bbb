@@ -1,14 +1,14 @@
-From 346e7359966093507c5e6cc28a5846670c003ca8 Mon Sep 17 00:00:00 2001
+From e71ef3f265fbbdb67e99d51f784838609e46e2ad Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
-Date: Thu, 1 Nov 2018 05:01:35 -0400
+Date: Mon, 6 May 2019 05:31:04 -0400
 Subject: [PATCH] Customize config and boot command
 
 ---
- configs/am335x_boneblack_defconfig | 47 +++++++++++++++-----------------------
- 1 file changed, 19 insertions(+), 28 deletions(-)
+ configs/am335x_boneblack_defconfig | 46 ++++++++++++++++----------------------
+ 1 file changed, 19 insertions(+), 27 deletions(-)
 
 diff --git a/configs/am335x_boneblack_defconfig b/configs/am335x_boneblack_defconfig
-index 732cb64..63675f0 100644
+index 439d0cb..b5d1c75 100644
 --- a/configs/am335x_boneblack_defconfig
 +++ b/configs/am335x_boneblack_defconfig
 @@ -4,14 +4,14 @@ CONFIG_TI_COMMON_CMD_OPTIONS=y
@@ -30,7 +30,7 @@ index 732cb64..63675f0 100644
  CONFIG_AUTOBOOT_KEYED=y
  CONFIG_AUTOBOOT_PROMPT="Press SPACE to abort autoboot in %d seconds\n"
  CONFIG_AUTOBOOT_DELAY_STR="d"
-@@ -19,33 +19,24 @@ CONFIG_AUTOBOOT_STOP_STR=" "
+@@ -19,32 +19,24 @@ CONFIG_AUTOBOOT_STOP_STR=" "
  CONFIG_CMD_SPL=y
  # CONFIG_CMD_FLASH is not set
  # CONFIG_CMD_SETEXPR is not set
@@ -58,25 +58,24 @@ index 732cb64..63675f0 100644
  CONFIG_MMC_OMAP_HS=y
 -CONFIG_SPI_FLASH=y
 -CONFIG_SPI_FLASH_WINBOND=y
--CONFIG_DRIVER_TI_CPSW=y
 +# CONFIG_SPI_FLASH is not set
 +# CONFIG_SPI_FLASH_WINBOND is not set
+ CONFIG_MII=y
+-CONFIG_DRIVER_TI_CPSW=y
 +# CONFIG_DRIVER_TI_CPSW is not set
- CONFIG_SYS_NS16550=y
  CONFIG_SPI=y
  CONFIG_OMAP3_SPI=y
 -CONFIG_USB=y
 -CONFIG_USB_MUSB_HOST=y
 -CONFIG_USB_MUSB_GADGET=y
 -CONFIG_USB_MUSB_DSPS=y
--CONFIG_USB_STORAGE=y
 -CONFIG_USB_GADGET=y
 -CONFIG_USB_GADGET_MANUFACTURER="Texas Instruments"
 -CONFIG_USB_GADGET_VENDOR_NUM=0x0451
 -CONFIG_USB_GADGET_PRODUCT_NUM=0xd022
 -CONFIG_USB_ETHER=y
 -CONFIG_USBNET_HOST_ADDR="de:ad:be:af:00:00"
-+# CONFIG_USB is not set
++CONFIG_USB is not set
  CONFIG_LZO=y
  CONFIG_OF_LIBFDT=y
 -- 

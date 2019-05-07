@@ -77,6 +77,7 @@ EXTRA_TOOLS_INSTALL = " \
     findutils \
     grep \
     i2c-tools \
+    ifupdown \
     iperf3 \
     iproute2 \
     iptables \
@@ -89,7 +90,6 @@ EXTRA_TOOLS_INSTALL = " \
     parted \
     procps \
     rndaddtoentcnt \
-    rng-tools \
     sysfsutils \
     tcpdump \
     tree \
