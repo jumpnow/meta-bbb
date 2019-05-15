@@ -18,6 +18,12 @@ KERNEL_EXTRA_INSTALL = " \
     load-modules \
 "
 
+WIREGUARD = " \
+    wireguard-init \
+    wireguard-module \
+    wireguard-tools \
+"
+
 WIFI_SUPPORT = " \
     bbgw-wireless \
     crda \
@@ -108,6 +114,7 @@ IMAGE_INSTALL += " \
     ${EXTRA_TOOLS_INSTALL} \
     ${KERNEL_EXTRA_INSTALL} \
     ${WIFI_SUPPORT} \
+    ${WIREGUARD} \
 "
 
 set_local_timezone() {

@@ -107,6 +107,24 @@ if [ -f /etc/network/interfaces ]; then
     fi
 fi
 
+if [ -d /etc/wireguard ]; then
+
+    count=$(ls /etc/wireguard | wc -l)
+
+    if [ "$count" -gt 0 ]; then
+        echo "  Copying /etc/wireguard files"
+
+        mkdir -p ${upgrade_mnt}/etc/wireguard
+
+        cp --preserve=mode,ownership /etc/wireguard/* ${upgrade_mnt}/etc/wireguard
+
+        if [ $? -ne 0 ]; then
+            echo "Error copying /etc/wireguard files"
+            exit 1
+        fi
+    fi
+fi
+
 echo "  Generating a random-seed file for urandom"
 
 mkdir -p ${upgrade_mnt}/var/lib/urandom

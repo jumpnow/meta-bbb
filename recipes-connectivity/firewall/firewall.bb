@@ -6,8 +6,6 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda
 SRC_URI += "file://init \
             file://firewall.rules"
 
-PR = "r0"
-
 S = "${WORKDIR}"
 
 inherit update-rc.d
