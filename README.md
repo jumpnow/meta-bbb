@@ -12,7 +12,7 @@ This layer depends on:
 Latest commits:
 
     poky 01b8a8b
-    meta-openembedded 8d5dcd6
+    meta-openembedded 0afee3e
     meta-qt5 2a5f941
 
 meta-bbb layer maintainer: Scott Ellis <scott@jumpnowtek.com>
