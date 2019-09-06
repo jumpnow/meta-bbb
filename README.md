@@ -13,6 +13,6 @@ Latest commits:
 
     poky 01b8a8b
     meta-openembedded 0afee3e
-    meta-qt5 2a5f941
+    meta-qt5 b4f9f22
 
 meta-bbb layer maintainer: Scott Ellis <scott@jumpnowtek.com>
