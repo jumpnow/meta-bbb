@@ -1,3 +1,5 @@
+cryptodev
+
 # if using gpio (on/off backlight)
 #gpio_backlight
 

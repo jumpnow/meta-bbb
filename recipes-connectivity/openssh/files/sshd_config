@@ -11,7 +11,7 @@
 # default value.
 
 #Port 22
-AddressFamily inet
+#AddressFamily any
 #ListenAddress 0.0.0.0
 #ListenAddress ::
 

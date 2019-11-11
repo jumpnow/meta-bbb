@@ -1,83 +1,25 @@
-From e71ef3f265fbbdb67e99d51f784838609e46e2ad Mon Sep 17 00:00:00 2001
+From 3b7c75826713522d669ea70c0b88c68ef72bba89 Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
-Date: Mon, 6 May 2019 05:31:04 -0400
+Date: Sun, 10 Nov 2019 08:04:11 -0500
 Subject: [PATCH] Customize config and boot command
 
 ---
- configs/am335x_boneblack_defconfig | 46 ++++++++++++++++----------------------
- 1 file changed, 19 insertions(+), 27 deletions(-)
+ configs/am335x_evm_defconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/configs/am335x_boneblack_defconfig b/configs/am335x_boneblack_defconfig
-index 439d0cb..b5d1c75 100644
---- a/configs/am335x_boneblack_defconfig
-+++ b/configs/am335x_boneblack_defconfig
-@@ -4,14 +4,14 @@ CONFIG_TI_COMMON_CMD_OPTIONS=y
- CONFIG_AM33XX=y
- CONFIG_SPL=y
+diff --git a/configs/am335x_evm_defconfig b/configs/am335x_evm_defconfig
+index ff96f19..3457c1f 100644
+--- a/configs/am335x_evm_defconfig
++++ b/configs/am335x_evm_defconfig
+@@ -6,7 +6,7 @@ CONFIG_SPL=y
  CONFIG_DISTRO_DEFAULTS=y
--CONFIG_SYS_EXTRA_OPTIONS="EMMC_BOOT"
+ CONFIG_SPL_LOAD_FIT=y
+ CONFIG_OF_BOARD_SETUP=y
 -CONFIG_BOOTCOMMAND="if test ${boot_fit} -eq 1; then run update_to_fit; fi; run findfdt; run init_console; run envboot; run distro_bootcmd"
-+# CONFIG_SYS_EXTRA_OPTIONS="EMMC_BOOT"
 +CONFIG_BOOTCOMMAND="run envboot; setenv mmcdev 1; run envboot; setenv mmcdev 0; run findfdt; run distro_bootcmd"
+ CONFIG_LOGLEVEL=3
  CONFIG_SYS_CONSOLE_INFO_QUIET=y
  CONFIG_VERSION_VARIABLE=y
- CONFIG_ARCH_MISC_INIT=y
--CONFIG_SPL_MUSB_NEW_SUPPORT=y
-+# CONFIG_SPL_MUSB_NEW_SUPPORT is not set
- # CONFIG_SPL_NAND_SUPPORT is not set
--CONFIG_SPL_OS_BOOT=y
-+# CONFIG_SPL_OS_BOOT is not set
- CONFIG_AUTOBOOT_KEYED=y
- CONFIG_AUTOBOOT_PROMPT="Press SPACE to abort autoboot in %d seconds\n"
- CONFIG_AUTOBOOT_DELAY_STR="d"
-@@ -19,32 +19,24 @@ CONFIG_AUTOBOOT_STOP_STR=" "
- CONFIG_CMD_SPL=y
- # CONFIG_CMD_FLASH is not set
- # CONFIG_CMD_SETEXPR is not set
--CONFIG_ENV_IS_IN_MMC=y
--CONFIG_ENV_VARS_UBOOT_RUNTIME_CONFIG=y
--CONFIG_BOOTCOUNT_LIMIT=y
--CONFIG_DFU_TFTP=y
--CONFIG_DFU_MMC=y
--CONFIG_DFU_RAM=y
--CONFIG_USB_FUNCTION_FASTBOOT=y
--CONFIG_FASTBOOT_FLASH=y
--CONFIG_FASTBOOT_FLASH_MMC_DEV=1
--CONFIG_FASTBOOT_CMD_OEM_FORMAT=y
-+# CONFIG_ENV_IS_IN_MMC is not set
-+CONFIG_ENV_IS_NOWHERE=y
-+# CONFIG_ENV_VARS_UBOOT_RUNTIME_CONFIG is not set
-+# CONFIG_BOOTCOUNT_LIMIT is not set
-+# CONFIG_DFU_TFTP is not set
-+# CONFIG_DFU_MMC is not set
-+# CONFIG_DFU_RAM is not set
-+# CONFIG_USB_FUNCTION_FASTBOOT is not set
-+# CONFIG_FASTBOOT_FLASH is not set
-+# CONFIG_FASTBOOT_FLASH_MMC_DEV is not set
-+# CONFIG_FASTBOOT_CMD_OEM_FORMAT is not set
- CONFIG_MMC_OMAP_HS=y
--CONFIG_SPI_FLASH=y
--CONFIG_SPI_FLASH_WINBOND=y
-+# CONFIG_SPI_FLASH is not set
-+# CONFIG_SPI_FLASH_WINBOND is not set
- CONFIG_MII=y
--CONFIG_DRIVER_TI_CPSW=y
-+# CONFIG_DRIVER_TI_CPSW is not set
- CONFIG_SPI=y
- CONFIG_OMAP3_SPI=y
--CONFIG_USB=y
--CONFIG_USB_MUSB_HOST=y
--CONFIG_USB_MUSB_GADGET=y
--CONFIG_USB_MUSB_DSPS=y
--CONFIG_USB_GADGET=y
--CONFIG_USB_GADGET_MANUFACTURER="Texas Instruments"
--CONFIG_USB_GADGET_VENDOR_NUM=0x0451
--CONFIG_USB_GADGET_PRODUCT_NUM=0xd022
--CONFIG_USB_ETHER=y
--CONFIG_USBNET_HOST_ADDR="de:ad:be:af:00:00"
-+CONFIG_USB is not set
- CONFIG_LZO=y
- CONFIG_OF_LIBFDT=y
 -- 
 2.7.4
 
