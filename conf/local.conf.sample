@@ -1,5 +1,5 @@
 # Local configuration for meta-bbb images
-# Yocto Project 2.8 Poky distribution [zeus] branch
+# Yocto Project 3.0 Poky distribution [zeus] branch
 # This is a sysvinit system
 
 BBMASK = "meta-networking/recipes-kernel/wireguard"
