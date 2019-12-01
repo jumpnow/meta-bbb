@@ -1,4 +1,4 @@
-From 0cb8b50d9dad3514ca7a1f1a063da62a17edf482 Mon Sep 17 00:00:00 2001
+From 77aacc7e9a4f9151d00b489b7ee2466f6b9b8824 Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
 Date: Mon, 8 Jul 2019 20:20:16 -0400
 Subject: [PATCH 2/3] dts: Remove bbb cape i2c definitions

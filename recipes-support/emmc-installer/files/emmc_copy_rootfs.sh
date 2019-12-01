@@ -12,12 +12,12 @@ MACHINE=beaglebone
 DEV=/dev/mmcblk1p2
 
 if [ -z "${SRCDIR}" ]; then
-        SRCDIR=.
+    SRCDIR=.
 else
-        if [ ! -d "${SRCDIR}" ]; then
-                echo "Source directory not found: ${SRCDIR}"
-                exit 1
-        fi
+    if [ ! -d "${SRCDIR}" ]; then
+            echo "Source directory not found: ${SRCDIR}"
+            exit 1
+    fi
 fi
 
 if [ "x${1}" = "x" ]; then
@@ -54,9 +54,9 @@ else
 fi
 
 if [ "x${2}" = "x" ]; then
-        TARGET_HOSTNAME=$MACHINE
+    TARGET_HOSTNAME=$MACHINE
 else
-        TARGET_HOSTNAME=${2}
+    TARGET_HOSTNAME=${2}
 fi
 
 echo -e "HOSTNAME: $TARGET_HOSTNAME\n"
@@ -75,7 +75,7 @@ mkdir -p /media/var/lib/urandom
 dd if=/dev/urandom of=/media/var/lib/urandom/random-seed bs=512 count=1
 chmod 600 /media/var/lib/urandom/random-seed
 
-echo "Writing hostname to /etc/hostname"
+echo "Writing ${TARGET_HOSTNAME} to /etc/hostname"
 export TARGET_HOSTNAME
 echo ${TARGET_HOSTNAME} > /media/etc/hostname
 
@@ -93,4 +93,3 @@ echo "Unmounting $DEV"
 umount $DEV
 
 echo "Done"
-

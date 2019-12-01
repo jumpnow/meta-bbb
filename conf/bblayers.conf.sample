@@ -10,7 +10,10 @@ BBLAYERS ?= " \
   ${HOME}/poky-zeus/meta-poky \
   ${HOME}/poky-zeus/meta-openembedded/meta-oe \
   ${HOME}/poky-zeus/meta-openembedded/meta-networking \
+  ${HOME}/poky-zeus/meta-openembedded/meta-perl \
   ${HOME}/poky-zeus/meta-openembedded/meta-python \
   ${HOME}/poky-zeus/meta-qt5 \
+  ${HOME}/poky-zeus/meta-security \
+  ${HOME}/poky-zeus/meta-jumpnow \
   ${HOME}/zeus-bbb/meta-bbb \
 "
