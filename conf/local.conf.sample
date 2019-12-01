@@ -16,7 +16,7 @@ PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
 PREFERRED_PROVIDER_udev = "eudev"
 VIRTUAL-RUNTIME_init_manager = "sysvinit"
 
-# Default is 5.0, but you can change versions here 
+# Default is 5.4, but you can change versions here
 # PREFERRED_VERSION_linux-stable = "4.19.%"
 
 MACHINE = "beaglebone"
