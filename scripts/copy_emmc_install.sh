@@ -20,13 +20,13 @@ else
 fi
 
 if [ -z "$OETMP" ]; then
-	if [ -d ${HOME}/bbb/build/tmp/deploy/images/${MACHINE} ]; then
-		echo -e "\nUsing ${HOME}/elvaria/build/tmp"
-		SRCDIR=${HOME}/bbb/build/tmp
-	else
-		echo -e "\nWorking from local directory"
-		SRCDIR=.
-	fi
+    if [ -d ${HOME}/bbb/build/tmp/deploy/images/${MACHINE} ]; then
+    	echo -e "\nUsing ${HOME}/elvaria/build/tmp"
+    	SRCDIR=${HOME}/bbb/build/tmp
+    else
+    	echo -e "\nWorking from local directory"
+    	SRCDIR=.
+    fi
 else
         echo -e "\nOETMP: $OETMP"
 
@@ -54,12 +54,12 @@ if [ ! -f "${SRCDIR}/${IMAGE}-image-${MACHINE}.tar.xz" ]; then
 fi
 
 for file in $SUPPORT_SCRIPTS; do
-	if [ ! -f ${SRCDIR}/${file} ]; then
-		if [ ! -f ./${file} ]; then
+    if [ ! -f ${SRCDIR}/${file} ]; then
+    	if [ ! -f ./${file} ]; then
         		echo "Support script not found: ${file}"
-			exit 1
-		fi
-	fi
+    		exit 1
+    	fi
+    fi
 done
 
 if [ -b ${1} ]; then
@@ -77,16 +77,14 @@ echo "Mounting ${DEV} to /media/card"
 sudo mount ${DEV} /media/card
 
 if [ ! -d /media/card/home/root ]; then
-	echo "Directory not found: /media/card/home/root"
-	echo "Did you run copy_rootfs.sh first?"
-	sudo umount ${DEV}
-	exit 1
+    echo "Directory not found: /media/card/home/root"
+    echo "Did you run copy_rootfs.sh first?"
+    sudo umount ${DEV}
+    exit 1
 fi
 
-if [ ! -d /media/card/home/root/emmc ]; then
-	echo "Creating /media/card/home/root/emmc directory"
-	sudo mkdir /media/card/home/root/emmc
-fi
+echo "Creating /media/card/home/root/emmc directory"
+sudo mkdir -p /media/card/home/root/emmc
 
 echo "Copying files"
 sudo cp ${SRCDIR}/MLO-${MACHINE} /media/card/home/root/emmc
@@ -94,11 +92,11 @@ sudo cp ${SRCDIR}/u-boot-${MACHINE}.img /media/card/home/root/emmc
 sudo cp ${SRCDIR}/${IMAGE}-image-${MACHINE}.tar.xz /media/card/home/root/emmc
 
 for file in $SUPPORT_SCRIPTS; do
-	if [ -f $SRCDIR/${file} ]; then
-		sudo cp ${SRCDIR}/${file} /media/card/home/root/emmc
-	else
-		sudo cp ./${file} /media/card/home/root/emmc
-	fi
+    if [ -f $SRCDIR/${file} ]; then
+    	sudo cp ${SRCDIR}/${file} /media/card/home/root/emmc
+    else
+    	sudo cp ./${file} /media/card/home/root/emmc
+    fi
 done
 
 echo "Unmounting ${DEV}"
