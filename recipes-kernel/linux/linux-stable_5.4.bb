@@ -10,6 +10,7 @@ KERNEL_DEVICETREE ?= " \
     am335x-boneblue.dtb \
     am335x-bonegreen.dtb \
     am335x-bonegreen-wireless.dtb \
+    bbb-4dcape43t.dtb \
 "
 
 LINUX_VERSION = "5.4"
@@ -27,4 +28,5 @@ SRC_URI = " \
     file://0001-spidev-Add-a-generic-compatible-id.patch \
     file://0002-dts-Remove-bbb-cape-i2c-definitions.patch \
     file://0003-wlcore-Change-NO-FW-RX-BA-session-warnings-to-debug.patch \
+    file://0004-Add-custom-dts-files.patch \
 "

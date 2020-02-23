@@ -1,14 +1,14 @@
-From 77aacc7e9a4f9151d00b489b7ee2466f6b9b8824 Mon Sep 17 00:00:00 2001
+From 1a63bca8851f856d918659fc7029d728ed8e7950 Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
 Date: Mon, 8 Jul 2019 20:20:16 -0400
-Subject: [PATCH 2/3] dts: Remove bbb cape i2c definitions
+Subject: [PATCH 2/4] dts: Remove bbb cape i2c definitions
 
 ---
- arch/arm/boot/dts/am335x-bone-common.dtsi | 56 -------------------------------
+ arch/arm/boot/dts/am335x-bone-common.dtsi | 56 -----------------------
  1 file changed, 56 deletions(-)
 
 diff --git a/arch/arm/boot/dts/am335x-bone-common.dtsi b/arch/arm/boot/dts/am335x-bone-common.dtsi
-index 89b4cf2..0011eca 100644
+index 89b4cf2cb7f8..0011eca745f4 100644
 --- a/arch/arm/boot/dts/am335x-bone-common.dtsi
 +++ b/arch/arm/boot/dts/am335x-bone-common.dtsi
 @@ -82,13 +82,6 @@
@@ -82,5 +82,5 @@ index 89b4cf2..0011eca 100644
  
  &tps {
 -- 
-2.7.4
+2.17.1
 
