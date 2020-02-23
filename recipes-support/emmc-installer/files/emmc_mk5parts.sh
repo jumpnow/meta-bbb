@@ -16,8 +16,8 @@ SIZE=`fdisk -l $DEV | grep "$DEV" | cut -d' ' -f5 | grep -o -E '[0-9]+'`
 
 echo EMMC SIZE : $SIZE bytes
 
-if [ "$SIZE" -lt 3800000000 ]; then
-	echo "Require an eMMC of at least 4GB"
+if [ "$SIZE" -lt 3000000000 ]; then
+	echo "Require an eMMC of at least 3GB"
 	exit 1
 fi
 
