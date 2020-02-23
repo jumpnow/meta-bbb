@@ -3,7 +3,7 @@
 MACHINE=beaglebone
 
 if [ "x${1}" = "x" ]; then
-    echo -e "\nUsage: ${0} <block device> [ <image-type> [<hostname>] ]\n"
+    echo  "Usage: ${0} <block device> [ <image-type> [<hostname>] ]"
     exit 0
 fi
 
@@ -19,10 +19,17 @@ else
 fi
 
 if [ -z "$OETMP" ]; then
-    echo -e "\nWorking from local directory"
-    SRCDIR=.
+    # echo try to find it
+    if [ -f ../../build/conf/local.conf ]; then
+        OETMP=$(grep '^TMPDIR' ../../build/conf/local.conf | awk '{ print $3 }' | sed 's/"//g')
+    fi
+fi
+
+if [ -z "$OETMP" ]; then
+    echo "Environment variable OETMP not set"
+    exit 1
 else
-    echo -e "\nOETMP: $OETMP"
+    echo "OETMP: $OETMP"
 
     if [ ! -d ${OETMP}/deploy/images/${MACHINE} ]; then
     	echo "Directory not found: ${OETMP}/deploy/images/${MACHINE}"

@@ -13,8 +13,15 @@ if [ ! -d /media/card ]; then
 fi
 
 if [ -z "$OETMP" ]; then
-    echo "Working from local directory"
-    SRCDIR=.
+    # echo try to find it
+    if [ -f ../../build/conf/local.conf ]; then
+        OETMP=$(grep '^TMPDIR' ../../build/conf/local.conf | awk '{ print $3 }' | sed 's/"//g')
+    fi
+fi
+
+if [ -z "$OETMP" ]; then
+    echo "Environment variable OETMP not set"
+    exit 1
 else
     echo "OETMP: $OETMP"
 

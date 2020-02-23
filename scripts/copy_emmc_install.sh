@@ -4,7 +4,7 @@ MACHINE=beaglebone
 SUPPORT_SCRIPTS="emmc-uEnv.txt"
 
 if [ "x${1}" = "x" ]; then
-        echo -e "\nUsage: ${0} <block device> [ <image-type> ] ]\n"
+        echo "Usage: ${0} <block device> [ <image-type> ] ]"
         exit 0
 fi
 
@@ -19,32 +19,36 @@ else
         IMAGE=${2}
 fi
 
+echo "IMAGE: $IMAGE"
+
 if [ -z "$OETMP" ]; then
-    if [ -d ${HOME}/bbb/build/tmp/deploy/images/${MACHINE} ]; then
-    	echo -e "\nUsing ${HOME}/elvaria/build/tmp"
-    	SRCDIR=${HOME}/bbb/build/tmp
-    else
-    	echo -e "\nWorking from local directory"
-    	SRCDIR=.
+    # echo try to find it
+    if [ -f ../../build/conf/local.conf ]; then
+        OETMP=$(grep '^TMPDIR' ../../build/conf/local.conf | awk '{ print $3 }' | sed 's/"//g')
     fi
-else
-        echo -e "\nOETMP: $OETMP"
-
-        if [ ! -d ${OETMP}/deploy/images/${MACHINE} ]; then
-                echo "Directory not found: ${OETMP}/deploy/images/${MACHINE}"
-                exit 1
-        fi
-
-        SRCDIR=${OETMP}/deploy/images/${MACHINE}
 fi
 
+if [ -z "$OETMP" ]; then
+    echo "Environment variable OETMP not set"
+    exit 1
+else
+    if [ ! -d ${OETMP}/deploy/images/${MACHINE} ]; then
+        echo "Directory not found: ${OETMP}/deploy/images/${MACHINE}"
+        exit 1
+    fi
+
+    SRCDIR=${OETMP}/deploy/images/${MACHINE}
+fi
+
+echo "OETMP: $OETMP"
+
 if [ ! -f ${SRCDIR}/MLO-${MACHINE} ]; then
-        echo -e "File not found: ${SRCDIR}/MLO-${MACHINE}\n"
+        echo "File not found: ${SRCDIR}/MLO-${MACHINE}"
         exit 1
 fi
 
 if [ ! -f ${SRCDIR}/u-boot-${MACHINE}.img ]; then
-        echo -e "File not found: ${SRCDIR}/u-boot-${MACHINE}.img\n"
+        echo "File not found: ${SRCDIR}/u-boot-${MACHINE}.img"
         exit 1
 fi
 
@@ -55,9 +59,9 @@ fi
 
 for file in $SUPPORT_SCRIPTS; do
     if [ ! -f ${SRCDIR}/${file} ]; then
-    	if [ ! -f ./${file} ]; then
-        		echo "Support script not found: ${file}"
-    		exit 1
+        if [ ! -f ./${file} ]; then
+            echo "Support script not found: ${file}"
+            exit 1
     	fi
     fi
 done
