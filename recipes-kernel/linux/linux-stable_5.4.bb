@@ -11,6 +11,7 @@ KERNEL_DEVICETREE ?= " \
     am335x-bonegreen.dtb \
     am335x-bonegreen-wireless.dtb \
     bbb-4dcape43t.dtb \
+    bbb-4dcape70t.dtb \
 "
 
 LINUX_VERSION = "5.4"
