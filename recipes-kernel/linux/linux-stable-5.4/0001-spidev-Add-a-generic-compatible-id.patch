@@ -1,4 +1,4 @@
-From 89a5ffe943de3c8d0383f9e2407d33c2f8c10b4e Mon Sep 17 00:00:00 2001
+From 3ef33c10cb8bba805f5f0e9511f5446b22ef22d6 Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
 Date: Sun, 12 May 2019 05:06:05 -0400
 Subject: [PATCH 1/4] spidev: Add a generic compatible id
