@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BT_ATTACH_ARGS="/dev/ttyO3 texas 300000"
+BT_ATTACH_ARGS="/dev/ttyO3 texas 3000000"
 
 [ -r /etc/default/bt-init ] && . /etc/default/bt-init
 
