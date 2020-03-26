@@ -7,6 +7,7 @@ WIFI = " \
     bbgw-wireless \
     crda \
     iw \
+    linux-firmware-wl12xx \
     linux-firmware-wl18xx \
     wpa-supplicant \
 "
