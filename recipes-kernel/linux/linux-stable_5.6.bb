@@ -14,7 +14,9 @@ KERNEL_DEVICETREE ?= " \
     am335x-bonegreen-wireless.dtb \
     \
     bbb-4dcape43t.dtb \
+    bbb-4dcape43t-spi.dtb \
     bbb-4dcape70t.dtb \
+    bbb-4dcape70t-spi.dtb \
     bbb-gen4-4dcape50t.dtb \
     bbb-nhd5cape.dtb \
     bbb-nhd7cape.dtb \
@@ -50,7 +52,9 @@ SRC_URI = " \
     file://bbb-4dcape70t-keypad.dtsi \
     \
     file://bbb-4dcape43t.dts \
+    file://bbb-4dcape43t-spi.dts \
     file://bbb-4dcape70t.dts \
+    file://bbb-4dcape70t-spi.dts \
     file://bbb-gen4-4dcape50t.dts \
     file://bbb-nhd5cape.dts \
     file://bbb-nhd7cape.dts \
