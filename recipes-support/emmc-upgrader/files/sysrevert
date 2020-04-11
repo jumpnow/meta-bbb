@@ -119,7 +119,7 @@ fi
 
 echo -e -n "Sanity checking new rootfs : "
 
-check_dirs="/bin /boot /etc /root /lib /sbin /usr"
+check_dirs="/bin /boot /etc /home/root /lib /sbin /usr"
 
 for d in $check_dirs; do
     if [ ! -d ${upgrade_mnt}$d ]; then
