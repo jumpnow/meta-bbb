@@ -23,20 +23,6 @@ fi
 
 echo -e "\nWorking on $DEV\n"
 
-#make sure that the SD card isn't mounted before we start
-if [ -b ${DEV}1 ]; then
-	umount ${DEV}1
-	umount ${DEV}2
-	umount ${DEV}3
-elif [ -b ${DEV}p1 ]; then
-	umount ${DEV}p1
-	umount ${DEV}p2
-	umount ${DEV}p3
-else
-	umount ${DEV}
-fi
-
-
 SIZE=`fdisk -l $DEV | grep "$DEV" | cut -d' ' -f5 | grep -o -E '[0-9]+'`
 
 echo DISK SIZE – $SIZE bytes
