@@ -13,6 +13,7 @@ KERNEL_DEVICETREE ?= " \
     \
     bbb-4dcape43t.dtb \
     bbb-4dcape43t-spi.dtb \
+    bbb-4dcape43t-bvt.dtb \
     bbb-4dcape70t.dtb \
     bbb-4dcape70t-spi.dtb \
     bbb-gen4-4dcape50t.dtb \
@@ -51,6 +52,7 @@ SRC_URI = " \
     \
     file://bbb-4dcape43t.dts \
     file://bbb-4dcape43t-spi.dts \
+    file://bbb-4dcape43t-bvt.dts \
     file://bbb-4dcape70t.dts \
     file://bbb-4dcape70t-spi.dts \
     file://bbb-gen4-4dcape50t.dts \
