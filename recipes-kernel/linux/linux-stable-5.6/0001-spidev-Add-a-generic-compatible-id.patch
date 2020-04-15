@@ -15,7 +15,7 @@ index 2ab6e782f14c..c16cd4b7e3c5 100644
  
  #ifdef CONFIG_OF
  static const struct of_device_id spidev_dt_ids[] = {
-+	{ .compatible = "spidev" },
++	{ .compatible = "userspi" },
  	{ .compatible = "rohm,dh2228fv" },
  	{ .compatible = "lineartechnology,ltc2488" },
  	{ .compatible = "ge,achc" },
