@@ -45,7 +45,7 @@
 };
 
 &am33xx_pinmux {
-	lcd_pins: lcd_pins {
+	lcd_pins: pinmux-lcd-pins {
 		pinctrl-single,pins = <
 			AM33XX_IOPAD(0x8a0, PIN_OUTPUT | MUX_MODE0)            /* lcd_data0 */
 			AM33XX_IOPAD(0x8a4, PIN_OUTPUT | MUX_MODE0)            /* lcd_data1 */
@@ -72,9 +72,21 @@
 		>;
 	};
 
-	backlight_pin: backlight_pin {
-		pinctrl-single,pins = < AM33XX_IOPAD(0x848, PIN_OUTPUT_PULLUP | MUX_MODE7) >; /* P9.14, gpio1[18] */
+	backlight_pins: pinmux-backlight-pins {
+		pinctrl-single,pins = <
+			AM33XX_IOPAD(0x848, PIN_OUTPUT_PULLDOWN | MUX_MODE6)     /* P9.14, ehrpwm1A */
+		>;
 	};
+};
+
+&epwmss1 {
+	status = "okay";
+};
+
+&ehrpwm1 {
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&backlight_pins>;
 };
 
 &lcdc {
@@ -124,11 +136,11 @@
 
 	backlight {
 		status = "okay";
-		compatible = "gpio-backlight";
-		pinctrl-names = "default";
-		pinctrl-0 = <&backlight_pin>;
-		gpios = <&gpio1 18 GPIO_ACTIVE_HIGH>; /* P9.14 */
-		default-on;
+		compatible = "pwm-backlight";
+		pwms = <&ehrpwm1 0 5000000 0>;
+		brightness-levels = <0 1 2 3 4 5 6 7 8 9 10>;
+		num-interpolated-steps = <10>;
+		default-brightness-level = <10>;
 	};
 };
 
