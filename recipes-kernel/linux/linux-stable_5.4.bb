@@ -13,9 +13,7 @@ KERNEL_DEVICETREE ?= " \
     \
     bbb-4dcape43t.dtb \
     bbb-4dcape43t-spi.dtb \
-    bbb-4dcape43t-bvt.dtb \
     bbb-4dcape70t.dtb \
-    bbb-4dcape70t-spi.dtb \
     bbb-gen4-4dcape50t.dtb \
     bbb-nhd5cape.dtb \
     bbb-nhd7cape.dtb \
@@ -28,8 +26,8 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-${LINUX_VERSION}:${THISDIR}/
 
 S = "${WORKDIR}/git"
 
-PV = "5.4.31"
-SRCREV = "de850633a01fa06515a89a184d6e9769c160d932"
+PV = "5.4.32"
+SRCREV = "bc844d58f697dff3ded4b410094ee89f5cedc04c"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-${LINUX_VERSION}.y \
     file://defconfig \
@@ -52,9 +50,7 @@ SRC_URI = " \
     \
     file://bbb-4dcape43t.dts \
     file://bbb-4dcape43t-spi.dts \
-    file://bbb-4dcape43t-bvt.dts \
     file://bbb-4dcape70t.dts \
-    file://bbb-4dcape70t-spi.dts \
     file://bbb-gen4-4dcape50t.dts \
     file://bbb-nhd5cape.dts \
     file://bbb-nhd7cape.dts \
