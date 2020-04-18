@@ -21,6 +21,8 @@ IMAGE_INSTALL += " \
     emmc-upgrader \
     ${DEV_EXTRAS} \
     ${WIFI} \
+    ${SECURITY_TOOLS} \
+    ${WIREGUARD} \
 "
 
 export IMAGE_BASENAME = "console-image"
