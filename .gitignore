@@ -5,3 +5,13 @@ scripts/interfaces
 scripts/wpa_supplicant.conf
 recipes-mender/mender/files/artifact-verify-key.pem
 recipes-mender/mender/files/server.crt
+recipes-kernel/linux/linux-stable-4.14/
+recipes-kernel/linux/linux-stable-5.0/
+recipes-kernel/linux/linux-stable-5.1/
+recipes-kernel/linux/linux-stable-5.2/
+recipes-kernel/linux/linux-stable-5.3/
+recipes-kernel/linux/linux-stable_4.14.bb
+recipes-kernel/linux/linux-stable_5.0.bb
+recipes-kernel/linux/linux-stable_5.1.*
+recipes-kernel/linux/linux-stable_5.2.*
+recipes-kernel/linux/linux-stable_5.3.bb
