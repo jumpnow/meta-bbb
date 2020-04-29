@@ -19,6 +19,7 @@ KERNEL_DEVICETREE ?= " \
     bbb-gen4-4dcape50t.dtb \
     bbb-nhd5cape.dtb \
     bbb-nhd7cape.dtb \
+    bbb-bcc-s6.dtb \
 "
 
 LINUX_VERSION = "5.6"
@@ -56,6 +57,7 @@ SRC_URI = " \
     file://bbb-gen4-4dcape50t.dts \
     file://bbb-nhd5cape.dts \
     file://bbb-nhd7cape.dts \
+    file://bbb-bcc-s6.dts \
 "
 
 do_configure_prepend () {
