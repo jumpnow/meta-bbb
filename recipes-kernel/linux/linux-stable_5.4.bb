@@ -17,6 +17,7 @@ KERNEL_DEVICETREE ?= " \
     bbb-gen4-4dcape50t.dtb \
     bbb-nhd5cape.dtb \
     bbb-nhd7cape.dtb \
+    bbb-bcc-s6.dtb \
 "
 
 LINUX_VERSION = "5.4"
@@ -26,8 +27,8 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-${LINUX_VERSION}:${THISDIR}/
 
 S = "${WORKDIR}/git"
 
-PV = "5.4.35"
-SRCREV = "0c418786cb3aa175823f0172d939679df9ab9a54"
+PV = "5.4.36"
+SRCREV = "aa73bcc376865c23e61dcebd467697b527901be8"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-${LINUX_VERSION}.y \
     file://defconfig \
@@ -54,6 +55,7 @@ SRC_URI = " \
     file://bbb-gen4-4dcape50t.dts \
     file://bbb-nhd5cape.dts \
     file://bbb-nhd7cape.dts \
+    file://bbb-bcc-s6.dts \
 "
 
 do_configure_prepend () {
