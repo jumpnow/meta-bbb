@@ -34,20 +34,19 @@ if [ -z "$OETMP" ]; then
     # echo try to find it
     if [ -f ../../build/conf/local.conf ]; then
         OETMP=$(grep '^TMPDIR' ../../build/conf/local.conf | awk '{ print $3 }' | sed 's/"//g')
+
+        if [ -z "$OETMP" ]; then
+            OETMP=../../build/tmp
+        fi
     fi
 fi
 
-if [ -z "$OETMP" ]; then
-    echo "Environment variable OETMP not set"
+if [ ! -d ${OETMP}/deploy/images/${MACHINE} ]; then
+    echo "Directory not found: ${OETMP}/deploy/images/${MACHINE}"
     exit 1
-else
-    if [ ! -d ${OETMP}/deploy/images/${MACHINE} ]; then
-        echo "Directory not found: ${OETMP}/deploy/images/${MACHINE}"
-        exit 1
-    fi
-
-    SRCDIR=${OETMP}/deploy/images/${MACHINE}
 fi
+
+SRCDIR=${OETMP}/deploy/images/${MACHINE}
 
 echo "OETMP: $OETMP"
 
