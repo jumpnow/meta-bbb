@@ -18,11 +18,11 @@ This layer depends on:
 
 Latest commits:
 
-    poky 74f229160c
+    poky 40daaa0c05
     meta-openembedded 9e60d3066
     meta-qt5 852e279
     meta-security ecd8c30
-    meta-jumpnow 5dc82a5
+    meta-jumpnow 62bf6c5
 
 
 meta-bbb layer maintainer: Scott Ellis <scott@jumpnowtek.com>
