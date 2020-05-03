@@ -7,9 +7,10 @@ echo -e "\nWorking on $DEV\n"
 mount | grep -q $DEV
 
 if [ $? -eq 0 ]; then
-        echo "Found mounted eMMC partitions."
-        echo "Aborting"
-        exit 1
+    echo "Found mounted eMMC partitions."
+    mount | grep ${DEV}
+    echo "Aborting"
+    exit 1
 fi
 
 SIZE=`fdisk -l $DEV | grep "$DEV" | cut -d' ' -f5 | grep -o -E '[0-9]+'`
@@ -17,8 +18,8 @@ SIZE=`fdisk -l $DEV | grep "$DEV" | cut -d' ' -f5 | grep -o -E '[0-9]+'`
 echo EMMC SIZE – $SIZE bytes
 
 if [ "$SIZE" -lt 1800000000 ]; then
-	echo "Require an eMMC of at least 2GB"
-	exit 1
+    echo "Require an eMMC of at least 2GB"
+    exit 1
 fi
 
 echo -e "\nOkay, here we go ...\n"
@@ -38,7 +39,7 @@ echo -e "\n=== Creating 2 partitions ===\n"
 echo 128,131072,0x0C,*
 echo 131200,2097152,0x83,-
 echo 2228352,+,0x83,-
-} | sfdisk $DEV
+} | sfdisk --no-reread $DEV
 
 
 sleep 1

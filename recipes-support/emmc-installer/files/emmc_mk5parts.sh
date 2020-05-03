@@ -2,23 +2,22 @@
 
 DEV=/dev/mmcblk1
 
-mount | grep -q ${DEV} 
+mount | grep -q ${DEV}
 
 if [ $? -eq 0 ]; then
-	echo "Found mounted eMMC partitions."
-	echo "Aborting"
-	exit 1
+    echo "Found mounted eMMC partitions."
+    mount | grep ${DEV}
+    echo "Aborting"
+    exit 1
 fi
-
-DEV=/dev/mmcblk1
 
 SIZE=`fdisk -l $DEV | grep "$DEV" | cut -d' ' -f5 | grep -o -E '[0-9]+'`
 
 echo EMMC SIZE : $SIZE bytes
 
 if [ "$SIZE" -lt 3000000000 ]; then
-	echo "Require an eMMC of at least 3GB"
-	exit 1
+    echo "Require an eMMC of at least 3GB"
+    exit 1
 fi
 
 echo -e "\nOkay, here we go ...\n"
@@ -44,7 +43,7 @@ echo ,2097152,0x83,-
 echo ,,E
 echo ,131072,0x0C,-
 echo ,+,0x83,-
-} | sfdisk $DEV
+} | sfdisk --no-reread $DEV
 
 sleep 1
 
