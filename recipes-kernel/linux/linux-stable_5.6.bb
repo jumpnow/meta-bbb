@@ -29,8 +29,8 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-${LINUX_VERSION}:${THISDIR}/
 
 S = "${WORKDIR}/git"
 
-PV = "5.6.7"
-SRCREV = "55b2af1c23eb12663015998079992f79fdfa56c8"
+PV = "5.6.10"
+SRCREV = "c9feecbe2f4a6b1ca993195f5ce7baf65cf0a310"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-${LINUX_VERSION}.y \
     file://defconfig \
