@@ -12,6 +12,7 @@ KERNEL_DEVICETREE ?= " \
     am335x-boneblue.dtb \
     am335x-bonegreen.dtb \
     am335x-bonegreen-wireless.dtb \
+    am335x-pocketbeagle.dtb \
     \
     bbb-4dcape43t.dtb \
     bbb-4dcape43t-spi.dtb \
