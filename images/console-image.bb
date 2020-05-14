@@ -19,6 +19,7 @@ DEV_EXTRAS = " \
 
 IMAGE_INSTALL += " \
     emmc-upgrader \
+    firewall \
     ${DEV_EXTRAS} \
     ${WIFI} \
     ${SECURITY_TOOLS} \
