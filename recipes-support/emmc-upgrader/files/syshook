@@ -125,6 +125,19 @@ if [ -d /etc/wireguard ]; then
     fi
 fi
 
+if [ -f /home/root/.ssh/authorized_keys ]; then
+    echo "  Copying /home/root/.ssh/authorized_keys"
+
+    mkdir -p ${upgrade_mnt}/home/root/.ssh
+
+    cp --preserve=mode,ownership /home/root/.ssh/authorized_keys ${upgrade_mnt}/home/root/.ssh
+
+    if [ $? -ne 0 ]; then
+        echo "Error copying /home/root/.ssh/authorized_keys"
+        exit 1
+    fi
+fi
+
 echo "  Generating a random-seed file for urandom"
 
 mkdir -p ${upgrade_mnt}/var/lib/urandom
