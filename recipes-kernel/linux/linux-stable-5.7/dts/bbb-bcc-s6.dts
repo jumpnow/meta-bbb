@@ -1,0 +1,50 @@
+/*
+ * Copyright (C) 2020 Jumpnow Technologies, LLC
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * Simple device tree for a Blank Canvas Cape Spartan 6 (BCC S6) Beaglebone
+ * cape. The requirements are spi0 and i2c2 for FPGA communications using
+ * the bcc_tool.
+ *
+ * http://ebrombaugh.studionebula.com/embedded/bcc_s6/index.html
+ *
+ */
+
+/dts-v1/;
+
+#include "am33xx.dtsi"
+#include "am335x-bone-common.dtsi"
+#include "bbb-spi0-spidev.dtsi"
+#include "bbb-i2c2.dtsi"
+#include "bbb-uart4.dtsi"
+
+/ {
+	model = "TI AM335x BeagleBone Black";
+	compatible = "ti,am335x-bone-black", "ti,am33xx";
+};
+
+&ldo3_reg {
+	regulator-min-microvolt = <1800000>;
+	regulator-max-microvolt = <1800000>;
+	regulator-always-on;
+};
+
+&mmc1 {
+	vmmc-supply = <&vmmcsd_fixed>;
+};
+
+&mmc2 {
+	vmmc-supply = <&vmmcsd_fixed>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&emmc_pins>;
+	bus-width = <8>;
+	status = "okay";
+};
+
+&rtc {
+	system-power-controller;
+};
+
