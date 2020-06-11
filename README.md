@@ -22,7 +22,7 @@ Latest commits:
     meta-openembedded cc155826b
     meta-qt5 fdd1951
     meta-security d83f7cb
-    meta-jumpnow 9f716c8
+    meta-jumpnow afa9b50
 
 
 meta-bbb layer maintainer: Scott Ellis <scott@jumpnowtek.com>
