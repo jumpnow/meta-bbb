@@ -30,8 +30,8 @@ FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-${LINUX_VERSION}:${THISDIR}/
 
 S = "${WORKDIR}/git"
 
-PV = "5.7.15"
-SRCREV = "0e446529d34888ac57fe059ec32e9114a381c800"
+PV = "5.7.16"
+SRCREV = "d036b5d2dd8fa3de540ec3357f657c436ce1d626"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-${LINUX_VERSION}.y \
     file://defconfig \
@@ -39,29 +39,24 @@ SRC_URI = " \
     file://0002-dts-Remove-bbb-cape-i2c-definitions.patch \
     file://0003-wlcore-Change-NO-FW-RX-BA-session-warnings-to-debug.patch \
     \
-    file://bbb-dcan0.dtsi \
-    file://bbb-dcan1.dtsi \
-    file://bbb-i2c1.dtsi \
-    file://bbb-i2c2.dtsi \
-    file://bbb-spi0-spidev.dtsi \
-    file://bbb-spi1-spidev.dtsi \
-    file://bbb-uart1.dtsi \
-    file://bbb-uart2.dtsi \
-    file://bbb-uart4.dtsi \
-    file://bbb-uart5.dtsi \
-    file://bbb-4dcape43t-keypad.dtsi \
-    file://bbb-4dcape70t-keypad.dtsi \
+    file://bbb-dcan0.dtsi;subdir=git/arch/arm/boot/dts \
+    file://bbb-dcan1.dtsi;subdir=git/arch/arm/boot/dts\
+    file://bbb-i2c1.dtsi;subdir=git/arch/arm/boot/dts \
+    file://bbb-i2c2.dtsi;subdir=git/arch/arm/boot/dts \
+    file://bbb-spi0-spidev.dtsi;subdir=git/arch/arm/boot/dts \
+    file://bbb-spi1-spidev.dtsi;subdir=git/arch/arm/boot/dts \
+    file://bbb-uart1.dtsi;subdir=git/arch/arm/boot/dts \
+    file://bbb-uart2.dtsi;subdir=git/arch/arm/boot/dts \
+    file://bbb-uart4.dtsi;subdir=git/arch/arm/boot/dts \
+    file://bbb-uart5.dtsi;subdir=git/arch/arm/boot/dts \
+    file://bbb-4dcape43t-keypad.dtsi;subdir=git/arch/arm/boot/dts \
+    file://bbb-4dcape70t-keypad.dtsi;subdir=git/arch/arm/boot/dts \
     \
-    file://bbb-4dcape43t.dts \
-    file://bbb-4dcape43t-spi.dts \
-    file://bbb-4dcape70t.dts \
-    file://bbb-gen4-4dcape50t.dts \
-    file://bbb-nhd5cape.dts \
-    file://bbb-nhd7cape.dts \
-    file://bbb-bcc-s6.dts \
+    file://bbb-4dcape43t.dts;subdir=git/arch/arm/boot/dts \
+    file://bbb-4dcape43t-spi.dts;subdir=git/arch/arm/boot/dts \
+    file://bbb-4dcape70t.dts;subdir=git/arch/arm/boot/dts \
+    file://bbb-gen4-4dcape50t.dts;subdir=git/arch/arm/boot/dts \
+    file://bbb-nhd5cape.dts;subdir=git/arch/arm/boot/dts \
+    file://bbb-nhd7cape.dts;subdir=git/arch/arm/boot/dts \
+    file://bbb-bcc-s6.dts;subdir=git/arch/arm/boot/dts \
 "
-
-do_configure_prepend () {
-    cp ${WORKDIR}/*.dtsi ${S}/arch/arm/boot/dts
-    cp ${WORKDIR}/*.dts ${S}/arch/arm/boot/dts
-}
