@@ -4,8 +4,8 @@ update_config=1
 
 network={
     key_mgmt=WPA-PSK
-    ssid="jumpnow"
-    psk="november"
+    ssid="<your-ssid>"
+    psk="<your-passphrase>"
 }
 
 # open network
