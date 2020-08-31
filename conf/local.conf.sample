@@ -19,7 +19,7 @@ PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
 PREFERRED_PROVIDER_udev = "eudev"
 VIRTUAL-RUNTIME_init_manager = "sysvinit"
 
-# Default kernel is 5.6, but you can change here
+# Default kernel is 5.8, but you can change here
 # PREFERRED_VERSION_linux-stable = "5.4.%"
 
 # uncomment for kernels < 5.6
