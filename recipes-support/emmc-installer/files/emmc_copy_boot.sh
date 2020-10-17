@@ -13,8 +13,38 @@
 #   2) u-boot-beaglebone.img
 #
 
+find_root_device()
+{
+    local part=""                 
+    local rdev=`stat -c %04D /`
+                                                    
+    for file in $(find /dev -type b 2>/dev/null); do  
+        local pdev=$(stat -c %02t%02T $file) 
+                                                       
+        if [ "${pdev}" = "${rdev}" ]; then
+            part=${file} 
+            break
+        fi
+    done
+                                           
+    # strip off the pX from end       
+    echo ${part} | sed -r 's/.{2}$//'
+}                           
+                            
+root_dev=$(find_root_device)
+                                          
+if [ -z $root_dev} ]; then                
+    echo "Unable to determine root device"
+    exit 1
+fi                      
+
+if [ ${root_dev} == "/dev/mmcblk0" ]; then
+    target_dev=/dev/mmcblk1p1
+else
+    target_dev=/dev/mmcblk0p1
+fi
+
 MACHINE=beaglebone
-DEV=/dev/mmcblk1p1
 
 if [ -z "${SRCDIR}" ]; then
     SRCDIR=.
@@ -25,8 +55,8 @@ else
     fi
 fi
 
-if [ ! -b ${DEV} ]; then
-    echo "Block device not found: ${DEV}"
+if [ ! -b ${target_dev} ]; then
+    echo "Block device not found: ${target_dev}"
     exit 1
 fi
 
@@ -50,11 +80,11 @@ if [ ! -f "${SRCDIR}/emmc-uEnv.txt" ]; then
     exit 1
 fi
 
-echo "Formatting FAT partition on $DEV"
-mkfs.vfat -F 32 ${DEV} -n BOOT
+echo "Formatting FAT partition on $target_dev"
+mkfs.vfat -F 32 ${target_dev} -n BOOT
 
-echo "Mounting $DEV"
-mount ${DEV} /media
+echo "Mounting $target_dev"
+mount ${target_dev} /media
 
 echo "Copying MLO"
 cp ${SRCDIR}/MLO-${MACHINE} /media/MLO
@@ -65,7 +95,7 @@ cp ${SRCDIR}/u-boot-${MACHINE}.img /media/u-boot.img
 echo "Copying emmc-uEnv.txt to uEnv.txt"
 cp ${SRCDIR}/emmc-uEnv.txt /media/uEnv.txt
 
-echo "Unmounting ${DEV}"
-umount ${DEV}
+echo "Unmounting ${target_dev}"
+umount ${target_dev}
 
 echo "Done"

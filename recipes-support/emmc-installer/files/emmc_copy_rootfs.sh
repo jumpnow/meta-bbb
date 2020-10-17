@@ -8,8 +8,38 @@
 #  ./emmc_copy_rootfs.sh <image-file> [ <hostname> ]
 #
 
+find_root_device()
+{
+    local part=""
+    local rdev=`stat -c %04D /`
+
+    for file in $(find /dev -type b 2>/dev/null); do
+        local pdev=$(stat -c %02t%02T $file)
+
+        if [ "${pdev}" = "${rdev}" ]; then
+            part=${file}
+            break
+        fi
+    done
+
+    # strip off the pX from end
+    echo ${part} | sed -r 's/.{2}$//'
+}
+
+root_dev=$(find_root_device)
+
+if [ -z $root_dev} ]; then
+    echo "Unable to determine root device"
+    exit 1
+fi
+
+if [ ${root_dev} == "/dev/mmcblk0" ]; then
+    target_dev=/dev/mmcblk1p2
+else
+    target_dev=/dev/mmcblk0p2
+fi
+
 MACHINE=beaglebone
-DEV=/dev/mmcblk1p2
 
 if [ -z "${SRCDIR}" ]; then
     SRCDIR=.
@@ -30,8 +60,8 @@ if [ ! -d /media ]; then
     exit 1
 fi
 
-if [ ! -b $DEV ]; then
-    echo "Block device not found: $DEV"
+if [ ! -b $target_dev ]; then
+    echo "Block device not found: $target_dev"
     exit 1
 fi
 
@@ -61,11 +91,11 @@ fi
 
 echo -e "HOSTNAME: $TARGET_HOSTNAME\n"
 
-echo "Formatting $DEV as ext4"
-mkfs.ext4 -q -F -L ROOT $DEV
+echo "Formatting $target_dev as ext4"
+mkfs.ext4 -q -F -L ROOT $target_dev
 
-echo "Mounting $DEV as /media"
-mount $DEV /media
+echo "Mounting $target_dev as /media"
+mount $target_dev /media
 
 echo "Extracting ${FULLPATH} to  /media"
 EXTRACT_UNSAFE_SYMLINKS=1 tar -C /media -xJf ${FULLPATH}
@@ -89,7 +119,7 @@ if [ -f ${SRCDIR}/wpa_supplicant.conf ]; then
     cp ${SRCDIR}/wpa_supplicant.conf /media/etc/wpa_supplicant.conf
 fi
 
-echo "Unmounting $DEV"
-umount $DEV
+echo "Unmounting $target_dev"
+umount $target_dev
 
 echo "Done"
