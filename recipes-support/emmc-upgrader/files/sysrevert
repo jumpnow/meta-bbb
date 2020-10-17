@@ -2,9 +2,33 @@
 #
 # Update flags partition to mark the currently non-active root as
 # the new active partition.
-# 
+#
 
-root_dev=/dev/mmcblk1
+find_root_device()
+{
+    local part=""
+    local rdev=`stat -c %04D /`
+
+    for file in $(find /dev -type b 2>/dev/null); do
+        local pdev=$(stat -c %02t%02T $file)
+
+        if [ "${pdev}" = "${rdev}" ]; then
+            part=${file}
+            break
+        fi
+    done
+
+    # strip off the pX from end
+    echo ${part} | sed -r 's/.{2}$//'
+}
+
+root_dev=$(find_root_device)
+
+if [ -z $root_dev} ]; then
+    echo "Unable to determine root device"
+    exit 1
+fi
+
 flags_part=${root_dev}p5
 
 mnt_root=/mnt
@@ -35,7 +59,7 @@ echo "${current_root}"
 
 echo -e -n "Checking that ${mnt_root} is not in use : "
 
-mount | grep -q ${mnt_root} 
+mount | grep -q ${mnt_root}
 
 if [ $? -eq 0 ]; then
     echo "fail"
@@ -47,7 +71,7 @@ echo "ok"
 
 echo -e -n "Checking for a ${flags_part} partition : "
 
-fdisk -l ${root_dev} | grep -q ${flags_part} 
+fdisk -l ${root_dev} | grep -q ${flags_part}
 
 if [ $? -eq 1 ]; then
     echo "fail"
@@ -59,7 +83,7 @@ echo "ok"
 
 echo -e -n "Checking that ${flags_part} is not in use : "
 
-mount | grep -q ${flags_part} 
+mount | grep -q ${flags_part}
 
 if [ $? -eq 0 ]; then
     echo "fail"
@@ -147,7 +171,7 @@ fi
 
 echo -e -n "Mounting ${flags_part} read-write on ${flags_mnt} : "
 
-mount -t vfat ${flags_part} ${flags_mnt} 
+mount -t vfat ${flags_part} ${flags_mnt}
 
 if [ $? -ne 0 ]; then
     echo "fail"
@@ -193,7 +217,7 @@ echo "ok"
 
 echo -e -n "Unmounting ${flags_part} : "
 
-umount ${flags_part} 
+umount ${flags_part}
 
 if [ $? -ne 0 ]; then
     echo "fail"
