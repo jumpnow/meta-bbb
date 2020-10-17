@@ -9,7 +9,7 @@ console=ttyO0,115200n8
 fdtaddr=0x88000000
 fdtfile=am335x-bonegreen.dtb
 loadaddr=0x82000000
-mmcroot=/dev/mmcblk1p2 ro
+mmcroot=/dev/mmcblk0p2 ro
 mmcrootfstype=ext4 rootwait
 optargs=consoleblank=0
 nohdmi=bbb-nohdmi.dtb
