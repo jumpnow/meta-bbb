@@ -1,5 +1,5 @@
 # Local configuration for meta-bbb images
-# Yocto Project 3.1 Poky distribution [dunfell] branch
+# Yocto Project 3.2 Poky distribution [gatesgarth] branch
 # This is a sysvinit system
 
 # mask wireguard from meta-openembedded/meta-networking
@@ -11,15 +11,10 @@ LICENSE_FLAGS_WHITELIST = "commercial"
 
 DISTRO_FEATURES = "ext2 usbhost ${DISTRO_FEATURES_LIBC}"
 
-# remove pulseaudio and opengl
-DISTRO_FEATURES_BACKFILL_CONSIDERED += "pulseaudio opengl"
-
-PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
-
 PREFERRED_PROVIDER_udev = "eudev"
 VIRTUAL-RUNTIME_init_manager = "sysvinit"
 
-# Default kernel is 5.8, but you can change here
+# Default kernel is 5.10, but you can change here
 # PREFERRED_VERSION_linux-stable = "5.4.%"
 
 # uncomment for kernels < 5.6
@@ -29,7 +24,7 @@ MACHINE = "beaglebone"
 
 # DL_DIR = "/src/oe"
 # SSTATE_DIR = "/oe5/bbb/sstate-cache"
-# TMPDIR = "/oe5/bbb/tmp-zeus"
+# TMPDIR = "/oe5/bbb/tmp-gatesgarth"
 
 DISTRO = "poky"
 

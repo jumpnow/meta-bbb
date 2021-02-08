@@ -1,17 +1,17 @@
-From 9edded8479cb8838d9cbd63c57c438a9fbf1ea73 Mon Sep 17 00:00:00 2001
+From 1e18757c9826563254b354d9d589964c49ff4fae Mon Sep 17 00:00:00 2001
 From: Scott Ellis <scott@jumpnowtek.com>
 Date: Mon, 8 Jul 2019 20:20:16 -0400
-Subject: [PATCH 2/4] dts: Remove bbb cape i2c definitions
+Subject: [PATCH 2/3] dts: Remove bbb cape i2c definitions
 
 ---
  arch/arm/boot/dts/am335x-bone-common.dtsi | 56 -----------------------
  1 file changed, 56 deletions(-)
 
 diff --git a/arch/arm/boot/dts/am335x-bone-common.dtsi b/arch/arm/boot/dts/am335x-bone-common.dtsi
-index 6c9187bc0f17..0b6d45da7c4e 100644
+index 2d51d4bba6d4..a7645790686d 100644
 --- a/arch/arm/boot/dts/am335x-bone-common.dtsi
 +++ b/arch/arm/boot/dts/am335x-bone-common.dtsi
-@@ -82,13 +82,6 @@
+@@ -82,13 +82,6 @@ AM33XX_PADCONF(AM335X_PIN_I2C0_SCL, PIN_INPUT_PULLUP, MUX_MODE0)	/* i2c0_scl.i2c
  		>;
  	};
  
@@ -25,7 +25,7 @@ index 6c9187bc0f17..0b6d45da7c4e 100644
  	uart0_pins: pinmux_uart0_pins {
  		pinctrl-single,pins = <
  			AM33XX_PADCONF(AM335X_PIN_UART0_RXD, PIN_INPUT_PULLUP, MUX_MODE0)
-@@ -224,55 +217,6 @@
+@@ -224,55 +217,6 @@ baseboard_data: baseboard_data@0 {
  	};
  };
  
@@ -82,5 +82,5 @@ index 6c9187bc0f17..0b6d45da7c4e 100644
  
  &tps {
 -- 
-2.17.1
+2.25.1
 

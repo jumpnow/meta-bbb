@@ -22,8 +22,6 @@ IMAGE_INSTALL += " \
     firewall \
     ${DEV_EXTRAS} \
     ${WIFI} \
-    ${SECURITY_TOOLS} \
-    ${WIREGUARD} \
 "
 
 export IMAGE_BASENAME = "console-image"
