@@ -5,15 +5,17 @@ POKY_BBLAYERS_CONF_VERSION = "2"
 BBPATH = "${TOPDIR}"
 BBFILES ?= ""
 
+YOCTOROOT = "${@os.path.abspath(os.path.join("${TOPDIR}", os.pardir))}"
+
 BBLAYERS ?= " \
-  ${HOME}/poky-dunfell/meta \
-  ${HOME}/poky-dunfell/meta-poky \
-  ${HOME}/poky-dunfell/meta-openembedded/meta-oe \
-  ${HOME}/poky-dunfell/meta-openembedded/meta-networking \
-  ${HOME}/poky-dunfell/meta-openembedded/meta-perl \
-  ${HOME}/poky-dunfell/meta-openembedded/meta-python \
-  ${HOME}/poky-dunfell/meta-qt5 \
-  ${HOME}/poky-dunfell/meta-security \
-  ${HOME}/poky-dunfell/meta-jumpnow \
-  ${HOME}/bbb/meta-bbb \
+  ${YOCTOROOT}/meta \
+  ${YOCTOROOT}/meta-poky \
+  ${YOCTOROOT}/meta-openembedded/meta-oe \
+  ${YOCTOROOT}/meta-openembedded/meta-networking \
+  ${YOCTOROOT}/meta-openembedded/meta-perl \
+  ${YOCTOROOT}/meta-openembedded/meta-python \
+  ${YOCTOROOT}/meta-qt5 \
+  ${YOCTOROOT}/meta-security \
+  ${YOCTOROOT}/meta-jumpnow \
+  ${YOCTOROOT}/meta-bbb \
 "
