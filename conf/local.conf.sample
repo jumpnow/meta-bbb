@@ -1,57 +1,31 @@
-# Local configuration for meta-bbb images
-# Yocto Project 3.1 Poky distribution [dunfell] branch
-# This is a sysvinit system
+# Local configuration for beaglebone images
+# Yocto Project 4.2 Poky distribution [mickledore] branch
+# This is a systemd system
 
-# mask wireguard from meta-openembedded/meta-networking
-# use version in meta-jumpnow to support kernels < 5.6
-# with wireguard-linux-compat
-BBMASK = "meta-networking/recipes-kernel/wireguard"
+DISTRO_FEATURES = "ext2 security systemd usbhost ${DISTRO_FEATURES_LIBC}"
 
-LICENSE_FLAGS_WHITELIST = "commercial"
+DISTRO_FEATURES_BACKFILL_CONSIDERED += "pulseaudio sysvinit"
 
-DISTRO_FEATURES = "ext2 usbhost ${DISTRO_FEATURES_LIBC}"
+DISTRO_FEATURES:remove = "ptest"
 
-# remove pulseaudio and opengl
-DISTRO_FEATURES_BACKFILL_CONSIDERED += "pulseaudio opengl"
-
-PREFERRED_PROVIDER_jpeg = "libjpeg-turbo"
-
-PREFERRED_PROVIDER_udev = "eudev"
-VIRTUAL-RUNTIME_init_manager = "sysvinit"
-
-# Default kernel is 5.8, but you can change here
-# PREFERRED_VERSION_linux-stable = "5.4.%"
-
-# uncomment for kernels < 5.6
-# WIREGUARD_COMPAT = "1"
+INIT_MANAGER = "systemd"
 
 MACHINE = "beaglebone"
 
-# DL_DIR = "/src/oe"
+PREFERRED_PROVIDER_virtual/kernel = "linux-stable"
+
+# DL_DIR = "/src/mickledore"
 # SSTATE_DIR = "/oe5/bbb/sstate-cache"
-# TMPDIR = "/oe5/bbb/tmp-zeus"
+# TMPDIR = "/oe5/bbb/tmp"
 
 DISTRO = "poky"
-
 PACKAGE_CLASSES = "package_ipk"
 
-# i686 or x86_64
 SDKMACHINE = "x86_64"
 
-# for empty root password
-# EXTRA_IMAGE_FEATURES = "debug-tweaks"
-
-# to enable a root password of jumpnowtek
-INHERIT += "extrausers"
-EXTRA_USERS_PARAMS = "usermod -P jumpnowtek root; "
-
-# to force a password change on first login
-INHERIT += "chageusers"
-CHAGE_USERS_PARAMS = "chage -d0 root; "
-
-USER_CLASSES = "image-mklibs image-prelink"
+EXTRA_IMAGE_FEATURES = "debug-tweaks"
 
 PATCHRESOLVE = "noop"
 RM_OLD_IMAGE = "1"
 INHERIT += "rm_work"
-CONF_VERSION = "1"
+CONF_VERSION = "2"

@@ -1,5 +1,4 @@
-SUMMARY = "A very basic image"
-HOMEPAGE = "http://www.jumpnowtek.com"
+SUMMARY = "A very basic boot image"
 
 IMAGE_LINGUAS = "en-us"
 

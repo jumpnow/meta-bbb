@@ -24,12 +24,12 @@ KERNEL_DEVICETREE ?= " \
 LINUX_VERSION = "5.4"
 LINUX_VERSION_EXTENSION = "-jumpnow"
 
-FILESEXTRAPATHS_prepend := "${THISDIR}/linux-stable-${LINUX_VERSION}:${THISDIR}/linux-stable-${LINUX_VERSION}/dts:"
+FILESEXTRAPATHS:prepend := "${THISDIR}/linux-stable-${LINUX_VERSION}:${THISDIR}/linux-stable-${LINUX_VERSION}/dts:"
 
 S = "${WORKDIR}/git"
 
-PV = "5.4.98"
-SRCREV = "5b9a4104c902d7dec14c9e3c5652a638194487c6"
+PV = "5.4.256"
+SRCREV = "0c2544add9fc25c0e54a2167d6a2cfd2e696cf58"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-${LINUX_VERSION}.y \
     file://defconfig \

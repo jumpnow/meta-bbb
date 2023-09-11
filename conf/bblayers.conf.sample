@@ -6,14 +6,12 @@ BBPATH = "${TOPDIR}"
 BBFILES ?= ""
 
 BBLAYERS ?= " \
-  ${HOME}/poky-dunfell/meta \
-  ${HOME}/poky-dunfell/meta-poky \
-  ${HOME}/poky-dunfell/meta-openembedded/meta-oe \
-  ${HOME}/poky-dunfell/meta-openembedded/meta-networking \
-  ${HOME}/poky-dunfell/meta-openembedded/meta-perl \
-  ${HOME}/poky-dunfell/meta-openembedded/meta-python \
-  ${HOME}/poky-dunfell/meta-qt5 \
-  ${HOME}/poky-dunfell/meta-security \
-  ${HOME}/poky-dunfell/meta-jumpnow \
+  ${HOME}/poky-mickledore/meta \
+  ${HOME}/poky-mickledore/meta-poky \
+  ${HOME}/poky-mickledore/meta-openembedded/meta-oe \
+  ${HOME}/poky-mickledore/meta-openembedded/meta-networking \
+  ${HOME}/poky-mickledore/meta-openembedded/meta-perl \
+  ${HOME}/poky-mickledore/meta-openembedded/meta-python \
+  ${HOME}/poky-mickledore/meta-security \
   ${HOME}/bbb/meta-bbb \
 "
