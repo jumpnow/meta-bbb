@@ -1,5 +1,10 @@
-Some custom targets available
+
+### Shell environment set up for builds. ###
+
+You can now run 'bitbake <target>'
+
+Common targets are:
 
     console-image
-    installer-image
-    qt5-image
+    console-dev-image
+

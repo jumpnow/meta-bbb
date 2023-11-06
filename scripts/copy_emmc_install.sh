@@ -4,8 +4,8 @@ MACHINE=beaglebone
 SUPPORT_SCRIPTS="emmc-uEnv.txt"
 
 if [ "x${1}" = "x" ]; then
-        echo "Usage: ${0} <block device> [ <image-type> ] ]"
-        exit 0
+    echo "Usage: ${0} <block device> [ <image-type> ] ]"
+    exit 0
 fi
 
 mount | grep '^/' | grep -q ${1}
@@ -18,14 +18,14 @@ if [ $? -ne 1 ]; then
 fi
 
 if [ ! -d /media/card ]; then
-        echo "Mount point /media/card does not exist"
-        exit 1
+    echo "Mount point /media/card does not exist"
+    exit 1
 fi
 
 if [ "x${2}" = "x" ]; then
-        IMAGE=console
+    IMAGE=console
 else
-        IMAGE=${2}
+    IMAGE=${2}
 fi
 
 echo "IMAGE: $IMAGE"
@@ -51,18 +51,18 @@ SRCDIR=${OETMP}/deploy/images/${MACHINE}
 echo "OETMP: $OETMP"
 
 if [ ! -f ${SRCDIR}/MLO-${MACHINE} ]; then
-        echo "File not found: ${SRCDIR}/MLO-${MACHINE}"
-        exit 1
+    echo "File not found: ${SRCDIR}/MLO-${MACHINE}"
+    exit 1
 fi
 
 if [ ! -f ${SRCDIR}/u-boot-${MACHINE}.img ]; then
-        echo "File not found: ${SRCDIR}/u-boot-${MACHINE}.img"
-        exit 1
+    echo "File not found: ${SRCDIR}/u-boot-${MACHINE}.img"
+    exit 1
 fi
 
-if [ ! -f "${SRCDIR}/${IMAGE}-image-${MACHINE}.tar.xz" ]; then
-        echo "File not found: ${SRCDIR}/${IMAGE}-image-${MACHINE}.tar.xz"
-        exit 1
+if [ ! -f "${SRCDIR}/${IMAGE}-image-${MACHINE}.rootfs.tar.xz" ]; then
+    echo "File not found: ${SRCDIR}/${IMAGE}-image-${MACHINE}.rootfs.tar.xz"
+    exit 1
 fi
 
 for file in $SUPPORT_SCRIPTS; do
@@ -75,14 +75,14 @@ for file in $SUPPORT_SCRIPTS; do
 done
 
 if [ -b ${1} ]; then
-        DEV=${1}
+    DEV=${1}
 elif [ -b "/dev/${1}2" ]; then
-        DEV=/dev/${1}2
+    DEV=/dev/${1}2
 elif [ -b "/dev/${1}p2" ]; then
-        DEV=/dev/${1}p2
+    DEV=/dev/${1}p2
 else
-        echo "Block device not found: /dev/${1}2 or /dev/${1}p2"
-        exit 1
+    echo "Block device not found: /dev/${1}2 or /dev/${1}p2"
+    exit 1
 fi
 
 echo "Mounting ${DEV} to /media/card"

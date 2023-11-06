@@ -1,6 +1,5 @@
 # Local configuration for beaglebone images
-# Yocto Project 4.2 Poky distribution [mickledore] branch
-# This is a systemd system
+# Yocto Project 4.3 Poky distribution [nanbield] branch
 
 DISTRO_FEATURES = "ext2 security systemd usbhost ${DISTRO_FEATURES_LIBC}"
 
@@ -14,7 +13,7 @@ MACHINE = "beaglebone"
 
 PREFERRED_PROVIDER_virtual/kernel = "linux-stable"
 
-# DL_DIR = "/src/mickledore"
+# DL_DIR = "/src/nanbield"
 # SSTATE_DIR = "/oe5/bbb/sstate-cache"
 # TMPDIR = "/oe5/bbb/tmp"
 

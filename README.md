@@ -1,16 +1,16 @@
 This layer depends on:
 
     URI: git://git.yoctoproject.org/poky.git
-    branch: mickledore
+    branch: nanbield
 
     URI: git://git.openembedded.org/meta-openembedded
-    branch: mickledore
+    branch: nanbield
 
     URI: git://git.yoctoproject.org/meta-security.git
-    branch: mickledore
+    branch: nanbield
 
 Latest commits:
 
-    poky 6c3c62ebc1
-    meta-openembedded 399688371
-    meta-security d7db0a3
+    poky 96290c8b1c
+    meta-openembedded 1750c66ae
+    meta-security 5044e35

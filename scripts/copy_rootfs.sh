@@ -1,5 +1,7 @@
 #!/bin/bash
 
+mnt=/mnt
+
 MACHINE=beaglebone
 
 if [ "x${1}" = "x" ]; then
@@ -45,79 +47,64 @@ if [ ! -d ${OETMP}/deploy/images/${MACHINE} ]; then
     exit 1
 fi
 
-SRCDIR=${OETMP}/deploy/images/${MACHINE}
+src=${OETMP}/deploy/images/${MACHINE}
 
 echo "IMAGE: $image"
 
 if [ "x${3}" = "x" ]; then
-    TARGET_HOSTNAME=$MACHINE
+    target_hostname=$MACHINE
 else
-    TARGET_HOSTNAME=${3}
+    target_hostname=${3}
 fi
 
-echo "HOSTNAME: $TARGET_HOSTNAME"
+echo "HOSTNAME: $target_hostname"
 
-if [ -f "${SRCDIR}/${image}-image-${MACHINE}.tar.xz" ]; then
-    rootfs=${SRCDIR}/${image}-image-${MACHINE}.tar.xz
-elif [ -f "${SRCDIR}/${image}-${MACHINE}.tar.xz" ]; then
-    rootfs=${SRCDIR}/${image}-${MACHINE}.tar.xz
-elif [ -f "${SRCDIR}/${image}" ]; then
-    rootfs=${SRCDIR}/${image}
+if [ -f "${src}/${image}-image-${MACHINE}.rootfs.tar.xz" ]; then
+    rootfs=${src}/${image}-image-${MACHINE}.rootfs.tar.xz
+elif [ -f "${src}/${image}-${MACHINE}.rootfs.tar.xz" ]; then
+    rootfs=${src}/${image}-${MACHINE}.rootfs.tar.xz
+elif [ -f "${src}/${image}" ]; then
+    rootfs=${src}/${image}
 else
     echo "Rootfs file not found. Tried"
-    echo " ${SRCDIR}/${image}-image-${MACHINE}.tar.xz"
-    echo " ${SRCDIR}/${image}-${MACHINE}.tar.xz"
-    echo " ${SRCDIR}/${image}"
+    echo " ${src}/${image}-image-${MACHINE}.rootfs.tar.xz"
+    echo " ${src}/${image}-${MACHINE}.rootfs.tar.xz"
+    echo " ${src}/${image}"
     exit 1
 fi
 
 if [ -b ${1} ]; then
-        DEV=${1}
+        dev=${1}
 elif [ -b "/dev/${1}2" ]; then
-        DEV=/dev/${1}2
+        dev=/dev/${1}2
 elif [ -b "/dev/${1}p2" ]; then
-        DEV=/dev/${1}p2
+        dev=/dev/${1}p2
 else
         echo "Block device not found: /dev/${1}2 or /dev/${1}p2"
         exit 1
 fi
 
-echo "Formatting $DEV as ext4"
-sudo mkfs.ext4 -q -L ROOT $DEV
+echo "Formatting $dev as ext4"
+sudo mkfs.ext4 -q -L ROOT $dev
 
-echo "Mounting $DEV"
-sudo mount $DEV /media/card
+echo "Mounting $dev"
+sudo mount $dev "$mnt" 
 
 echo "Extracting ${rootfs} /media/card"
-sudo tar -C /media/card -xJf ${rootfs}
+sudo tar -C "$mnt" -xJf ${rootfs}
 
 echo "Generating a random-seed for urandom"
-mkdir -p /media/card/var/lib/urandom
-sudo dd if=/dev/urandom of=/media/card/var/lib/urandom/random-seed bs=512 count=1
-sudo chmod 600 /media/card/var/lib/urandom/random-seed
+mkdir -p "${mnt}/var/lib/systemd"
+sudo dd if=/dev/urandom of="${mnt}/var/lib/systemd/random-seed" bs=512 count=1
+sudo chmod 600 "${mnt}/var/lib/systemd/random-seed"
 
-echo "Writing ${TARGET_HOSTNAME} to /etc/hostname"
-export TARGET_HOSTNAME
-sudo -E bash -c 'echo ${TARGET_HOSTNAME} > /media/card/etc/hostname'
+echo "Writing ${target_hostname} to ${mnt}/etc/hostname"
+export mnt
+export target_hostname
+sudo -E bash -c 'echo ${target_hostname} > ${mnt}/etc/hostname'
 
-if [ -f ${SRCDIR}/interfaces ]; then
-    echo "Writing interfaces to /media/card/etc/network/"
-    sudo cp ${SRCDIR}/interfaces /media/card/etc/network/interfaces
-elif [ -f ./interfaces ]; then
-    echo "Writing ./interfaces to /media/card/etc/network/"
-    sudo cp ./interfaces /media/card/etc/network/interfaces
-fi
-
-if [ -f ${SRCDIR}/wpa_supplicant.conf ]; then
-    echo "Writing wpa_supplicant.conf to /media/card/etc/"
-    sudo cp ${SRCDIR}/wpa_supplicant.conf /media/card/etc/wpa_supplicant.conf
-elif [ -f ./wpa_supplicant.conf ]; then
-    echo "Writing ./wpa_supplicant.conf to /media/card/etc/"
-    sudo cp ./wpa_supplicant.conf /media/card/etc/wpa_supplicant.conf
-fi
-
-echo "Unmounting $DEV"
-sudo umount $DEV
+echo "Unmounting $dev"
+sudo umount $dev
 
 echo "Done"
 

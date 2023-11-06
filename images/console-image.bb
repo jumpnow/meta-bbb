@@ -42,17 +42,13 @@ EXTRA_TOOLS = " \
     util-linux-blkid \
     unzip \
     wget \
-    zip \
-"
-
-SECURITY_STUFF = " \
     wireguard-tools \
+    zip \
 "
 
 IMAGE_INSTALL += " \
     ${CORE_OS} \
     ${EXTRA_TOOLS} \
-    ${SECURITY_STUFF} \
 "
 
 set_local_timezone() {
