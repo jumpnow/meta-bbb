@@ -1,16 +1,12 @@
 This layer depends on:
 
     URI: git://git.yoctoproject.org/poky.git
-    branch: nanbield
+    branch: scarthgap
 
     URI: git://git.openembedded.org/meta-openembedded
-    branch: nanbield
-
-    URI: git://git.yoctoproject.org/meta-security.git
-    branch: nanbield
+    branch: scarthgap
 
 Latest commits:
 
-    poky 7b8aa378d0
-    meta-openembedded da9063bdf
-    meta-security 5938fa5
+    poky 02eacd385e
+    meta-openembedded a72010b41

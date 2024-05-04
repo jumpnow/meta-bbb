@@ -1,7 +1,7 @@
 # Local configuration for beaglebone images
-# Yocto Project 4.3 Poky distribution [nanbield] branch
+# Yocto Project 5.0 Poky distribution [scarthgap] branch
 
-DISTRO_FEATURES = "ext2 security systemd usbhost ${DISTRO_FEATURES_LIBC}"
+DISTRO_FEATURES = "ext2 systemd usbhost ${DISTRO_FEATURES_LIBC}"
 
 DISTRO_FEATURES_BACKFILL_CONSIDERED += "pulseaudio sysvinit"
 
@@ -13,7 +13,7 @@ MACHINE = "beaglebone"
 
 PREFERRED_PROVIDER_virtual/kernel = "linux-stable"
 
-# DL_DIR = "/src/nanbield"
+# DL_DIR = "/src/scarthgap"
 # SSTATE_DIR = "/oe5/bbb/sstate-cache"
 # TMPDIR = "/oe5/bbb/tmp"
 

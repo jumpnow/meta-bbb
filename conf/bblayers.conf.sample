@@ -6,11 +6,10 @@ BBPATH = "${TOPDIR}"
 BBFILES ?= ""
 
 BBLAYERS ?= " \
-  ${HOME}/poky-nanbield/meta \
-  ${HOME}/poky-nanbield/meta-poky \
-  ${HOME}/poky-nanbield/meta-openembedded/meta-oe \
-  ${HOME}/poky-nanbield/meta-openembedded/meta-networking \
-  ${HOME}/poky-nanbield/meta-openembedded/meta-python \
-  ${HOME}/poky-nanbield/meta-security \
+  ${HOME}/poky-scarthgap/meta \
+  ${HOME}/poky-scarthgap/meta-poky \
+  ${HOME}/poky-scarthgap/meta-openembedded/meta-oe \
+  ${HOME}/poky-scarthgap/meta-openembedded/meta-networking \
+  ${HOME}/poky-scarthgap/meta-openembedded/meta-python \
   ${HOME}/bbb/meta-bbb \
 "
