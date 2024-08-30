@@ -19,9 +19,10 @@ FILESEXTRAPATHS:prepend := "${THISDIR}/linux-stable-${LINUX_VERSION}:${THISDIR}/
 
 S = "${WORKDIR}/git"
 
-PV = "6.10.6"
-SRCREV = "7ba498d9d1bb67bcbc2a79f19a9054cdc8b95098"
+PV = "6.10.7"
+SRCREV = "24873d2e5fe32f4635cf8406ff3b8d16f6e47505"
 SRC_URI = " \
     git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git;branch=linux-${LINUX_VERSION}.y \
     file://defconfig \
+    file://0001-kbuild-remove-recent-dependency-on-truncate.patch \
 "
