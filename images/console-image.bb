@@ -13,7 +13,6 @@ CORE_OS = " \
 
 EXTRA_TOOLS = " \
     bzip2 \
-    chrony \
     coreutils \
     curl \
     diffutils \
@@ -37,6 +36,8 @@ EXTRA_TOOLS = " \
     procps \
     strace \
     sysfsutils \
+    systemd-analyze \
+    tar \
     tcpdump \
     util-linux \
     util-linux-blkid \
