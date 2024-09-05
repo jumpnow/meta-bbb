@@ -1,8 +1,7 @@
 #!/bin/bash
 
-mnt=/mnt
-
 MACHINE=beaglebone
+mnt=/mnt
 
 if [ "x${1}" = "x" ]; then
     echo  "Usage: ${0} <block device> [ <image-type> [<hostname>] ]"
@@ -18,8 +17,8 @@ if [ $? -ne 1 ]; then
     exit 1
 fi
 
-if [ ! -d /media/card ]; then
-    echo "Temporary mount point [/media/card] not found"
+if [ ! -d ${mnt} ]; then
+    echo "Temporary mount point [${mnt}] not found"
     exit 1
 fi
 
@@ -59,16 +58,16 @@ fi
 
 echo "HOSTNAME: $target_hostname"
 
-if [ -f "${src}/${image}-image-${MACHINE}.rootfs.tar.xz" ]; then
-    rootfs=${src}/${image}-image-${MACHINE}.rootfs.tar.xz
-elif [ -f "${src}/${image}-${MACHINE}.rootfs.tar.xz" ]; then
-    rootfs=${src}/${image}-${MACHINE}.rootfs.tar.xz
+if [ -f "${src}/${image}-image-${MACHINE}.rootfs.tar.gz" ]; then
+    rootfs=${src}/${image}-image-${MACHINE}.rootfs.tar.gz
+elif [ -f "${src}/${image}-${MACHINE}.rootfs.tar.gz" ]; then
+    rootfs=${src}/${image}-${MACHINE}.rootfs.tar.gz
 elif [ -f "${src}/${image}" ]; then
     rootfs=${src}/${image}
 else
     echo "Rootfs file not found. Tried"
-    echo " ${src}/${image}-image-${MACHINE}.rootfs.tar.xz"
-    echo " ${src}/${image}-${MACHINE}.rootfs.tar.xz"
+    echo " ${src}/${image}-image-${MACHINE}.rootfs.tar.gz"
+    echo " ${src}/${image}-${MACHINE}.rootfs.tar.gz"
     echo " ${src}/${image}"
     exit 1
 fi
@@ -87,11 +86,11 @@ fi
 echo "Formatting $dev as ext4"
 sudo mkfs.ext4 -q -L ROOT $dev
 
-echo "Mounting $dev"
-sudo mount $dev "$mnt" 
+echo "Mounting $dev at ${mnt}"
+sudo mount $dev "${mnt}"
 
-echo "Extracting ${rootfs} /media/card"
-sudo tar -C "$mnt" -xJf ${rootfs}
+echo "Extracting ${rootfs}"
+sudo tar -C ${mnt} -xzf ${rootfs}
 
 echo "Generating a random-seed for urandom"
 mkdir -p "${mnt}/var/lib/systemd"
@@ -101,7 +100,9 @@ sudo chmod 600 "${mnt}/var/lib/systemd/random-seed"
 echo "Writing ${target_hostname} to ${mnt}/etc/hostname"
 export mnt
 export target_hostname
-sudo -E bash -c 'echo ${target_hostname} > ${mnt}/etc/hostname'
+sudo -E bash -c 'echo $target_hostname > ${mnt}/etc/hostname'
+
+sudo sync
 
 echo "Unmounting $dev"
 sudo umount $dev

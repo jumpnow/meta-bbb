@@ -1,6 +1,7 @@
 #!/bin/bash
 
 MACHINE=beaglebone
+mnt=/mnt
 
 if [ "x${1}" = "x" ]; then
     echo "Usage: ${0} <block device>"
@@ -16,8 +17,8 @@ if [ $? -ne 1 ]; then
     exit 1
 fi
 
-if [ ! -d /media/card ]; then
-    echo "Temporary mount point [/media/card] not found"
+if [ ! -d ${mnt} ]; then
+    echo "Temporary mount point [${mnt}] not found"
     exit 1
 fi
 
@@ -39,51 +40,51 @@ if [ ! -d ${OETMP}/deploy/images/${MACHINE} ]; then
     exit 1
 fi
 
-SRCDIR=${OETMP}/deploy/images/${MACHINE}
+src=${OETMP}/deploy/images/${MACHINE}
 
-if [ ! -f ${SRCDIR}/MLO-${MACHINE} ]; then
-    echo "File not found: ${SRCDIR}/MLO-${MACHINE}"
+if [ ! -f ${src}/MLO-${MACHINE} ]; then
+    echo "File not found: ${src}/MLO-${MACHINE}"
     exit 1
 fi
 
-if [ ! -f ${SRCDIR}/u-boot-${MACHINE}.img ]; then
-    echo "File not found: ${SRCDIR}/u-boot-${MACHINE}.img"
+if [ ! -f ${src}/u-boot-${MACHINE}.img ]; then
+    echo "File not found: ${src}/u-boot-${MACHINE}.img"
     exit 1
+fi
+
+if [ ! -f ${src}/boot.scr ]; then
+    echo "File not found: ${src}/boot.scr"
+    exit1
 fi
 
 if [ -b ${1} ]; then
-    DEV=${1}
+    dev=${1}
 elif [ -b "/dev/${1}1" ]; then
-    DEV=/dev/${1}1
+    dev=/dev/${1}1
 elif [ -b "/dev/${1}p1" ]; then
-    DEV=/dev/${1}p1
+    dev=/dev/${1}p1
 else
     echo "Block device not found: /dev/${1}1 or /dev/${1}p1"
     exit 1
 fi
 
-echo "Formatting FAT partition on $DEV"
-sudo mkfs.vfat ${DEV}
+echo "Formatting FAT partition on $dev"
+sudo mkfs.vfat -n BOOT ${dev}
 
-echo "Mounting $DEV"
-sudo mount ${DEV} /media/card
+echo "Mounting $dev at ${mnt}"
+sudo mount ${dev} ${mnt}
 
 echo "Copying MLO"
-sudo cp ${SRCDIR}/MLO-${MACHINE} /media/card/MLO
+sudo cp ${src}/MLO-${MACHINE} ${mnt}/MLO
 
-echo "Copying u-boot"
-sudo cp ${SRCDIR}/u-boot-${MACHINE}.img /media/card/u-boot.img
+echo "Copying u-boot.img"
+sudo cp ${src}/u-boot-${MACHINE}.img ${mnt}/u-boot.img
 
-if [ -f ${SRCDIR}/uEnv.txt ]; then
-    echo "Copying ${SRCDIR}/uEnv.txt to /media/card"
-    sudo cp ${SRCDIR}/uEnv.txt /media/card
-elif [ -f ./uEnv.txt ]; then
-    echo "Copying ./uEnv.txt to /media/card"
-    sudo cp ./uEnv.txt /media/card
-fi
+echo "Copying boot.scr"
+sudo cp ${src}/boot.scr ${mnt}/boot.scr
 
-echo "Unmounting ${DEV}"
-sudo umount ${DEV}
+echo "Unmounting ${dev}"
+sudo umount ${dev}
 
 echo "Done"
 
