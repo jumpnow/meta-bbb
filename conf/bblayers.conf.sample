@@ -11,5 +11,7 @@ BBLAYERS ?= " \
   ${HOME}/poky-scarthgap/meta-openembedded/meta-oe \
   ${HOME}/poky-scarthgap/meta-openembedded/meta-networking \
   ${HOME}/poky-scarthgap/meta-openembedded/meta-python \
+  ${HOME}/poky-scarthgap/meta-security \
+  ${HOME}/poky-scarthgap/meta-qt5 \
   ${HOME}/bbb/meta-bbb \
 "
