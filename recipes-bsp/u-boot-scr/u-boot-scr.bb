@@ -9,13 +9,16 @@ inherit deploy nopackages
 DEPENDS = "u-boot-mkimage-native"
 
 SRC_URI = " \
-    file://boot-bonegreen.cmd \
-    file://boot-boneblack.cmd \
+    file://boot.cmd \
 "
 
-# bonegreen as default dtb for now
+S = "${WORKDIR}"
+
+KERNEL_DTB ?= "am336x-boneblack.dtb"
+
 do_compile() {
-    mkimage -A arm -T script -C none -n "Boot script" -d "${WORKDIR}/boot-bonegreen.cmd" boot.scr
+    sed -i "s/DTB/${KERNEL_DTB}/" "${S}/boot.cmd"
+    mkimage -A arm -T script -C none -n "Boot script" -d "${S}/boot.cmd" boot.scr
 }
 
 do_deploy() {

@@ -3,7 +3,7 @@ setenv bootdev 0
 setenv bootpart 2
 setenv console ttyO0,115200n8
 setenv fdtaddr 0x88000000
-setenv fdtfile am335x-bonegreen.dtb
+setenv fdtfile DTB
 setenv loadaddr 0x82000000
 setenv mmcroot /dev/mmcblk${bootdev}p${bootpart} rootwait rw
 setenv setbootargs setenv bootargs console=${console} root=${mmcroot}
