@@ -14,7 +14,7 @@ SRC_URI = " \
 
 S = "${WORKDIR}"
 
-KERNEL_DTB ?= "am336x-boneblack.dtb"
+KERNEL_DTB ?= "am335x-boneblack.dtb"
 
 do_compile() {
     sed -i "s/DTB/${KERNEL_DTB}/" "${S}/boot.cmd"

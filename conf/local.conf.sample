@@ -12,7 +12,7 @@ INIT_MANAGER = "systemd"
 MACHINE = "beaglebone"
 
 # change this to modify fdtfile in boot.scr
-KERNEL_DTB = "am336x-boneblack.dtb"
+KERNEL_DTB = "am335x-boneblack.dtb"
 
 PREFERRED_PROVIDER_virtual/kernel = "linux-stable"
 
