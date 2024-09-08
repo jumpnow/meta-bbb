@@ -1,6 +1,5 @@
-SUMMARY = "A custom console image for the beaglebone boards"
+SUMMARY = "Installs an image to the eMMC of a beaglebone"
 
-IMAGE_FEATURES += "package-management"
 IMAGE_LINGUAS = "en-us"
 
 inherit image
@@ -14,35 +13,24 @@ CORE_OS = " \
 EXTRA_TOOLS = " \
     bzip2 \
     coreutils \
-    curl \
     diffutils \
     dosfstools \
     e2fsprogs-mke2fs \
-    ethtool \
+    emmc-installer \
     file \
     findutils \
     grep \
-    i2c-tools \
-    iperf3 \
     iproute2-ifstat iproute2-ip iproute2-nstat iproute2-ss \
-    iptables \
     less \
-    lsof \
-    ltrace \
     mtd-utils \
-    netcat-openbsd \
     parted \
     procps \
-    strace \
     sysfsutils \
-    systemd-analyze \
     tar \
-    tcpdump \
     util-linux \
     util-linux-blkid \
     unzip \
     wget \
-    wireguard-tools \
     zip \
 "
 
@@ -60,4 +48,4 @@ ROOTFS_POSTPROCESS_COMMAND += " \
     set_local_timezone ; \
 "
 
-export IMAGE_BASENAME = "console-image"
+export IMAGE_BASENAME = "emmc-installer-image"

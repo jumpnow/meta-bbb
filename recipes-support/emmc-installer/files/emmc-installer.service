@@ -1,0 +1,9 @@
+[Unit]
+Description=eMMC installer
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/emmc_installer.sh
+
+[Install]
+WantedBy=multi-user.target

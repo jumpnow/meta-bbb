@@ -1,9 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 
 ONE="/sys/class/leds/beaglebone:green:heartbeat"
 TWO="/sys/class/leds/beaglebone:green:mmc0"
 THREE="/sys/class/leds/beaglebone:green:usr2"
 FOUR="/sys/class/leds/beaglebone:green:usr3"
+
+LONG=500000
+SHORT=150000
 
 cylon_sequence() {
     echo gpio > ${ONE}/trigger
@@ -13,22 +16,22 @@ cylon_sequence() {
 
     while [ 1 -gt 0 ]; do
         echo 1 > ${ONE}/brightness
-        usleep 400000 
+        usleep ${LONG}
         echo 0 > ${ONE}/brightness
         echo 1 > ${TWO}/brightness
-        usleep 100000 
+        usleep ${SHORT}
         echo 0 > ${TWO}/brightness
         echo 1 > ${THREE}/brightness
-        usleep 100000 
+        usleep ${SHORT}
         echo 0 > ${THREE}/brightness
         echo 1 > ${FOUR}/brightness
-        usleep 400000
+        usleep ${LONG}
         echo 0 > ${FOUR}/brightness
         echo 1 > ${THREE}/brightness
-        usleep 100000 
+        usleep ${SHORT}
         echo 0 > ${THREE}/brightness
         echo 1 > ${TWO}/brightness
-        usleep 100000 
+        usleep ${SHORT}
         echo 0 > ${TWO}/brightness
     done
 }
@@ -50,4 +53,3 @@ restore_leds_and_exit() {
 trap "restore_leds_and_exit" TERM INT HUP QUIT
 
 cylon_sequence
-

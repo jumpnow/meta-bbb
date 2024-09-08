@@ -1,10 +1,10 @@
 #!/bin/bash
 
 MACHINE=beaglebone
-SUPPORT_SCRIPTS="emmc-uEnv.txt"
+mnt=/mnt
 
 if [ "x${1}" = "x" ]; then
-    echo "Usage: ${0} <block device> [ <image-type> ] ]"
+    echo  "Usage: ${0} <block device> [ <image-type> [<hostname>] ]"
     exit 0
 fi
 
@@ -17,18 +17,16 @@ if [ $? -ne 1 ]; then
     exit 1
 fi
 
-if [ ! -d /media/card ]; then
-    echo "Mount point /media/card does not exist"
+if [ ! -d ${mnt} ]; then
+    echo "Temporary mount point [${mnt}] not found"
     exit 1
 fi
 
 if [ "x${2}" = "x" ]; then
-    IMAGE=console
+    image=console
 else
-    IMAGE=${2}
+    image=${2}
 fi
-
-echo "IMAGE: $IMAGE"
 
 if [ -z "$OETMP" ]; then
     # echo try to find it
@@ -41,77 +39,68 @@ if [ -z "$OETMP" ]; then
     fi
 fi
 
+echo "OETMP: $OETMP"
+
 if [ ! -d ${OETMP}/deploy/images/${MACHINE} ]; then
     echo "Directory not found: ${OETMP}/deploy/images/${MACHINE}"
     exit 1
 fi
 
-SRCDIR=${OETMP}/deploy/images/${MACHINE}
+src=${OETMP}/deploy/images/${MACHINE}
 
-echo "OETMP: $OETMP"
+echo "EMMC IMAGE: $image"
 
-if [ ! -f ${SRCDIR}/MLO-${MACHINE} ]; then
-    echo "File not found: ${SRCDIR}/MLO-${MACHINE}"
+if [ -f "${src}/${image}-image-${MACHINE}.rootfs.tar.gz" ]; then
+    rootfs=${src}/${image}-image-${MACHINE}.rootfs.tar.gz
+elif [ -f "${src}/${image}-${MACHINE}.rootfs.tar.gz" ]; then
+    rootfs=${src}/${image}-${MACHINE}.rootfs.tar.gz
+elif [ -f "${src}/${image}" ]; then
+    rootfs=${src}/${image}
+else
+    echo "Rootfs file not found. Tried"
+    echo " ${src}/${image}-image-${MACHINE}.rootfs.tar.gz"
+    echo " ${src}/${image}-${MACHINE}.rootfs.tar.gz"
+    echo " ${src}/${image}"
     exit 1
 fi
-
-if [ ! -f ${SRCDIR}/u-boot-${MACHINE}.img ]; then
-    echo "File not found: ${SRCDIR}/u-boot-${MACHINE}.img"
-    exit 1
-fi
-
-if [ ! -f "${SRCDIR}/${IMAGE}-image-${MACHINE}.rootfs.tar.xz" ]; then
-    echo "File not found: ${SRCDIR}/${IMAGE}-image-${MACHINE}.rootfs.tar.xz"
-    exit 1
-fi
-
-for file in $SUPPORT_SCRIPTS; do
-    if [ ! -f ${SRCDIR}/${file} ]; then
-        if [ ! -f ./${file} ]; then
-            echo "Support script not found: ${file}"
-            exit 1
-    	fi
-    fi
-done
 
 if [ -b ${1} ]; then
-    DEV=${1}
+        dev=${1}
 elif [ -b "/dev/${1}2" ]; then
-    DEV=/dev/${1}2
+        dev=/dev/${1}2
 elif [ -b "/dev/${1}p2" ]; then
-    DEV=/dev/${1}p2
+        dev=/dev/${1}p2
 else
-    echo "Block device not found: /dev/${1}2 or /dev/${1}p2"
-    exit 1
+        echo "Block device not found: /dev/${1}2 or /dev/${1}p2"
+        exit 1
 fi
 
-echo "Mounting ${DEV} to /media/card"
-sudo mount ${DEV} /media/card
+dst="/mnt/home/root/emmc"
 
-if [ ! -d /media/card/home/root ]; then
-    echo "Directory not found: /media/card/home/root"
-    echo "Did you run copy_rootfs.sh first?"
-    sudo umount ${DEV}
-    exit 1
-fi
+echo "Mounting $dev at ${mnt}"
+sudo mount $dev $mnt
 
-echo "Creating /media/card/home/root/emmc directory"
-sudo mkdir -p /media/card/home/root/emmc
+echo "Creating ${dst} directory"
+sudo mkdir -p ${dst}
 
-echo "Copying files"
-sudo cp ${SRCDIR}/MLO-${MACHINE} /media/card/home/root/emmc
-sudo cp ${SRCDIR}/u-boot-${MACHINE}.img /media/card/home/root/emmc
-sudo cp ${SRCDIR}/${IMAGE}-image-${MACHINE}.tar.xz /media/card/home/root/emmc
+sudo rm -rf ${dst}/*
 
-for file in $SUPPORT_SCRIPTS; do
-    if [ -f $SRCDIR/${file} ]; then
-    	sudo cp ${SRCDIR}/${file} /media/card/home/root/emmc
-    else
-    	sudo cp ./${file} /media/card/home/root/emmc
-    fi
-done
+echo "Copying ${src}/MLO-${MACHINE}"
+sudo cp ${src}/MLO-${MACHINE} ${dst}/MLO
 
-echo "Unmounting ${DEV}"
-sudo umount ${DEV}
+echo "Copying ${src}/u-boot-${MACHINE}.img"
+sudo cp ${src}/u-boot-${MACHINE}.img ${dst}/u-boot.img
+
+echo "Copying ${src}/emmc-boot.scr"
+sudo cp ${src}/emmc-boot.scr ${dst}/boot.scr
+
+echo "Copying ${rootfs}"
+sudo cp ${rootfs} ${dst}/rootfs.tar.gz
+
+sudo sync
+
+echo "Unmounting $dev"
+sudo umount $dev
 
 echo "Done"
+
