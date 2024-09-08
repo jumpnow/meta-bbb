@@ -10,6 +10,7 @@ DEPENDS = "u-boot-mkimage-native"
 
 SRC_URI = " \
     file://boot.cmd \
+    file://emmc-boot.cmd \
 "
 
 S = "${WORKDIR}"
@@ -19,11 +20,15 @@ KERNEL_DTB ?= "am335x-boneblack.dtb"
 do_compile() {
     sed -i "s/DTB/${KERNEL_DTB}/" "${S}/boot.cmd"
     mkimage -A arm -T script -C none -n "Boot script" -d "${S}/boot.cmd" boot.scr
+
+    sed -i "s/DTB/${KERNEL_DTB}/" "${S}/emmc-boot.cmd"
+    mkimage -A arm -T script -C none -n "Boot script" -d "${S}/emmc-boot.cmd" emmc-boot.scr
 }
 
 do_deploy() {
     install -d ${DEPLOYDIR}
     install -m 0644 boot.scr ${DEPLOYDIR}/boot.scr
+    install -m 0644 emmc-boot.scr ${DEPLOYDIR}/emmc-boot.scr
 }
 
 addtask deploy before do_build after do_compile
