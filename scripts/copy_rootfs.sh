@@ -72,40 +72,38 @@ else
     exit 1
 fi
 
-if [ -b ${1} ]; then
-        dev=${1}
-elif [ -b "/dev/${1}2" ]; then
-        dev=/dev/${1}2
+if [ -b "/dev/${1}2" ]; then
+        p2=/dev/${1}2
 elif [ -b "/dev/${1}p2" ]; then
-        dev=/dev/${1}p2
+        p2=/dev/${1}p2
 else
         echo "Block device not found: /dev/${1}2 or /dev/${1}p2"
         exit 1
 fi
 
-echo "Formatting $dev as ext4"
-sudo mkfs.ext4 -q -L ROOT $dev
+echo "Formatting $p2 as ext4"
+sudo mkfs.ext4 -Fq -L ROOT $p2
 
-echo "Mounting $dev at ${mnt}"
-sudo mount $dev "${mnt}"
+echo "Mounting $p2 at $mnt"
+sudo mount $p2 $mnt
 
-echo "Extracting ${rootfs}"
-sudo tar -C ${mnt} -xzf ${rootfs}
+echo "Extracting $rootfs"
+sudo tar -C $mnt -xzf $rootfs
 
 echo "Generating a random-seed for urandom"
 mkdir -p "${mnt}/var/lib/systemd"
 sudo dd if=/dev/urandom of="${mnt}/var/lib/systemd/random-seed" bs=512 count=1
 sudo chmod 600 "${mnt}/var/lib/systemd/random-seed"
 
-echo "Writing ${target_hostname} to ${mnt}/etc/hostname"
+echo "Writing $target_hostname to ${mnt}/etc/hostname"
 export mnt
 export target_hostname
 sudo -E bash -c 'echo $target_hostname > ${mnt}/etc/hostname'
 
 sudo sync
 
-echo "Unmounting $dev"
-sudo umount $dev
+echo "Unmounting $p2"
+sudo umount $p2
 
 echo "Done"
 
