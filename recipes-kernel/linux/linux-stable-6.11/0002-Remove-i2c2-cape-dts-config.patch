@@ -1,0 +1,86 @@
+From a74eb42c99fe81732c4975a831e9a16c8f4135e4 Mon Sep 17 00:00:00 2001
+From: Scott Ellis <scott-ellis@idexx.com>
+Date: Mon, 16 Sep 2024 07:26:06 -0400
+Subject: [PATCH 2/2] Remove i2c2 cape dts config
+
+---
+ .../boot/dts/ti/omap/am335x-bone-common.dtsi  | 56 -------------------
+ 1 file changed, 56 deletions(-)
+
+diff --git a/arch/arm/boot/dts/ti/omap/am335x-bone-common.dtsi b/arch/arm/boot/dts/ti/omap/am335x-bone-common.dtsi
+index 2d0216840ff5..1da821b3f5c3 100644
+--- a/arch/arm/boot/dts/ti/omap/am335x-bone-common.dtsi
++++ b/arch/arm/boot/dts/ti/omap/am335x-bone-common.dtsi
+@@ -82,13 +82,6 @@ AM33XX_PADCONF(AM335X_PIN_I2C0_SCL, PIN_INPUT_PULLUP, MUX_MODE0)	/* i2c0_scl.i2c
+ 		>;
+ 	};
+ 
+-	i2c2_pins: i2c2-pins {
+-		pinctrl-single,pins = <
+-			AM33XX_PADCONF(AM335X_PIN_UART1_CTSN, PIN_INPUT_PULLUP, MUX_MODE3)	/* uart1_ctsn.i2c2_sda */
+-			AM33XX_PADCONF(AM335X_PIN_UART1_RTSN, PIN_INPUT_PULLUP, MUX_MODE3)	/* uart1_rtsn.i2c2_scl */
+-		>;
+-	};
+-
+ 	uart0_pins: uart0-pins {
+ 		pinctrl-single,pins = <
+ 			AM33XX_PADCONF(AM335X_PIN_UART0_RXD, PIN_INPUT_PULLUP, MUX_MODE0)
+@@ -229,55 +222,6 @@ baseboard_data: baseboard_data@0 {
+ 	};
+ };
+ 
+-&i2c2 {
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&i2c2_pins>;
+-
+-	status = "okay";
+-	clock-frequency = <100000>;
+-
+-	cape_eeprom0: cape_eeprom0@54 {
+-		compatible = "atmel,24c256";
+-		reg = <0x54>;
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		cape0_data: cape_data@0 {
+-			reg = <0 0x100>;
+-		};
+-	};
+-
+-	cape_eeprom1: cape_eeprom1@55 {
+-		compatible = "atmel,24c256";
+-		reg = <0x55>;
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		cape1_data: cape_data@0 {
+-			reg = <0 0x100>;
+-		};
+-	};
+-
+-	cape_eeprom2: cape_eeprom2@56 {
+-		compatible = "atmel,24c256";
+-		reg = <0x56>;
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		cape2_data: cape_data@0 {
+-			reg = <0 0x100>;
+-		};
+-	};
+-
+-	cape_eeprom3: cape_eeprom3@57 {
+-		compatible = "atmel,24c256";
+-		reg = <0x57>;
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		cape3_data: cape_data@0 {
+-			reg = <0 0x100>;
+-		};
+-	};
+-};
+-
+-
+ /include/ "../../tps65217.dtsi"
+ 
+ &tps {
+-- 
+2.34.1
+

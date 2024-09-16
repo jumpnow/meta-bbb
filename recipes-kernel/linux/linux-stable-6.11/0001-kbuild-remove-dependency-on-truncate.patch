@@ -1,0 +1,29 @@
+From 471ecb5eb41109f339c18fe2422db96e675280ff Mon Sep 17 00:00:00 2001
+From: Scott Ellis <scott-ellis@idexx.com>
+Date: Mon, 16 Sep 2024 07:22:33 -0400
+Subject: [PATCH 1/2] kbuild: remove dependency on truncate
+
+Remove the recently-added dependency on the truncate program for
+building the kernel.  truncate is not available when building the kernel
+under Yocto.  It could be added, but it would be better just to avoid
+the unnecessary dependency.
+---
+ scripts/link-vmlinux.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/scripts/link-vmlinux.sh b/scripts/link-vmlinux.sh
+index 070a319140e8..c27b4e969f20 100755
+--- a/scripts/link-vmlinux.sh
++++ b/scripts/link-vmlinux.sh
+@@ -215,7 +215,7 @@ kallsymso=
+ strip_debug=
+ 
+ if is_enabled CONFIG_KALLSYMS; then
+-	truncate -s0 .tmp_vmlinux.kallsyms0.syms
++	true > .tmp_vmlinux.kallsyms0.syms
+ 	kallsyms .tmp_vmlinux.kallsyms0.syms .tmp_vmlinux0.kallsyms
+ fi
+ 
+-- 
+2.34.1
+
