@@ -19,10 +19,10 @@ KERNEL_DTB ?= "am335x-boneblack.dtb"
 
 do_compile() {
     sed -i "s/DTB/${KERNEL_DTB}/" "${S}/boot.cmd"
-    mkimage -A arm -T script -C none -n "Boot script" -d "${S}/boot.cmd" boot.scr
+    mkimage -A arm -O linux -T script -C none -n "Boot script" -d "${S}/boot.cmd" boot.scr
 
     sed -i "s/DTB/${KERNEL_DTB}/" "${S}/emmc-boot.cmd"
-    mkimage -A arm -T script -C none -n "Boot script" -d "${S}/emmc-boot.cmd" emmc-boot.scr
+    mkimage -A arm -O linux -T script -C none -n "Boot script" -d "${S}/emmc-boot.cmd" emmc-boot.scr
 }
 
 do_deploy() {
