@@ -10,11 +10,11 @@ This layer depends on:
     branch: styhead
 
     URI: https://code.qt.io/yocto/meta-qt6.git
-    branch: 6.8
+    branch: 6.9
 
 Latest commits:
 
     poky 70dc28ac28
     meta-openembedded c93994f1bb
     meta-security e2c44c8
-    meta-qt6 e576ed8
+    meta-qt6 338aefag
