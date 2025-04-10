@@ -1,20 +1,20 @@
 This layer depends on:
 
     URI: git://git.yoctoproject.org/poky.git
-    branch: styhead
+    branch: walnascar
 
     URI: git://git.openembedded.org/meta-openembedded
-    branch: styhead
+    branch: walnascar
 
     URI: git://git.yoctoproject.org/meta-security.git
-    branch: styhead
+    branch: master 
 
     URI: https://code.qt.io/yocto/meta-qt6.git
     branch: 6.9
 
 Latest commits:
 
-    poky 70dc28ac28
-    meta-openembedded c93994f1bb
-    meta-security e2c44c8
+    poky 39cbc37918
+    meta-openembedded a7bc0ed175
+    meta-security 1c03fdf
     meta-qt6 338aefag
