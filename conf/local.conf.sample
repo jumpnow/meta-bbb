@@ -25,7 +25,7 @@ PACKAGE_CLASSES = "package_ipk"
 
 SDKMACHINE = "x86_64"
 
-EXTRA_IMAGE_FEATURES = "debug-tweaks"
+EXTRA_IMAGE_FEATURES = "empty-root-password allow-empty-password allow-root-login"
 
 PATCHRESOLVE = "noop"
 RM_OLD_IMAGE = "1"
